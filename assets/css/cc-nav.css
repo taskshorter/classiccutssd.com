@@ -1,0 +1,387 @@
+/* Classic Cuts — Apple-style global nav + mega menu */
+
+:root {
+  --cc-nav-bg: #ffffff;
+  --cc-nav-text: #1d1d1f;
+  --cc-nav-muted: #6e6e73;
+  --cc-mega-bg: #ffffff;
+  --cc-nav-h: 48px;
+}
+
+.cc-header {
+  position: fixed;
+  top: calc(var(--cc-announce-h, 36px) - 1px);
+  left: 0;
+  right: 0;
+  z-index: 39;
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #ececec;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.cc-header.is-mega-open {
+  border-bottom: none;
+  background: #ffffff;
+  /* One continuous white sheet with the mega (shadow lives on .cc-mega) */
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.cc-header__bar {
+  display: none;
+}
+
+.cc-header__nav {
+  min-height: var(--cc-nav-h, 48px);
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+}
+
+.cc-nav-shell {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cc-header__mark,
+.cc-header__book {
+  display: none !important;
+}
+
+.cc-nav {
+  display: flex;
+  flex: 0 1 auto;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cc-nav > li {
+  position: static;
+}
+
+.cc-nav > li > a {
+  display: flex;
+  align-items: center;
+  height: var(--cc-nav-h, 48px);
+  padding: 0 14px;
+  color: var(--cc-nav-text);
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  line-height: 1;
+  opacity: 0.88;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cc-nav > li > a:hover,
+.cc-nav > li.is-active > a,
+.cc-nav > li.is-open > a {
+  opacity: 1;
+  color: #000000;
+}
+
+/* ——— Mega panel ———
+   Same #ffffff as the bar. Any “grayer” look was mostly contrast against the
+   dark blur behind it + a hairline gap — not a different paint color. */
+.cc-mega {
+  display: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  z-index: 38;
+  margin-top: -1px; /* kill subpixel gap over the darkened page */
+  padding-top: 1px;
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  border: 0;
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  /* Soft drop only under the panel — never a top edge band */
+  box-shadow:
+    0 1px 0 #ffffff,
+    0 22px 44px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  /* Force an opaque compositing layer so backdrop blur can’t tint this white */
+  isolation: isolate;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.cc-mega.is-open {
+  display: block;
+  animation: cc-mega-in 160ms ease;
+}
+
+@keyframes cc-mega-in {
+  from {
+    transform: translate3d(0, -6px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.cc-mega__inner {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 40px 48px 48px;
+  display: grid;
+  grid-template-columns: minmax(220px, 1.4fr) 1fr 1fr;
+  gap: 40px;
+}
+
+.cc-mega__label {
+  margin: 0 0 14px;
+  color: #6e6e73;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.cc-mega__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.cc-mega__links a {
+  display: inline-block;
+  color: #1d1d1f;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  line-height: 1.25;
+}
+
+.cc-mega__links a:hover {
+  color: #000000;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.cc-mega__links--lg {
+  gap: 12px;
+}
+
+.cc-mega__links--lg a {
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.cc-mega__links--lg a.cc-mega__soft {
+  font-size: 17px;
+  font-weight: 600;
+  color: #06c;
+  margin-top: 6px;
+}
+
+.cc-mega__links--lg a.cc-mega__soft:hover {
+  color: #0077ed;
+}
+
+/* Backdrop — keep lighter so it doesn’t make the white panel look gray by contrast */
+.cc-nav-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 37;
+  background: rgba(0, 0, 0, 0.28);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  backdrop-filter: blur(14px) saturate(120%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.cc-nav-backdrop.is-open {
+  display: block;
+  opacity: 1;
+}
+
+/* Hide old tiny dropdowns */
+.cc-nav__sub {
+  display: none !important;
+}
+
+.cc-hamburger {
+  display: none;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  left: auto;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  z-index: 6;
+}
+
+.cc-hamburger span,
+.cc-hamburger span::before,
+.cc-hamburger span::after {
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  margin: 0 auto;
+  background: #1d1d1f;
+  content: "";
+  transition: transform 200ms ease, top 200ms ease, background 200ms ease;
+}
+
+.cc-hamburger span {
+  top: 0;
+}
+
+.cc-hamburger span::before {
+  top: -6px;
+  position: absolute;
+  left: 0;
+}
+
+.cc-hamburger span::after {
+  top: 6px;
+  position: absolute;
+  left: 0;
+}
+
+body.nav-open .cc-hamburger span {
+  background: transparent;
+}
+
+body.nav-open .cc-hamburger span::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+
+body.nav-open .cc-hamburger span::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+/* Mobile drawer */
+.cc-mobile-nav {
+  display: none;
+  position: fixed;
+  top: var(--cc-chrome-h, 84px);
+  left: 0;
+  right: 0;
+  z-index: 38;
+  max-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  opacity: 0;
+  background: #161617;
+  transition: max-height 400ms ease, opacity 300ms ease, padding 300ms ease;
+}
+
+.cc-mobile-nav a {
+  display: block;
+  padding: 14px 22px;
+  color: #f5f5f7;
+  font-family: "Montserrat", sans-serif;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+.cc-mobile-nav .cc-nav__sub a,
+.cc-mobile-nav .cc-mega-mobile a {
+  padding: 8px 22px 8px 34px;
+  font-size: 14px;
+  color: #a1a1a6;
+}
+
+.cc-mobile-nav .is-active > a {
+  color: #ffffff;
+}
+
+.cc-mobile-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 22px 28px;
+}
+
+body.nav-open .cc-mobile-nav {
+  max-height: calc(100vh - var(--cc-chrome-h, 84px) - 20px);
+  opacity: 1;
+  padding-top: 8px;
+}
+
+@media screen and (max-width: 920px) {
+  .cc-nav > li > a {
+    padding: 0 8px;
+    font-size: 11px;
+  }
+
+  .cc-mega__inner {
+    padding: 32px 28px 40px;
+    gap: 28px;
+  }
+
+  .cc-mega__links--lg a {
+    font-size: 20px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cc-header {
+    height: var(--cc-nav-h, 50px);
+  }
+
+  .cc-header__bar {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    height: var(--cc-nav-h, 50px);
+  }
+
+  .cc-header__nav,
+  .cc-mega,
+  .cc-nav-backdrop {
+    display: none !important;
+  }
+
+  .cc-hamburger {
+    display: block;
+  }
+
+  .cc-mobile-nav {
+    display: block;
+  }
+
+  .cc-header__bar .cc-header__mark {
+    height: auto;
+  }
+}

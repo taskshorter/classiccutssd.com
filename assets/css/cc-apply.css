@@ -1,0 +1,527 @@
+/* Barber application — full-page form */
+
+body.cc-page-apply {
+  background-color: #f4f4f5;
+  background-image: url("../images/backgrounds/application-background.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-x: clip;
+}
+
+html:has(body.cc-page-apply) {
+  overflow-x: clip;
+}
+
+/* No floating Squire “Book Now” on the application page */
+body.cc-page-apply [class*="squire"],
+body.cc-page-apply [id*="squire"],
+body.cc-page-apply iframe[src*="getsquire"],
+body.cc-page-apply iframe[src*="squire"] {
+  display: none !important;
+}
+
+body.cc-page-apply .cc-main {
+  background: transparent;
+  padding: 0;
+}
+
+.cc-apply {
+  padding: 48px 28px 80px;
+}
+
+.cc-apply__layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(420px, 1.22fr);
+  gap: 28px 36px;
+  align-items: start;
+}
+
+.cc-apply__pitch {
+  position: sticky;
+  top: var(--cc-pitch-sticky-top, calc(var(--cc-chrome-h, 96px) + 24px));
+  padding: 0 4px 0 0;
+  text-align: center;
+  min-width: 0;
+  align-self: start;
+}
+
+.cc-apply__brand {
+  margin: 0 0 18px;
+}
+
+.cc-apply__brand-name {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #111;
+}
+
+.cc-apply__brand-sub {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 8px 0 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: #777;
+}
+
+.cc-apply__brand-sub::before,
+.cc-apply__brand-sub::after {
+  content: "";
+  width: 40px;
+  height: 1px;
+  background: #c8c8c8;
+}
+
+.cc-apply__headline {
+  margin: 0 0 12px;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: clamp(1.85rem, 2.8vw, 2.45rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #111;
+}
+
+.cc-apply__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: #8a8a8a;
+}
+
+.cc-apply__divider span {
+  width: 36px;
+  height: 1px;
+  background: #cfcfcf;
+}
+
+.cc-apply__divider svg {
+  width: 18px;
+  height: 18px;
+}
+
+.cc-apply__lead {
+  max-width: none;
+  margin: 0 0 20px;
+  font-family: "Lato", "Quattrocento Sans", sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #555;
+}
+
+.cc-apply__lead p {
+  margin: 0 0 0.75em;
+}
+
+.cc-apply__lead p:last-child {
+  margin-bottom: 0;
+}
+
+.cc-apply__lead em {
+  font-style: italic;
+  color: #333;
+}
+
+.cc-apply__perks {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0 0 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.cc-apply__perk {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px 8px 12px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+}
+
+.cc-apply__perk-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid #d0d0d0;
+  border-radius: 50%;
+  color: #333;
+}
+
+.cc-apply__perk-icon svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cc-apply__perk > span:last-child {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #222;
+}
+
+.cc-apply__quote {
+  position: relative;
+  margin: 0;
+  padding: 20px 18px 16px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+.cc-apply__quote-mark {
+  display: block;
+  margin: 0 0 2px;
+  font-family: "Abril Fatface", serif;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: #bbb;
+}
+
+.cc-apply__quote p {
+  margin: 0 0 10px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #444;
+  font-style: italic;
+}
+
+.cc-apply__quote cite {
+  display: block;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 600;
+  color: #666;
+}
+
+.cc-apply__shell {
+  max-width: 640px;
+  width: 100%;
+  justify-self: end;
+  margin: 0;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 20px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+  padding: 36px 36px 40px;
+}
+
+.cc-apply__title {
+  margin: 0 0 6px;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: clamp(2rem, 4.5vw, 2.65rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: #111;
+  text-align: center;
+}
+
+.cc-apply__sub {
+  margin: 0 0 28px;
+  text-align: center;
+  color: #6b6b6b;
+  font-family: "Montserrat", "Lato", sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: 0.02em;
+}
+
+.cc-apply__section {
+  margin: 0 0 22px;
+}
+
+.cc-apply__section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3a3a3a;
+}
+
+.cc-apply__section-label svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.75;
+}
+
+.cc-apply__grid {
+  display: grid;
+  gap: 14px;
+}
+
+.cc-apply__grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.cc-apply__field label {
+  display: block;
+  margin-bottom: 7px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #555;
+}
+
+.cc-apply__field input,
+.cc-apply__field select,
+.cc-apply__field textarea {
+  width: 100%;
+  padding: 13px 14px;
+  border: 1px solid #e4e4e7;
+  border-radius: 12px;
+  background: #f7f7f8;
+  color: #111;
+  font-family: "Lato", "Quattrocento Sans", sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.4;
+  transition: border-color 160ms ease, background 160ms ease, box-shadow 160ms ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.cc-apply__field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.cc-apply__field input::placeholder,
+.cc-apply__field textarea::placeholder {
+  color: #9a9a9a;
+}
+
+.cc-apply__field input:focus,
+.cc-apply__field select:focus,
+.cc-apply__field textarea:focus {
+  outline: none;
+  border-color: #111;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+}
+
+.cc-apply__field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.cc-apply__upload {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 132px;
+  padding: 24px 16px;
+  border: 1.5px dashed #d4d4d8;
+  border-radius: 14px;
+  background: #fafafa;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.cc-apply__upload:hover,
+.cc-apply__upload.is-dragover {
+  border-color: #111;
+  background: #f5f5f5;
+}
+
+.cc-apply__upload input[type="file"] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.cc-apply__upload-icon {
+  width: 28px;
+  height: 28px;
+  stroke: #555;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cc-apply__upload-title {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #222;
+}
+
+.cc-apply__upload-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  color: #888;
+}
+
+.cc-apply__files {
+  margin: 10px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 6px;
+}
+
+.cc-apply__files li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #f4f4f5;
+  font-size: 0.82rem;
+  color: #333;
+}
+
+.cc-apply__files button {
+  border: 0;
+  background: transparent;
+  color: #777;
+  cursor: pointer;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 2px 4px;
+}
+
+.cc-apply__files button:hover {
+  color: #111;
+}
+
+.cc-apply__actions {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+
+.cc-apply__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+  padding: 14px 20px;
+  border: 0;
+  border-radius: 12px;
+  background: #111;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.cc-apply__submit:hover {
+  background: #2a2a2a;
+}
+
+.cc-apply__submit:active {
+  transform: scale(0.99);
+}
+
+.cc-apply__note {
+  margin: 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: #888;
+  line-height: 1.45;
+}
+
+@media (max-width: 980px) {
+  .cc-apply {
+    padding: 32px 18px 64px;
+  }
+
+  .cc-apply__layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .cc-apply__pitch {
+    position: static;
+    top: auto;
+    padding: 0;
+  }
+
+  .cc-apply__shell {
+    max-width: 640px;
+    justify-self: center;
+  }
+}
+
+@media (max-width: 640px) {
+  body.cc-page-apply {
+    background-attachment: scroll;
+    background-position: center top;
+  }
+
+  .cc-apply {
+    padding: 24px 14px 56px;
+  }
+
+  .cc-apply__perks {
+    grid-template-columns: 1fr;
+    max-width: 280px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cc-apply__shell {
+    padding: 28px 18px 32px;
+    border-radius: 16px;
+  }
+
+  .cc-apply__grid--2 {
+    grid-template-columns: 1fr;
+  }
+}

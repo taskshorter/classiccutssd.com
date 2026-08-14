@@ -1,0 +1,239 @@
+/* PixelSwap — React Bits (vanilla port) */
+.pixel-swap {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  isolation: isolate;
+  outline: none;
+}
+
+.pixel-swap__layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+.pixel-swap__layer[data-visible='false'] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.pixel-swap__grid {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.pixel-swap__pixel {
+  position: absolute;
+  overflow: hidden;
+  opacity: 0;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.pixel-swap__pixel-content {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.pixel-swap__clone-layer,
+.pixel-swap__clone-layer * {
+  animation: none !important;
+  transition: none !important;
+}
+
+.cc-mission-card {
+  width: min(1120px, calc(100% - clamp(32px, 6vw, 80px)));
+  max-width: none;
+  margin: 0 auto 56px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #0a0a0a;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
+}
+
+.cc-mission-swap-mount,
+.cc-mission-card .pixel-swap {
+  position: relative;
+  width: 100%;
+  min-height: clamp(340px, 38vw, 420px);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.cc-mission-swap-mount:not([data-pixel-ready]) {
+  display: grid;
+  place-items: stretch;
+}
+
+.cc-mission-swap-mount:not([data-pixel-ready]) [data-pixel-second][hidden] {
+  display: none !important;
+}
+
+.cc-mission-card .pixel-swap__layer {
+  display: grid;
+  place-items: stretch;
+  padding: 0;
+}
+
+.cc-mission-cover,
+.cc-mission-reveal {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+  padding: clamp(28px, 4vw, 44px) clamp(20px, 3.5vw, 36px);
+  text-align: center;
+}
+
+.cc-mission-cover {
+  background: #0a0a0a;
+  color: #f5ebeb;
+}
+
+.cc-mission-reveal {
+  background: #f3f1ec;
+  color: #111111;
+}
+
+.cc-mission-cover__inner,
+.cc-mission-reveal__inner {
+  width: 100%;
+  max-width: 40em;
+  margin: 0 auto;
+}
+
+.cc-mission-cover .cc-eyebrow,
+#cc-content .cc-mission-cover .cc-eyebrow,
+#cc-content .cc-section--dark .cc-mission-cover .cc-eyebrow {
+  margin: 0 0 12px;
+  color: rgba(245, 235, 235, 0.55) !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.cc-mission-cover__title,
+#cc-content .cc-mission-cover__title,
+#cc-content .cc-section--dark .cc-mission-cover__title,
+#cc-content .cc-section--dark .cc-mission-cover h2 {
+  margin: 0 auto 16px;
+  font-family: "Abril Fatface", Georgia, serif !important;
+  font-size: clamp(32px, 5.5vw, 52px) !important;
+  font-weight: 400 !important;
+  line-height: 1.08 !important;
+  color: #f5ebeb !important;
+}
+
+.cc-mission-cover__quote,
+#cc-content .cc-mission-cover__quote,
+#cc-content .cc-section--dark .cc-mission-cover__quote {
+  margin: 0 auto 20px;
+  color: rgba(245, 235, 235, 0.82) !important;
+  font-family: "Lato", sans-serif !important;
+  font-size: clamp(16px, 2vw, 19px) !important;
+  font-weight: 300 !important;
+  line-height: 1.6 !important;
+}
+
+.cc-mission-cover .cc-hours-chip,
+#cc-content .cc-section--dark .cc-mission-cover .cc-hours-chip {
+  color: #f5ebeb !important;
+  border-color: rgba(245, 235, 235, 0.35) !important;
+  pointer-events: none;
+}
+
+/* Clean reveal stats — no graphs */
+.cc-mission-reveal .cc-eyebrow,
+#cc-content .cc-mission-reveal .cc-eyebrow,
+#cc-content .cc-section--dark .cc-mission-reveal .cc-eyebrow {
+  margin: 0 0 28px;
+  color: rgba(17, 17, 17, 0.45) !important;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.cc-mission-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 4vw, 40px);
+  text-align: center;
+}
+
+.cc-mission-stats li {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.cc-mission-stats__value,
+#cc-content .cc-mission-stats__value,
+#cc-content .cc-section--dark .cc-mission-stats__value {
+  display: block;
+  margin: 0;
+  font-family: "Abril Fatface", Georgia, serif !important;
+  font-size: clamp(40px, 6vw, 56px) !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  color: #111111 !important;
+}
+
+.cc-mission-stats__label,
+#cc-content .cc-mission-stats__label,
+#cc-content .cc-section--dark .cc-mission-stats__label {
+  display: block;
+  margin: 0;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.55) !important;
+  line-height: 1.3 !important;
+}
+
+.cc-mission-stats__note,
+#cc-content .cc-mission-stats__note,
+#cc-content .cc-section--dark .cc-mission-stats__note {
+  display: block;
+  margin: 0;
+  max-width: 14em;
+  font-family: "Lato", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 300 !important;
+  line-height: 1.45 !important;
+  color: rgba(17, 17, 17, 0.7) !important;
+}
+
+@media (max-width: 760px) {
+  .cc-mission-stats {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .cc-mission-swap-mount,
+  .cc-mission-card .pixel-swap {
+    min-height: clamp(420px, 88vw, 560px);
+  }
+}
+
+@media (max-width: 640px) {
+  .cc-mission-card {
+    width: calc(100% - 28px);
+    border-radius: 22px;
+    margin-bottom: 28px;
+  }
+}

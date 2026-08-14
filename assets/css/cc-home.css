@@ -1,0 +1,1738 @@
+/* Classic Cuts — announcement bar + video hero overlay (homepage) */
+
+:root {
+  --cc-announce-h: 36px;
+  --cc-nav-h: 48px;
+  --cc-chrome-h: calc(var(--cc-announce-h) + var(--cc-nav-h));
+  --cc-ink: #0a0a0a;
+  --cc-cream: #f5ebeb;
+  --cc-muted: rgba(245, 235, 235, 0.82);
+}
+
+/* Kill accidental horizontal page scroll (100vw / translated cards) */
+html,
+body.cc-page-home {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+body.cc-page-home .cc-site,
+body.cc-page-home .content-wrap,
+body.cc-page-home #cc-content {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ——— Fixed announcement bar (stays for entire page scroll) ——— */
+.cc-announce {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 2px;
+  height: auto;
+  min-height: var(--cc-announce-h);
+  padding: 10px 16px;
+  box-sizing: border-box;
+  background: var(--cc-ink);
+  color: var(--cc-cream);
+  text-align: center;
+  font-family: "Montserrat", "Quattrocento Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.45;
+  overflow: visible;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.cc-announce::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 3px;
+  background: var(--cc-ink);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cc-announce a {
+  color: var(--cc-cream);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease, opacity 200ms ease;
+}
+
+.cc-announce a:hover {
+  color: #ffffff;
+  border-bottom-color: rgba(245, 235, 235, 0.55);
+}
+
+.cc-announce__sep {
+  display: inline-block;
+  margin: 0 0.65em;
+  opacity: 0.35;
+}
+
+@media screen and (max-width: 560px) {
+  .cc-announce {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding: 12px 10px;
+    line-height: 1.45;
+    column-gap: 0;
+  }
+
+  .cc-announce__sep {
+    margin: 0 0.4em;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --cc-announce-h: 48px;
+    --cc-nav-h: 50px;
+  }
+}
+
+/* ——— Video hero: full-bleed footage + original logo proportions ——— */
+body.cc-page-home .cc-hero {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body.cc-page-home .cc-hero {
+  /* Fill everything below fixed chrome so video hits the bottom of the screen */
+  height: calc(100svh - var(--cc-chrome-h)) !important;
+  height: calc(100dvh - var(--cc-chrome-h)) !important;
+  min-height: calc(100svh - var(--cc-chrome-h));
+  min-height: calc(100dvh - var(--cc-chrome-h));
+  display: flex;
+  align-items: stretch;
+  background: #000 !important;
+  background-image: none !important;
+}
+
+/* Native full-bleed video — masked so the bottom dissolves into black */
+body.cc-page-home .cc-hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  will-change: opacity, mask-image;
+  opacity: calc(1 - var(--cc-hero-fade, 0) * 0.35);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 calc(52% - var(--cc-hero-fade, 0) * 28%),
+    rgba(0, 0, 0, 0.55) calc(72% - var(--cc-hero-fade, 0) * 18%),
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    #000 0%,
+    #000 calc(52% - var(--cc-hero-fade, 0) * 28%),
+    rgba(0, 0, 0, 0.55) calc(72% - var(--cc-hero-fade, 0) * 18%),
+    transparent 100%
+  );
+}
+
+/* Always-on bottom blend + scroll wash into black */
+body.cc-page-home .cc-hero-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  will-change: opacity;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, calc(var(--cc-hero-fade, 0) * 0.55)) 0%,
+    rgba(0, 0, 0, calc(0.08 + var(--cc-hero-fade, 0) * 0.45)) 40%,
+    rgba(0, 0, 0, calc(0.55 + var(--cc-hero-fade, 0) * 0.35)) 68%,
+    rgba(0, 0, 0, calc(0.92 + var(--cc-hero-fade, 0) * 0.08)) 88%,
+    #000 100%
+  );
+}
+
+/* Hide duplicate Weebly-injected background videos if their JS runs */
+body.cc-page-home .cc-hero video:not(.cc-hero-video),
+body.cc-page-home .cc-hero iframe {
+  display: none !important;
+}
+
+body.cc-page-home .cc-hero__content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: inherit;
+  height: 100%;
+  box-sizing: border-box;
+  /* Transparent behind the logo — soft fade only at the bottom for CTAs */
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0) 55%,
+    rgba(0, 0, 0, 0.28) 78%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
+}
+
+body.cc-page-home .cc-hero .container {
+  overflow: visible;
+  width: 100%;
+  max-width: 960px;
+  padding: 48px 24px 56px;
+  box-sizing: border-box;
+  background: transparent !important;
+}
+
+body.cc-page-home .cc-hero__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  background: transparent !important;
+}
+
+/* Kill old Weebly float layout around the logo */
+body.cc-page-home .cc-hero .imgPusher,
+body.cc-page-home .cc-hero hr {
+  display: none !important;
+}
+
+/*
+  Original logo asset is 920×320 (~2.875:1).
+  Weebly showed it at natural width capped by the 960px content column.
+*/
+body.cc-page-home .cc-hero-logo {
+  display: block;
+  float: none !important;
+  margin: 0 auto 18px !important;
+  width: 100%;
+  max-width: 920px;
+  background: transparent;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+body.cc-page-home .cc-hero-logo img {
+  display: block;
+  width: 100%;
+  max-width: 920px;
+  height: auto;
+  aspect-ratio: 920 / 320;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+  -webkit-filter: none !important;
+}
+
+body.cc-page-home .cc-hero-line {
+  margin: 0 0 22px;
+  max-width: 34em;
+  color: var(--cc-cream);
+  font-family: "Lato", "Quattrocento Sans", sans-serif;
+  font-size: clamp(16px, 2.2vw, 20px);
+  font-weight: 300;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.55);
+}
+
+body.cc-page-home .cc-hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+body.cc-page-home .cc-hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 168px;
+  padding: 14px 22px;
+  font-family: "Montserrat", "Quattrocento Sans", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: background 220ms ease, color 220ms ease, border-color 220ms ease,
+    transform 220ms ease;
+}
+
+body.cc-page-home .cc-hero-btn:hover {
+  transform: translateY(-1px);
+}
+
+body.cc-page-home .cc-hero-btn--primary {
+  background: #ffffff;
+  color: #111111;
+  border-color: #ffffff;
+}
+
+body.cc-page-home .cc-hero-btn--primary:hover {
+  background: transparent;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+body.cc-page-home .cc-hero-btn--ghost {
+  background: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+body.cc-page-home .cc-hero-btn--ghost:hover {
+  background: #ffffff;
+  color: #111111;
+  border-color: #ffffff;
+}
+
+@media screen and (max-width: 767px) {
+  body.cc-page-home .cc-hero {
+    height: calc(100svh - var(--cc-chrome-h)) !important;
+    height: calc(100dvh - var(--cc-chrome-h)) !important;
+    min-height: calc(100svh - var(--cc-chrome-h));
+    min-height: calc(100dvh - var(--cc-chrome-h));
+  }
+
+  /* Soft dark pocket so logo + copy pop over busy video */
+  body.cc-page-home .cc-hero__content {
+    background:
+      radial-gradient(
+        ellipse 95% 70% at 50% 48%,
+        rgba(0, 0, 0, 0.72) 0%,
+        rgba(0, 0, 0, 0.45) 42%,
+        rgba(0, 0, 0, 0.2) 68%,
+        rgba(0, 0, 0, 0.35) 100%
+      ) !important;
+  }
+
+  body.cc-page-home .cc-hero .container {
+    padding: 36px 18px 44px;
+  }
+
+  body.cc-page-home .cc-hero-logo {
+    max-width: 100%;
+    margin-bottom: 14px !important;
+  }
+
+  body.cc-page-home .cc-hero-logo img {
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.85))
+      drop-shadow(0 8px 28px rgba(0, 0, 0, 0.7)) !important;
+    -webkit-filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.85))
+      drop-shadow(0 8px 28px rgba(0, 0, 0, 0.7)) !important;
+  }
+
+  body.cc-page-home .cc-hero-line,
+  body.cc-page-home #cc-content .cc-hero p.cc-hero-line {
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff !important;
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.95),
+      0 2px 12px rgba(0, 0, 0, 0.85),
+      0 0 28px rgba(0, 0, 0, 0.65);
+  }
+
+  body.cc-page-home .cc-hero-ctas {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  body.cc-page-home .cc-hero-btn {
+    width: 100%;
+    max-width: 280px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+  }
+
+  body.cc-page-home .cc-hero-btn--ghost {
+    background: rgba(0, 0, 0, 0.35);
+    border-color: #ffffff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* ——— Nav Book CTA ——— */
+
+/* ——— Shared homepage section chrome ——— */
+body.cc-page-home .cc-section {
+  padding: 72px 24px;
+  box-sizing: border-box;
+}
+
+body.cc-page-home .cc-section__inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+body.cc-page-home .cc-eyebrow {
+  margin: 0 0 10px;
+  color: #8a8a8a;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+body.cc-page-home .cc-section h2 {
+  margin: 0 0 14px;
+  color: #111111;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+body.cc-page-home .cc-section--dark {
+  background: linear-gradient(0deg, #020202 0%, #3a3a3a 100%);
+  color: #f5ebeb;
+}
+
+body.cc-page-home .cc-section--dark .cc-eyebrow {
+  color: rgba(245, 235, 235, 0.55);
+}
+
+body.cc-page-home .cc-section--dark h2 {
+  color: #f5ebeb !important;
+}
+
+body.cc-page-home .cc-section--reviews h2 {
+  color: #f5ebeb !important;
+}
+
+body.cc-page-home .cc-section h2 {
+  color: #111111 !important;
+}
+
+body.cc-page-home .cc-section--dark p,
+body.cc-page-home .cc-lead {
+  color: rgba(245, 235, 235, 0.88);
+  font-family: "Lato", sans-serif;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+body.cc-page-home .cc-lead {
+  margin: 0 0 28px;
+  max-width: 38em;
+}
+
+/* Trust strip */
+body.cc-page-home .cc-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 28px;
+  align-items: center;
+  margin: 0 0 36px;
+}
+
+body.cc-page-home .cc-trust__rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 10px;
+  color: #f5ebeb;
+  font-family: "Montserrat", sans-serif;
+}
+
+body.cc-page-home .cc-trust__stars {
+  color: #d4af37;
+  letter-spacing: 2px;
+  font-size: 16px;
+}
+
+body.cc-page-home .cc-trust__score {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+body.cc-page-home .cc-trust__meta {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+
+body.cc-page-home .cc-hours-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid rgba(245, 235, 235, 0.25);
+  border-radius: 999px;
+  color: #f5ebeb;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+body.cc-page-home .cc-hours-chip::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c45c5c;
+  box-shadow: 0 0 0 0 rgba(196, 92, 92, 0.5);
+  animation: cc-pulse 2s infinite;
+}
+
+body.cc-page-home .cc-hours-chip.is-open::before {
+  background: #3dba7a;
+  box-shadow: 0 0 0 0 rgba(61, 186, 122, 0.5);
+}
+
+@keyframes cc-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(61, 186, 122, 0.45); }
+  70% { box-shadow: 0 0 0 8px rgba(61, 186, 122, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(61, 186, 122, 0); }
+}
+
+/* Experience / amenities */
+body.cc-page-home .cc-amenities {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+body.cc-page-home .cc-amenities li {
+  padding: 18px 16px;
+  border: 1px solid rgba(245, 235, 235, 0.18);
+  color: #f5ebeb;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.35;
+}
+
+body.cc-page-home .cc-split {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 28px;
+  align-items: start;
+  margin-top: 36px;
+}
+
+body.cc-page-home .cc-split iframe {
+  width: 100%;
+  min-height: 280px;
+  border: 0;
+  filter: grayscale(0.2);
+}
+
+body.cc-page-home .cc-btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+body.cc-page-home .cc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+/* Soften remaining Weebly buttons on the homepage */
+body.cc-page-home .cc-legacy .wsite-button,
+body.cc-page-home .cc-legacy .wsite-button .wsite-button-inner,
+body.cc-page-home #commentSubmit {
+  border-radius: 10px !important;
+}
+
+body.cc-page-home .cc-btn--light {
+  background: #ffffff;
+  color: #111111;
+}
+
+body.cc-page-home .cc-btn--light:hover {
+  background: transparent;
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+body.cc-page-home .cc-btn--ghost-light {
+  background: transparent;
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+body.cc-page-home .cc-btn--ghost-light:hover {
+  background: #ffffff;
+  color: #111111;
+}
+
+body.cc-page-home .cc-btn--dark {
+  background: #111111;
+  color: #ffffff;
+}
+
+body.cc-page-home .cc-btn--dark:hover {
+  background: #333333;
+}
+
+body.cc-page-home .cc-btn--ghost-dark {
+  background: transparent;
+  color: #111111;
+  border-color: #111111;
+}
+
+body.cc-page-home .cc-btn--ghost-dark:hover {
+  background: #111111;
+  color: #ffffff;
+}
+
+body.cc-page-home .cc-btn--quiet {
+  background: transparent;
+  color: #666666;
+  border-color: #cccccc;
+}
+
+body.cc-page-home .cc-btn--quiet:hover {
+  color: #111111;
+  border-color: #111111;
+}
+
+/* Services preview */
+body.cc-page-home .cc-services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 28px 0 0;
+}
+
+body.cc-page-home .cc-service-card {
+  padding: 22px 20px;
+  border: 1px solid #e6e6e6;
+  background: #ffffff;
+}
+
+body.cc-page-home .cc-service-card h3 {
+  margin: 0 0 6px;
+  font-family: "Abril Fatface", serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #111111;
+}
+
+body.cc-page-home .cc-service-card .cc-price {
+  margin: 0 0 10px;
+  color: #111111;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+body.cc-page-home .cc-service-card p {
+  margin: 0 0 16px;
+  color: #555555;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+body.cc-page-home .cc-service-card a {
+  color: #111111;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid #111111;
+}
+
+/* Reviews */
+body.cc-page-home .cc-section--reviews {
+  background: #111111;
+  color: #f5ebeb;
+  overflow: hidden;
+}
+
+body.cc-page-home .cc-section--reviews h2 {
+  color: #f5ebeb;
+}
+
+body.cc-page-home .cc-reviews-grid {
+  display: none;
+}
+
+/* Visit / hours */
+body.cc-page-home .cc-visit-grid {
+  display: none;
+}
+
+body.cc-page-home .cc-visit-card h3 {
+  margin: 0 0 12px;
+  font-family: "Abril Fatface", serif;
+  font-size: 28px;
+  font-weight: 400;
+}
+
+body.cc-page-home .cc-visit-card p,
+body.cc-page-home .cc-visit-card li {
+  margin: 0;
+  color: #333333;
+  font-family: "Lato", sans-serif;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+body.cc-page-home .cc-hours-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+body.cc-page-home .cc-hours-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 0;
+  border-bottom: 1px solid #ececec;
+}
+
+body.cc-page-home .cc-apply-note {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid #e6e6e6;
+  text-align: center;
+}
+
+body.cc-page-home .cc-apply-note p {
+  margin: 0 0 14px;
+  color: #666666;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+}
+
+/* Footer */
+body.cc-page-home .cc-footer {
+  background: #ffffff;
+  border-top: 1px solid #ececec;
+  padding: 36px 24px 28px;
+}
+
+body.cc-page-home .cc-footer__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+body.cc-page-home .cc-footer h4 {
+  margin: 0 0 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+body.cc-page-home .cc-footer p,
+body.cc-page-home .cc-footer a {
+  color: #555555;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+  text-decoration: none;
+}
+
+body.cc-page-home .cc-footer a:hover {
+  color: #111111;
+}
+
+body.cc-page-home .cc-footer__copy {
+  grid-column: 1 / -1;
+  margin-top: 8px;
+  padding-top: 18px;
+  border-top: 1px solid #f0f0f0;
+  color: #888888;
+  font-size: 12px;
+}
+
+/* Scroll top */
+body.cc-page-home .cc-scroll-top {
+  position: fixed;
+  right: 20px;
+  bottom: 24px;
+  z-index: 35;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #111111;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+body.cc-page-home .cc-scroll-top.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.cc-page-home .cc-scroll-top:hover {
+  transform: translateY(-2px);
+}
+
+/* Mobile drawer extras */
+body.cc-page-home .cc-mobile-actions {
+  display: none;
+}
+
+@media screen and (max-width: 767px) {
+  body.cc-page-home .cc-nav-book {
+    display: none;
+  }
+
+  body.cc-page-home .cc-mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 18px 20px 28px;
+  }
+
+  body.cc-page-home .cc-amenities {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  body.cc-page-home .cc-split,
+  body.cc-page-home .cc-services-grid,
+  body.cc-page-home .cc-reviews-grid,
+  body.cc-page-home .cc-visit-grid,
+  body.cc-page-home .cc-footer__inner {
+    grid-template-columns: 1fr;
+  }
+
+  body.cc-page-home .cc-section {
+    padding: 56px 18px;
+  }
+}
+
+/* ============================================================
+   Contrast + section blends
+   Weebly injects #cc-content h2/p { color:#2a2a2a !important }
+   so ID-level selectors are required to win.
+   ============================================================ */
+
+/* Hero supporting line — force light on dark video */
+#cc-content .cc-hero-line,
+body.cc-page-home #cc-content .cc-hero p.cc-hero-line {
+  color: #f5ebeb !important;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.75) !important;
+}
+
+/* Dark sections: cream text */
+#cc-content .cc-section--dark h2,
+#cc-content .cc-section--reviews h2,
+body.cc-page-home #cc-content .cc-section--dark h2,
+body.cc-page-home #cc-content .cc-section--reviews h2 {
+  color: #f5ebeb !important;
+}
+
+#cc-content .cc-section--dark p,
+#cc-content .cc-section--dark .cc-lead,
+#cc-content .cc-section--reviews p,
+#cc-content .cc-section--reviews span,
+#cc-content .cc-section--dark .cc-amenities li,
+#cc-content .cc-section--dark .cc-trust__rating,
+#cc-content .cc-section--dark .cc-trust__meta,
+#cc-content .cc-section--dark .cc-trust__score,
+#cc-content .cc-section--reviews .cc-trust__rating,
+#cc-content .cc-section--reviews .cc-trust__meta,
+#cc-content .cc-section--reviews .cc-trust__score {
+  color: #f5ebeb !important;
+}
+
+#cc-content .cc-section--dark .cc-eyebrow,
+#cc-content .cc-section--reviews .cc-eyebrow {
+  color: rgba(245, 235, 235, 0.6) !important;
+}
+
+#cc-content .cc-section--dark .cc-hours-chip,
+#cc-content .cc-section--reviews .cc-hours-chip {
+  color: #f5ebeb !important;
+  border-color: rgba(245, 235, 235, 0.35) !important;
+}
+
+#cc-content .cc-review-card,
+#cc-content .cc-review-card strong,
+#cc-content .cc-review-card span {
+  color: #f5ebeb !important;
+}
+
+/* Light sections: dark text */
+#cc-content .cc-section:not(.cc-section--dark):not(.cc-section--reviews) h2 {
+  color: #111111 !important;
+}
+
+#cc-content .cc-section:not(.cc-section--dark):not(.cc-section--reviews) p,
+#cc-content .cc-section:not(.cc-section--dark):not(.cc-section--reviews) .cc-lead,
+#cc-content .cc-service-card p,
+#cc-content .cc-service-card .cc-price,
+#cc-content .cc-visit-card p,
+#cc-content .cc-visit-card li,
+#cc-content .cc-apply-note p {
+  color: #333333 !important;
+}
+
+#cc-content .cc-section:not(.cc-section--dark):not(.cc-section--reviews) .cc-eyebrow {
+  color: #8a8a8a !important;
+}
+
+#cc-content .cc-section:not(.cc-section--dark):not(.cc-section--reviews) .cc-hours-chip {
+  color: #111111 !important;
+  border-color: #dddddd !important;
+}
+
+#cc-content .cc-service-card h3,
+#cc-content .cc-visit-card h3 {
+  color: #111111 !important;
+}
+
+/* Gallery wrappers sitting on dark bands */
+body.cc-page-home .cc-section[style*="background:linear-gradient"],
+body.cc-page-home .cc-section[style*="background:#111"] {
+  color: #f5ebeb;
+}
+
+/* ——— Soft blends between sections ——— */
+
+/* Desktop: keep hero content clear; mobile scrim is in the max-width 767 block above */
+@media screen and (min-width: 768px) {
+  body.cc-page-home .cc-hero__content {
+    background: transparent !important;
+  }
+}
+
+body.cc-page-home .cc-hero {
+  margin-bottom: 0 !important;
+}
+
+/* About continues pure black after video fade */
+body.cc-page-home #about.cc-section--dark:not(.cc-about) {
+  background: #000 !important;
+  padding-top: 56px;
+}
+
+body.cc-page-home #about.cc-about {
+  background: #000 !important;
+  padding-top: 56px !important;
+}
+
+/* Shared fade helpers on section edges */
+body.cc-page-home .cc-section {
+  position: relative;
+}
+
+body.cc-page-home .cc-section::before,
+body.cc-page-home .cc-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 56px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+body.cc-page-home .cc-section::before {
+  top: 0;
+}
+
+body.cc-page-home .cc-section::after {
+  bottom: 0;
+}
+
+body.cc-page-home .cc-section__inner {
+  position: relative;
+  z-index: 2;
+}
+
+/* Dark → light: black curve dips into light (inverted arch) */
+body.cc-page-home #about.cc-about {
+  overflow: hidden;
+  padding-bottom: 80px !important;
+  z-index: 2;
+}
+
+body.cc-page-home #about.cc-about::before,
+body.cc-page-home #about.cc-about::after {
+  display: none !important;
+  content: none !important;
+}
+
+body.cc-page-home #services.cc-section {
+  position: relative;
+  background: #f7f7f7 !important;
+  padding-top: clamp(88px, 12vw, 120px);
+  padding-bottom: 80px;
+  margin-top: 0;
+  overflow: hidden;
+  z-index: 2;
+}
+
+body.cc-page-home #services.cc-section::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 160%;
+  height: clamp(100px, 16vw, 168px);
+  margin-left: -80%;
+  background: #000;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  pointer-events: none;
+  z-index: 2;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateY(-50%);
+}
+
+/* Light services → dark gallery: same curve (light dips into dark) */
+body.cc-page-home #services.cc-section::after {
+  display: none !important;
+  content: none !important;
+  height: 0 !important;
+  background: none !important;
+}
+
+body.cc-page-home #gallery-preview.cc-bounce-gallery {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  padding-top: clamp(88px, 12vw, 120px) !important;
+  background: #0a0a0a !important;
+}
+
+body.cc-page-home #gallery-preview.cc-bounce-gallery::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 160%;
+  height: clamp(100px, 16vw, 168px);
+  margin-left: -80%;
+  background: #f7f7f7;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  pointer-events: none;
+  z-index: 2;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateY(-50%);
+}
+
+body.cc-page-home #gallery-preview.cc-bounce-gallery::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Gallery bands blend */
+body.cc-page-home .cc-section[style*="background:linear-gradient"] {
+  background: linear-gradient(180deg, #0a0a0a 0%, #1c1c1c 50%, #111111 100%) !important;
+  padding-top: 24px !important;
+}
+
+body.cc-page-home .cc-section[style*="background:#111"] {
+  background: linear-gradient(180deg, #111111 0%, #0d0d0d 100%) !important;
+}
+
+/* Reviews soft in — continue from gallery black into #111 */
+body.cc-page-home #reviews.cc-section--reviews {
+  background: linear-gradient(
+    180deg,
+    #000000 0%,
+    #080808 36px,
+    #111111 96px,
+    #111111 100%
+  ) !important;
+  padding-bottom: 80px !important;
+  overflow-x: hidden;
+  overflow-y: visible;
+  z-index: 2;
+}
+
+body.cc-page-home #reviews.cc-section--reviews::before,
+body.cc-page-home #reviews.cc-section--reviews::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Dark reviews → light visit: same inverted black curve */
+body.cc-page-home #visit.cc-section {
+  position: relative;
+  background: #ffffff !important;
+  padding-top: clamp(88px, 12vw, 120px);
+  margin-top: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+body.cc-page-home #visit.cc-section::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 160%;
+  height: clamp(100px, 16vw, 168px);
+  margin-left: -80%;
+  background: #111111;
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  pointer-events: none;
+  z-index: 2;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateY(-50%);
+}
+
+body.cc-page-home #visit.cc-section::after {
+  display: none !important;
+  content: none !important;
+}
+
+/* Visit heading/text must stay dark on the light part */
+#cc-content #visit h2,
+#cc-content #visit h3,
+#cc-content #visit p,
+#cc-content #visit li,
+#cc-content #visit th,
+#cc-content #visit td {
+  color: #111111 !important;
+}
+
+#cc-content #visit .cc-eyebrow {
+  color: #8a8a8a !important;
+}
+
+#cc-content #visit .cc-hours-chip {
+  color: #111111 !important;
+  border-color: #dddddd !important;
+  background: #ffffff;
+}
+
+/* Footer sits cleanly on white */
+body.cc-page-home .cc-footer {
+  background: #ffffff;
+  border-top: 1px solid #ececec;
+}
+
+/* ——— About / Mission (centered, cards + meters) ——— */
+body.cc-page-home #about.cc-about {
+  position: relative;
+  overflow: hidden;
+  padding: 80px 0 80px !important;
+  background: #000 !important;
+  isolation: isolate;
+}
+
+body.cc-page-home #about.cc-about::before,
+body.cc-page-home #about.cc-about::after {
+  display: none !important;
+  content: none !important;
+}
+
+body.cc-page-home .cc-about__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding-left: clamp(16px, 3vw, 24px);
+  padding-right: clamp(16px, 3vw, 24px);
+  box-sizing: border-box;
+}
+
+body.cc-page-home .cc-mission {
+  max-width: 40em;
+  margin: 0 auto 40px;
+}
+
+body.cc-page-home .cc-mission-card {
+  margin-bottom: 40px;
+}
+
+body.cc-page-home #about .cc-mission h2,
+body.cc-page-home #about .cc-mission-reveal h2 {
+  max-width: none;
+  font-size: clamp(36px, 5.5vw, 56px) !important;
+  line-height: 1.08 !important;
+  margin: 0 auto 18px;
+}
+
+body.cc-page-home #about .cc-mission__quote,
+#cc-content #about .cc-mission__quote {
+  margin: 0 auto 22px;
+  font-family: "Lato", sans-serif;
+  font-size: clamp(17px, 2.2vw, 20px);
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+body.cc-page-home .cc-hours-chip--centered {
+  display: inline-flex;
+  margin: 0 auto;
+}
+
+body.cc-page-home .cc-mission-card .cc-hours-chip--centered {
+  pointer-events: none;
+}
+
+body.cc-page-home .cc-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 18px;
+  text-align: left;
+}
+
+body.cc-page-home .cc-metric-card,
+body.cc-page-home .cc-value-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 22px 20px;
+  box-sizing: border-box;
+}
+
+body.cc-page-home .cc-metric-card__kicker {
+  margin: 0 0 8px;
+  color: rgba(245, 235, 235, 0.5) !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+body.cc-page-home .cc-metric-card__big,
+#cc-content #about .cc-metric-card__big {
+  margin: 0 0 6px;
+  color: #ffffff !important;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: clamp(40px, 5vw, 52px);
+  line-height: 1;
+}
+
+body.cc-page-home .cc-metric-card__note,
+#cc-content #about .cc-metric-card__note {
+  margin: 0;
+  color: rgba(245, 235, 235, 0.7) !important;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+body.cc-page-home .cc-metric-card__list {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+}
+
+body.cc-page-home .cc-metric-card__list li,
+#cc-content #about .cc-metric-card__list li {
+  position: relative;
+  margin: 0 0 8px;
+  padding-left: 14px;
+  color: rgba(245, 235, 235, 0.82) !important;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+body.cc-page-home .cc-metric-card__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d4af37;
+}
+
+/* Circular rating meter */
+body.cc-page-home .cc-meter {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 14px;
+}
+
+body.cc-page-home .cc-meter__svg {
+  width: 120px;
+  height: 120px;
+  transform: rotate(-90deg);
+}
+
+body.cc-page-home .cc-meter__track,
+body.cc-page-home .cc-meter__fill {
+  fill: none;
+  stroke-width: 8;
+}
+
+body.cc-page-home .cc-meter__track {
+  stroke: rgba(255, 255, 255, 0.12);
+}
+
+body.cc-page-home .cc-meter__fill {
+  stroke: #d4af37;
+  stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+  animation: cc-meter-draw 1.2s ease-out both;
+}
+
+@keyframes cc-meter-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+body.cc-page-home .cc-meter__value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+body.cc-page-home .cc-meter__score,
+#cc-content #about .cc-meter__score {
+  color: #ffffff !important;
+  font-family: "Abril Fatface", serif;
+  font-size: 32px;
+  line-height: 1;
+}
+
+body.cc-page-home .cc-meter__label,
+#cc-content #about .cc-meter__label {
+  color: rgba(245, 235, 235, 0.55) !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Mini review bars */
+body.cc-page-home .cc-bar-chart {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+body.cc-page-home .cc-bar-chart__row {
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+body.cc-page-home .cc-bar-chart__row span,
+#cc-content #about .cc-bar-chart__row span {
+  color: rgba(245, 235, 235, 0.55) !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+}
+
+body.cc-page-home .cc-bar-chart__row i {
+  display: block;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+body.cc-page-home .cc-bar-chart__row i::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--cc-bar, 0%);
+  border-radius: inherit;
+  background: linear-gradient(90deg, #b8962e, #e0c56a);
+  animation: cc-bar-grow 900ms ease-out both;
+}
+
+@keyframes cc-bar-grow {
+  from { width: 0; }
+}
+
+body.cc-page-home .cc-value-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0 0 36px;
+  text-align: left;
+}
+
+body.cc-page-home .cc-value-card h3,
+#cc-content #about .cc-value-card h3 {
+  margin: 0 0 10px;
+  color: #ffffff !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body.cc-page-home .cc-value-card p,
+#cc-content #about .cc-value-card p {
+  margin: 0;
+  color: rgba(245, 235, 235, 0.78) !important;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+body.cc-page-home .cc-btn-row--center {
+  justify-content: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.cc-page-home .cc-meter__fill,
+  body.cc-page-home .cc-bar-chart__row i::after {
+    animation: none;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  body.cc-page-home #about.cc-about {
+    padding: 56px 0 72px !important;
+  }
+
+  body.cc-page-home .cc-metric-grid,
+  body.cc-page-home .cc-value-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body.cc-page-home .cc-visit-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Visit: location-page layout (centered intro + actions + hours/map) */
+body.cc-page-home .cc-visit {
+  text-align: center;
+}
+
+body.cc-page-home .cc-visit__intro {
+  max-width: 40em;
+  margin: 0 auto;
+  text-align: center;
+}
+
+body.cc-page-home .cc-visit__intro .cc-eyebrow {
+  text-align: center;
+}
+
+body.cc-page-home .cc-visit__intro h2 {
+  margin-bottom: 16px;
+}
+
+body.cc-page-home .cc-visit__rule {
+  width: 64px;
+  height: 1px;
+  margin: 0 auto 18px;
+  background: rgba(17, 17, 17, 0.28);
+}
+
+body.cc-page-home .cc-visit__lead,
+#cc-content .cc-visit__lead {
+  margin: 0 auto;
+  max-width: 34em;
+  font-family: "Lato", sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 300 !important;
+  line-height: 1.65 !important;
+  color: #555555 !important;
+}
+
+#cc-content .cc-visit__lead a {
+  color: #111111 !important;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+body.cc-page-home .cc-visit__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 28px 0 36px;
+}
+
+body.cc-page-home .cc-visit-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.95fr) minmax(280px, 1.05fr);
+  gap: 28px;
+  margin-top: 0;
+  align-items: stretch;
+  text-align: left;
+}
+
+body.cc-page-home .cc-visit-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 28px 26px;
+  border: 1px solid #e5e5e5;
+  border-radius: 18px;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+
+body.cc-page-home .cc-visit-panel__title,
+#cc-content #visit .cc-visit-panel__title {
+  margin: 0 0 16px !important;
+  font-family: "Abril Fatface", serif !important;
+  font-size: 28px !important;
+  font-weight: 400 !important;
+  color: #111111 !important;
+  line-height: 1.15 !important;
+}
+
+body.cc-page-home .cc-visit-panel .cc-hours-chip {
+  margin: 0 0 18px;
+  display: inline-flex;
+}
+
+body.cc-page-home .cc-hours-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0;
+}
+
+body.cc-page-home .cc-hours-table th,
+body.cc-page-home .cc-hours-table td,
+#cc-content #visit .cc-hours-table th,
+#cc-content #visit .cc-hours-table td {
+  padding: 11px 0 !important;
+  border-bottom: 1px solid #ebebeb !important;
+  font-family: "Lato", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 400 !important;
+  color: #111111 !important;
+  line-height: 1.4 !important;
+  text-align: left !important;
+  background: transparent !important;
+}
+
+body.cc-page-home .cc-hours-table td,
+#cc-content #visit .cc-hours-table td {
+  text-align: right !important;
+  font-weight: 300 !important;
+  color: #333333 !important;
+}
+
+body.cc-page-home .cc-hours-table tr:last-child th,
+body.cc-page-home .cc-hours-table tr:last-child td {
+  border-bottom: none !important;
+}
+
+body.cc-page-home .cc-visit-panel__note,
+#cc-content #visit .cc-visit-panel__note {
+  margin: 16px 0 0 !important;
+  font-family: "Lato", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  line-height: 1.5 !important;
+  color: #777777 !important;
+}
+
+body.cc-page-home .cc-visit-panel__block--address {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid #ebebeb;
+}
+
+body.cc-page-home .cc-visit-panel__label,
+#cc-content #visit .cc-visit-panel__label {
+  margin: 0 0 10px !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 11px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: #888888 !important;
+}
+
+body.cc-page-home .cc-visit-panel__address,
+#cc-content #visit .cc-visit-panel__address {
+  display: block !important;
+  font-family: "Lato", sans-serif !important;
+  font-size: 15px !important;
+  font-weight: 300 !important;
+  line-height: 1.55 !important;
+  color: #333333 !important;
+  text-decoration: none !important;
+}
+
+body.cc-page-home .cc-visit-panel__address:hover {
+  color: #111111 !important;
+}
+
+body.cc-page-home .cc-visit-panel__neighborhood {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #888888;
+}
+
+body.cc-page-home .cc-visit-panel__directions {
+  display: block;
+  margin-top: 8px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+body.cc-page-home .cc-visit-panel__address:hover .cc-visit-panel__directions {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+body.cc-page-home .cc-visit-panel__phone,
+#cc-content #visit .cc-visit-panel__phone {
+  display: inline-block !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.04em !important;
+  color: #111111 !important;
+  text-decoration: underline !important;
+  text-decoration-color: rgba(17, 17, 17, 0.28) !important;
+  text-underline-offset: 4px !important;
+}
+
+body.cc-page-home .cc-visit-panel__phone:hover {
+  text-decoration-color: #111111 !important;
+}
+
+body.cc-page-home .cc-visit-panel__trolley,
+#cc-content #visit .cc-visit-panel__trolley {
+  margin: 12px 0 0 !important;
+  font-family: "Lato", sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 300 !important;
+  color: #777777 !important;
+}
+
+body.cc-page-home .cc-visit-map {
+  min-height: 380px;
+  overflow: hidden;
+  border: 1px solid #e5e5e5;
+  border-radius: 18px;
+  background: #f0f0f0;
+}
+
+body.cc-page-home .cc-visit-map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  border: 0;
+  display: block;
+  filter: grayscale(0.12) contrast(1.04);
+}
+
+body.cc-page-home .cc-visit .cc-apply-note {
+  margin-top: 40px;
+  text-align: center;
+}
+
+body.cc-page-home .cc-visit-layout .cc-visit-grid {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  body.cc-page-home .cc-visit-layout {
+    grid-template-columns: 1fr;
+  }
+
+  body.cc-page-home .cc-visit-map,
+  body.cc-page-home .cc-visit-map iframe {
+    min-height: 300px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body.cc-page-home .cc-hero-video,
+  body.cc-page-home .cc-hero-fade {
+    will-change: auto;
+  }
+}

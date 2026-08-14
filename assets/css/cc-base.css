@@ -1,0 +1,438 @@
+/* Classic Cuts — base (replaces Weebly sites.css + cento theme) */
+
+@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700&family=Quattrocento+Sans:wght@400;700&family=Quattrocento:wght@400;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  overflow-x: hidden;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  background: #ffffff;
+  color: #2a2a2a;
+  font-family: "Lato", "Quattrocento Sans", sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 200ms ease, opacity 200ms ease, background 200ms ease, border-color 200ms ease;
+}
+
+a:hover {
+  color: #000000;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 0.6em;
+  color: #111111;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+p {
+  margin: 0 0 1em;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.cc-site {
+  width: 100%;
+  min-height: 100%;
+}
+
+.cc-main {
+  width: 100%;
+  background: #ffffff;
+}
+
+.cc-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header / mega nav: see cc-nav.css */
+
+/* ——— Content leftovers (legacy Weebly markup still on some pages) ——— */
+.cc-legacy .container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+.cc-legacy .wsite-multicol-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.cc-legacy .wsite-multicol-col {
+  vertical-align: top;
+}
+
+.cc-legacy .wsite-image {
+  margin: 0 0 1em;
+}
+
+.cc-legacy .wsite-image img {
+  display: inline-block;
+}
+
+.cc-legacy .paragraph {
+  margin-bottom: 1em;
+  line-height: 1.5;
+}
+
+.cc-legacy .wsite-spacer {
+  display: block;
+}
+
+.cc-legacy .wsite-button,
+.cc-legacy a.wsite-button {
+  display: inline-block;
+  padding: 10px 16px;
+  background: #111111;
+  color: #ffffff !important;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 8px;
+}
+
+.cc-legacy .wsite-button-inner {
+  color: inherit;
+}
+
+.cc-legacy .wsite-social {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.cc-legacy .wsite-social-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: #111111;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.cc-legacy .wsite-social-facebook::before { content: "f"; }
+.cc-legacy .wsite-social-instagram::before { content: "ig"; }
+.cc-legacy .wsite-social-mail::before { content: "@"; }
+.cc-legacy .wsite-social-item-inner { display: none; }
+
+@media screen and (max-width: 767px) {
+  .cc-legacy .wsite-multicol-table,
+  .cc-legacy .wsite-multicol-tbody,
+  .cc-legacy .wsite-multicol-tr,
+  .cc-legacy .wsite-multicol-col {
+    display: block;
+    width: 100% !important;
+  }
+
+  .cc-legacy .wsite-multicol-col {
+    padding: 0 !important;
+    margin-bottom: 24px;
+  }
+}
+
+/* ——— Clean forms ——— */
+.cc-form {
+  max-width: 520px;
+  display: grid;
+  gap: 14px;
+}
+
+.cc-form__row {
+  display: grid;
+  gap: 14px;
+}
+
+@media screen and (min-width: 640px) {
+  .cc-form__row--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.cc-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #444444;
+}
+
+.cc-form input,
+.cc-form textarea,
+.cc-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d8d8d8;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #111111;
+}
+
+.cc-form input:focus,
+.cc-form textarea:focus,
+.cc-form select:focus {
+  outline: none;
+  border-color: #111111;
+}
+
+.cc-form textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.cc-form__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 12px 22px;
+  border: 0;
+  border-radius: 10px;
+  background: #111111;
+  color: #ffffff;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cc-form__submit:hover {
+  background: #333333;
+}
+
+.cc-form__note {
+  font-size: 13px;
+  color: #666666;
+}
+
+.cc-page-pad {
+  padding: 48px 20px 72px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ——— Buttons (shared) ——— */
+.cc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none !important;
+  border: 2px solid transparent;
+  transition: background 200ms ease, color 200ms ease, border-color 200ms ease;
+}
+
+/* Solid dark — for light backgrounds */
+.cc-btn--dark {
+  background: #111111;
+  color: #ffffff !important;
+}
+
+.cc-btn--dark:hover {
+  background: #333333;
+  color: #ffffff !important;
+}
+
+/* Solid light — for dark backgrounds (white fill, dark label) */
+.cc-btn--light {
+  background: #ffffff;
+  color: #111111 !important;
+}
+
+.cc-btn--light:hover {
+  background: transparent;
+  color: #ffffff !important;
+  border-color: #ffffff;
+}
+
+/* Ghost on dark backgrounds */
+.cc-btn--ghost-light {
+  background: transparent;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.75);
+}
+
+.cc-btn--ghost-light:hover {
+  background: #ffffff;
+  color: #111111 !important;
+}
+
+/* Ghost on light backgrounds */
+.cc-btn--ghost-dark {
+  background: transparent;
+  color: #111111 !important;
+  border-color: #111111;
+}
+
+.cc-btn--ghost-dark:hover {
+  background: #111111;
+  color: #ffffff !important;
+}
+
+.cc-btn--quiet {
+  background: transparent;
+  color: #666666 !important;
+  border-color: #cccccc;
+}
+
+.cc-btn--quiet:hover {
+  color: #111111 !important;
+  border-color: #111111;
+}
+
+.cc-mobile-actions .cc-btn {
+  width: 100%;
+}
+
+/* ——— Footer (shared) ——— */
+.cc-footer {
+  background: #ffffff;
+  border-top: 1px solid #ececec;
+  padding: 36px 24px 28px;
+}
+
+.cc-footer__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.cc-footer h4 {
+  margin: 0 0 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #111111;
+}
+
+.cc-footer p,
+.cc-footer a {
+  color: #555555;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.55;
+  text-decoration: none;
+}
+
+.cc-footer a:hover {
+  color: #111111;
+}
+
+.cc-footer__copy {
+  grid-column: 1 / -1;
+  margin: 8px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid #ececec;
+  font-size: 12px !important;
+  color: #888888 !important;
+}
+
+@media screen and (max-width: 767px) {
+  .cc-footer__inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ——— Legacy Weebly image galleries ——— */
+.cc-legacy .imageGallery {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  line-height: 0 !important;
+  overflow: hidden;
+}
+
+.cc-legacy .imageGallery > div {
+  float: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.cc-legacy .imageGallery .galleryImageHolder {
+  padding: 0 0 75% !important;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #111;
+}
+
+.cc-legacy .imageGallery img.galleryImage {
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  left: 0 !important;
+  top: 0 !important;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 767px) {
+  .cc-legacy .imageGallery {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

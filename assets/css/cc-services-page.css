@@ -1,0 +1,146 @@
+/* Services page — matches apply/contact aesthetic */
+
+body.cc-page-services {
+  background-color: #f4f4f5;
+  background-image: url("../images/backgrounds/application-background.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-x: clip;
+}
+
+html:has(body.cc-page-services) {
+  overflow-x: clip;
+}
+
+body.cc-page-services .cc-main {
+  background: transparent;
+  padding: 0;
+}
+
+.cc-services-page .cc-apply__pitch {
+  text-align: center;
+}
+
+.cc-services-menu {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0;
+}
+
+.cc-services-menu li {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid #ececec;
+}
+
+.cc-services-menu li:last-child {
+  border-bottom: 0;
+}
+
+.cc-services-menu__photo {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 10px;
+  background: #eee;
+  display: block;
+}
+
+.cc-services-menu__name {
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: 1.28rem;
+  line-height: 1.2;
+  color: #111;
+}
+
+.cc-services-menu__price {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #222;
+  white-space: nowrap;
+}
+
+.cc-services-specials {
+  margin-top: 8px;
+  padding: 20px 18px;
+  border-radius: 14px;
+  background: #f7f7f8;
+  border: 1px solid #ebebeb;
+}
+
+.cc-services-specials__label {
+  margin: 0 0 12px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.cc-services-specials ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.cc-services-specials li {
+  font-family: "Lato", sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  color: #444;
+}
+
+.cc-services-specials strong {
+  color: #111;
+  font-weight: 700;
+}
+
+.cc-services-tagline {
+  margin: 22px 0 0;
+  text-align: center;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  color: #333;
+}
+
+.cc-services-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+@media (max-width: 640px) {
+  body.cc-page-services {
+    background-attachment: scroll;
+  }
+
+  .cc-services-menu li {
+    grid-template-columns: 52px minmax(0, 1fr) auto;
+    gap: 12px;
+  }
+
+  .cc-services-menu__photo {
+    width: 52px;
+    height: 52px;
+    border-radius: 8px;
+  }
+
+  .cc-services-menu__name {
+    font-size: 1.1rem;
+  }
+}

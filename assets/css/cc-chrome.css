@@ -1,0 +1,97 @@
+/* Classic Cuts — sitewide announce bar + fixed nav chrome */
+
+:root {
+  --cc-announce-h: 36px;
+  --cc-nav-h: 48px;
+  --cc-chrome-h: calc(var(--cc-announce-h) + var(--cc-nav-h));
+  --cc-ink: #0a0a0a;
+  --cc-cream: #f5ebeb;
+}
+
+.cc-announce {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 2px;
+  height: auto;
+  min-height: var(--cc-announce-h);
+  padding: 10px 16px;
+  box-sizing: border-box;
+  background: var(--cc-ink);
+  color: var(--cc-cream);
+  text-align: center;
+  font-family: "Montserrat", "Quattrocento Sans", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.45;
+  overflow: visible;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.cc-announce::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--cc-ink);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.cc-announce a {
+  color: var(--cc-cream);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms ease, opacity 200ms ease;
+}
+
+.cc-announce a:hover {
+  color: #ffffff;
+  border-bottom-color: rgba(245, 235, 235, 0.55);
+}
+
+.cc-announce__sep {
+  display: inline-block;
+  margin: 0 0.65em;
+  opacity: 0.35;
+}
+
+@media screen and (max-width: 560px) {
+  .cc-announce {
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    padding: 12px 10px;
+    line-height: 1.45;
+  }
+
+  .cc-announce__sep {
+    margin: 0 0.4em;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  :root {
+    --cc-announce-h: 48px;
+    --cc-nav-h: 50px;
+  }
+}
+
+.cc-site {
+  padding-top: var(--cc-chrome-h);
+}
+
+.cc-nav-book {
+  display: none;
+}

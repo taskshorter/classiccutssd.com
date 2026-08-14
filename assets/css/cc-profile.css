@@ -1,0 +1,191 @@
+/* Barber profile pages */
+
+body.cc-page-profile .cc-main {
+  padding-bottom: 64px;
+}
+
+.cc-profile-hero {
+  display: grid;
+  grid-template-columns: minmax(160px, 280px) minmax(0, 1fr);
+  gap: 28px 40px;
+  align-items: center;
+  max-width: 920px;
+  margin: 28px auto 36px;
+  padding: 0 8px;
+}
+
+.cc-profile-hero__photo-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #eee;
+  border-radius: 4px;
+}
+
+.cc-profile-hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cc-profile-hero__eyebrow {
+  margin: 0 0 8px;
+  font-family: "Montserrat", "Lato", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.cc-profile-hero__name {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  line-height: 1.05;
+}
+
+.cc-profile-hero__bio {
+  margin: 0 0 20px;
+  max-width: 36em;
+  color: #444;
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.cc-profile-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 18px;
+}
+
+.cc-profile-hero__ig img {
+  width: 40px;
+  height: 40px;
+  display: block;
+  opacity: 0.92;
+  transition: opacity 180ms ease;
+}
+
+.cc-profile-hero__ig:hover img {
+  opacity: 1;
+}
+
+.cc-work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  max-width: 1100px;
+  margin: 8px auto 28px;
+  padding: 0 4px;
+}
+
+.cc-work-grid__item {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f2f2f2;
+  cursor: zoom-in;
+}
+
+.cc-work-grid__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cc-work-grid__item:hover img {
+  transform: scale(1.04);
+}
+
+.cc-profile-video {
+  max-width: 720px;
+  margin: 0 auto 28px;
+  padding: 0 8px;
+}
+
+.cc-profile-video video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  background: #000;
+}
+
+.cc-profile-book {
+  text-align: center;
+  padding: 12px 0 28px;
+}
+
+.cc-profile-book h2 {
+  margin-bottom: 16px;
+}
+
+.cc-profile-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.88);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 200ms ease, visibility 200ms ease;
+}
+
+.cc-profile-lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cc-profile-lightbox__img {
+  max-width: min(96vw, 1100px);
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+
+.cc-profile-lightbox__close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 8px;
+}
+
+@media (max-width: 720px) {
+  .cc-profile-hero {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    text-align: center;
+    margin-top: 16px;
+  }
+
+  .cc-profile-hero__photo-wrap {
+    max-width: 220px;
+    margin: 0 auto;
+  }
+
+  .cc-profile-hero__bio {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cc-profile-hero__actions {
+    justify-content: center;
+  }
+
+  .cc-work-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+}

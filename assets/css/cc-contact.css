@@ -1,0 +1,148 @@
+/* Contact page — shares apply aesthetics */
+
+body.cc-page-contact {
+  background-color: #f4f4f5;
+  background-image: url("../images/backgrounds/application-background.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow-x: clip;
+}
+
+html:has(body.cc-page-contact) {
+  overflow-x: clip;
+}
+
+/* No floating Squire “Book Now” on contact */
+body.cc-page-contact [class*="squire"],
+body.cc-page-contact [id*="squire"],
+body.cc-page-contact iframe[src*="getsquire"],
+body.cc-page-contact iframe[src*="squire"] {
+  display: none !important;
+}
+
+body.cc-page-contact .cc-main {
+  background: transparent;
+  padding: 0;
+}
+
+.cc-contact__facts .cc-apply__perk > span:last-child,
+.cc-contact__facts .cc-apply__perk a {
+  font-size: 0.66rem;
+  word-break: break-word;
+}
+
+.cc-contact__facts .cc-apply__perk a:hover {
+  color: #111;
+  text-decoration: underline;
+}
+
+.cc-contact__hours {
+  margin: 0 0 16px;
+  padding: 16px 18px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+}
+
+.cc-contact__hours-label {
+  margin: 0 0 8px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #666;
+}
+
+.cc-contact__hours p {
+  margin: 0 0 4px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: #444;
+}
+
+.cc-contact__hours-status {
+  margin-top: 10px !important;
+  font-family: "Montserrat", sans-serif !important;
+  font-size: 0.72rem !important;
+  font-weight: 600;
+  color: #111 !important;
+}
+
+.cc-contact__reviews {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
+.cc-contact__review {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.82);
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #222;
+  text-align: center;
+}
+
+.cc-contact__review:hover {
+  border-color: #111;
+  color: #111;
+}
+
+.cc-contact__social {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 18px;
+  margin: 0 0 4px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.cc-contact__social a {
+  color: #666;
+}
+
+.cc-contact__social a:hover {
+  color: #111;
+}
+
+.cc-contact__map {
+  margin-top: 28px;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid #e8e8e8;
+}
+
+.cc-contact__map iframe {
+  display: block;
+  width: 100%;
+  height: 240px;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  body.cc-page-contact {
+    background-attachment: scroll;
+  }
+
+  .cc-contact__reviews {
+    grid-template-columns: 1fr;
+  }
+}
