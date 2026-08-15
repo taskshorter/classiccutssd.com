@@ -1,9 +1,10 @@
-/* Classic Cuts — mega menu + mobile nav */
+/**
+ * Classic Cuts — mega menu + mobile nav
+ */
 (function () {
   "use strict";
 
-  var BOOK =
-    "https://getsquire.com/discover/barbershop/classic-cuts-barbershop-san-diego";
+  var BOOK = "book.html";
 
   function ready(fn) {
     if (document.readyState !== "loading") fn();
@@ -20,18 +21,23 @@
     var openKey = null;
     var closeTimer = null;
 
-    function syncAnnounce() {
-      var announce = document.querySelector(".cc-announce");
-      if (!announce) return;
-      var h = Math.round(announce.getBoundingClientRect().height);
-      if (h > 0) document.documentElement.style.setProperty("--cc-announce-h", h + "px");
+    function setMobileOpen(open) {
+      document.body.classList.toggle("nav-open", !!open);
+      if (toggle) toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      if (!mobile) return;
+      mobile.setAttribute("aria-hidden", open ? "false" : "true");
+      if ("inert" in mobile) {
+        mobile.inert = !open;
+      } else {
+        mobile.querySelectorAll("a, button").forEach(function (el) {
+          if (open) el.removeAttribute("tabindex");
+          else el.setAttribute("tabindex", "-1");
+        });
+      }
     }
-    syncAnnounce();
-    window.addEventListener("resize", syncAnnounce);
-    var announce = document.querySelector(".cc-announce");
-    if (announce && window.ResizeObserver) {
-      new ResizeObserver(syncAnnounce).observe(announce);
-    }
+
+    // Start closed
+    setMobileOpen(false);
 
     function closeMega() {
       openKey = null;
@@ -107,7 +113,6 @@
         });
       }
 
-      // Non-mega items close the panel
       document.querySelectorAll(".cc-nav > li:not(.has-mega)").forEach(function (li) {
         li.addEventListener("mouseenter", function () {
           if (window.innerWidth < 768) return;
@@ -123,9 +128,7 @@
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape") {
         closeMega();
-        document.body.classList.remove("nav-open");
-        if (toggle) toggle.setAttribute("aria-expanded", "false");
-        if (mobile) mobile.setAttribute("aria-hidden", "true");
+        setMobileOpen(false);
       }
     });
 
@@ -133,10 +136,7 @@
       toggle.addEventListener("click", function (e) {
         e.preventDefault();
         closeMega();
-        document.body.classList.toggle("nav-open");
-        var open = document.body.classList.contains("nav-open");
-        toggle.setAttribute("aria-expanded", open ? "true" : "false");
-        if (mobile) mobile.setAttribute("aria-hidden", open ? "false" : "true");
+        setMobileOpen(!document.body.classList.contains("nav-open"));
       });
     }
 
@@ -144,14 +144,11 @@
       mobile.querySelectorAll("a").forEach(function (a) {
         a.addEventListener("click", function () {
           if (window.innerWidth >= 768) return;
-          document.body.classList.remove("nav-open");
-          if (toggle) toggle.setAttribute("aria-expanded", "false");
-          mobile.setAttribute("aria-hidden", "true");
+          setMobileOpen(false);
         });
       });
     }
 
-    // Ensure book link exists for analytics-free CTA
     var book = document.querySelector(".cc-header__book");
     if (book && !book.getAttribute("href")) book.setAttribute("href", BOOK);
   });

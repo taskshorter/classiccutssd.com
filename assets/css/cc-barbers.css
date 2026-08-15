@@ -30,9 +30,8 @@ body.cc-page-barbers .container {
   background: transparent !important;
 }
 
-body.cc-page-barbers .banner-wrap,
-body.cc-page-barbers .banner-wrap,
-body.cc-page-barbers .cc-main {
+/* Old Weebly banner only — never hide .cc-main (barber content lives there) */
+body.cc-page-barbers .banner-wrap {
   display: none !important;
   background: none !important;
 }

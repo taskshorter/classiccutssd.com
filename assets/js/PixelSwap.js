@@ -497,9 +497,17 @@
         { passive: true }
       );
       root.setAttribute("role", "button");
+      root.setAttribute(
+        "aria-label",
+        root.getAttribute("data-aria-label") || "Reveal shop highlights"
+      );
       root.tabIndex = 0;
     } else if (trigger === "click") {
       root.setAttribute("role", "button");
+      root.setAttribute(
+        "aria-label",
+        root.getAttribute("data-aria-label") || "Reveal shop highlights"
+      );
       root.tabIndex = 0;
       root.addEventListener("click", function () {
         requestActive(!desiredActive());

@@ -57,6 +57,69 @@
   overflow: hidden;
 }
 
+.cc-mission-stage {
+  width: min(1120px, calc(100% - clamp(32px, 6vw, 80px)));
+  max-width: none;
+  margin: 0 auto 56px;
+}
+
+.cc-mission-stage .cc-mission-card {
+  width: 100%;
+  margin: 0;
+}
+
+.cc-mission-hint {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 14px;
+  padding: 0 8px;
+  color: rgba(245, 235, 235, 0.42);
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 280ms ease, color 280ms ease;
+}
+
+.cc-mission-hint::after {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.7;
+  transform: translateY(1px);
+}
+
+.cc-mission-hint__touch {
+  display: none;
+}
+
+.cc-mission-stage:hover .cc-mission-hint,
+.cc-mission-stage:focus-within .cc-mission-hint {
+  opacity: 0.28;
+}
+
+@media (hover: none) {
+  .cc-mission-hint__desk {
+    display: none;
+  }
+
+  .cc-mission-hint__touch {
+    display: inline;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-mission-hint {
+    transition: none;
+  }
+}
+
 .cc-mission-swap-mount,
 .cc-mission-card .pixel-swap {
   position: relative;

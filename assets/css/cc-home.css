@@ -127,7 +127,21 @@ body.cc-page-home .cc-hero {
   background-image: none !important;
 }
 
-/* Native full-bleed video — masked so the bottom dissolves into black */
+
+/* Poster is the mobile/LCP paint; video fades over it on desktop */
+body.cc-page-home .cc-hero-poster {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  transition: opacity 400ms ease;
+}
+
+/* Native full-bleed video — static mask (composited-safe) */
 body.cc-page-home .cc-hero-video {
   position: absolute;
   inset: 0;
@@ -137,39 +151,32 @@ body.cc-page-home .cc-hero-video {
   object-fit: cover;
   object-position: center center;
   pointer-events: none;
-  will-change: opacity, mask-image;
-  opacity: calc(1 - var(--cc-hero-fade, 0) * 0.35);
   -webkit-mask-image: linear-gradient(
     to bottom,
     #000 0%,
-    #000 calc(52% - var(--cc-hero-fade, 0) * 28%),
-    rgba(0, 0, 0, 0.55) calc(72% - var(--cc-hero-fade, 0) * 18%),
+    #000 52%,
+    rgba(0, 0, 0, 0.55) 72%,
     transparent 100%
   );
   mask-image: linear-gradient(
     to bottom,
     #000 0%,
-    #000 calc(52% - var(--cc-hero-fade, 0) * 28%),
-    rgba(0, 0, 0, 0.55) calc(72% - var(--cc-hero-fade, 0) * 18%),
+    #000 52%,
+    rgba(0, 0, 0, 0.55) 72%,
     transparent 100%
   );
 }
 
-/* Always-on bottom blend + scroll wash into black */
+/* Scroll wash — opacity only (GPU composited) */
 body.cc-page-home .cc-hero-fade {
   position: absolute;
   inset: 0;
   z-index: 1;
   pointer-events: none;
+  background: #000;
+  opacity: var(--cc-hero-fade, 0);
   will-change: opacity;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, calc(var(--cc-hero-fade, 0) * 0.55)) 0%,
-    rgba(0, 0, 0, calc(0.08 + var(--cc-hero-fade, 0) * 0.45)) 40%,
-    rgba(0, 0, 0, calc(0.55 + var(--cc-hero-fade, 0) * 0.35)) 68%,
-    rgba(0, 0, 0, calc(0.92 + var(--cc-hero-fade, 0) * 0.08)) 88%,
-    #000 100%
-  );
+  transition: none;
 }
 
 /* Hide duplicate Weebly-injected background videos if their JS runs */
@@ -182,13 +189,15 @@ body.cc-page-home .cc-hero__content {
   position: relative;
   z-index: 2;
   width: 100%;
-  max-width: none;
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: inherit;
   height: 100%;
   box-sizing: border-box;
+  padding: 24px 16px;
+  overflow: hidden;
   /* Transparent behind the logo — soft fade only at the bottom for CTAs */
   background: linear-gradient(
     180deg,
@@ -199,10 +208,13 @@ body.cc-page-home .cc-hero__content {
   );
 }
 
+body.cc-page-home .cc-hero .cc-container,
 body.cc-page-home .cc-hero .container {
   overflow: visible;
   width: 100%;
   max-width: 960px;
+  min-width: 0;
+  margin: 0 auto;
   padding: 48px 24px 56px;
   box-sizing: border-box;
   background: transparent !important;
@@ -212,8 +224,11 @@ body.cc-page-home .cc-hero__inner {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   width: 100%;
+  max-width: 100%;
+  min-width: 0;
   background: transparent !important;
 }
 
@@ -225,14 +240,15 @@ body.cc-page-home .cc-hero hr {
 
 /*
   Original logo asset is 920×320 (~2.875:1).
-  Weebly showed it at natural width capped by the 960px content column.
+  Cap to the content column so it never overflows the viewport.
 */
 body.cc-page-home .cc-hero-logo {
   display: block;
   float: none !important;
   margin: 0 auto 18px !important;
-  width: 100%;
-  max-width: 920px;
+  width: min(920px, 100%);
+  max-width: 100%;
+  min-width: 0;
   background: transparent;
   border: none !important;
   outline: none !important;
@@ -242,10 +258,10 @@ body.cc-page-home .cc-hero-logo {
 body.cc-page-home .cc-hero-logo img {
   display: block;
   width: 100%;
-  max-width: 920px;
+  max-width: 100%;
   height: auto;
   aspect-ratio: 920 / 320;
-  margin: 0 !important;
+  margin: 0 auto !important;
   padding: 0 !important;
   background: transparent !important;
   border: 0 !important;
@@ -253,6 +269,8 @@ body.cc-page-home .cc-hero-logo img {
   box-shadow: none !important;
   filter: none !important;
   -webkit-filter: none !important;
+  object-fit: contain;
+  object-position: center;
 }
 
 body.cc-page-home .cc-hero-line {
@@ -341,11 +359,13 @@ body.cc-page-home .cc-hero-btn--ghost:hover {
       ) !important;
   }
 
+  body.cc-page-home .cc-hero .cc-container,
   body.cc-page-home .cc-hero .container {
     padding: 36px 18px 44px;
   }
 
   body.cc-page-home .cc-hero-logo {
+    width: min(920px, 100%);
     max-width: 100%;
     margin-bottom: 14px !important;
   }
@@ -489,10 +509,14 @@ body.cc-page-home .cc-trust__meta {
 }
 
 body.cc-page-home .cc-hours-chip {
+  --cc-hours-dot: #c45c5c;
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 8px;
   padding: 8px 14px;
+  min-width: 7.5em;
+  justify-content: center;
   border: 1px solid rgba(245, 235, 235, 0.25);
   border-radius: 999px;
   color: #f5ebeb;
@@ -502,25 +526,51 @@ body.cc-page-home .cc-hours-chip {
   text-transform: uppercase;
 }
 
+body.cc-page-home .cc-hours-chip.is-open {
+  --cc-hours-dot: #3dba7a;
+}
+
 body.cc-page-home .cc-hours-chip::before {
   content: "";
+  position: relative;
+  z-index: 1;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #c45c5c;
-  box-shadow: 0 0 0 0 rgba(196, 92, 92, 0.5);
-  animation: cc-pulse 2s infinite;
+  background: var(--cc-hours-dot);
+  flex-shrink: 0;
 }
 
-body.cc-page-home .cc-hours-chip.is-open::before {
-  background: #3dba7a;
-  box-shadow: 0 0 0 0 rgba(61, 186, 122, 0.5);
+/* Composited pulse ring (transform + opacity only) */
+body.cc-page-home .cc-hours-chip::after {
+  content: "";
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  border-radius: 50%;
+  background: var(--cc-hours-dot);
+  opacity: 0.45;
+  transform: scale(1);
+  animation: cc-pulse 2s ease-out infinite;
+  pointer-events: none;
 }
 
 @keyframes cc-pulse {
-  0% { box-shadow: 0 0 0 0 rgba(61, 186, 122, 0.45); }
-  70% { box-shadow: 0 0 0 8px rgba(61, 186, 122, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(61, 186, 122, 0); }
+  0% {
+    transform: scale(1);
+    opacity: 0.45;
+  }
+  70% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
 }
 
 /* Experience / amenities */
@@ -795,6 +845,12 @@ body.cc-page-home .cc-footer a {
   text-decoration: none;
 }
 
+body.cc-page-home .cc-footer a {
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
+}
+
 body.cc-page-home .cc-footer a:hover {
   color: #111111;
 }
@@ -804,7 +860,7 @@ body.cc-page-home .cc-footer__copy {
   margin-top: 8px;
   padding-top: 18px;
   border-top: 1px solid #f0f0f0;
-  color: #888888;
+  color: #666666;
   font-size: 12px;
 }
 
@@ -1213,6 +1269,10 @@ body.cc-page-home .cc-mission {
 }
 
 body.cc-page-home .cc-mission-card {
+  margin-bottom: 0;
+}
+
+body.cc-page-home .cc-mission-stage {
   margin-bottom: 40px;
 }
 
@@ -1460,7 +1520,8 @@ body.cc-page-home .cc-btn-row--center {
 
 @media (prefers-reduced-motion: reduce) {
   body.cc-page-home .cc-meter__fill,
-  body.cc-page-home .cc-bar-chart__row i::after {
+  body.cc-page-home .cc-bar-chart__row i::after,
+  body.cc-page-home .cc-hours-chip::after {
     animation: none;
   }
 }
@@ -1736,3 +1797,4 @@ body.cc-page-home .cc-visit-layout .cc-visit-grid {
     will-change: auto;
   }
 }
+

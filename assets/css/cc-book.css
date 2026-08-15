@@ -1,0 +1,435 @@
+/* Classic Cuts — custom booking page shell (BookLocal handles the flow) */
+
+body.cc-page-book {
+  background: #000;
+  color: #f5ebeb;
+}
+
+body.cc-page-book .cc-main {
+  background: #000;
+}
+
+/* ——— Hero ——— */
+.cc-book-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(48px, 8vw, 88px) 24px clamp(36px, 5vw, 56px);
+  background: #000;
+}
+
+.cc-book-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.cc-book-hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  filter: grayscale(1) contrast(1.05);
+  opacity: 0.38;
+}
+
+.cc-book-hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.55) 0%,
+    rgba(0, 0, 0, 0.72) 45%,
+    #000 100%
+  );
+}
+
+.cc-book-hero__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cc-book-eyebrow {
+  margin: 0 0 14px;
+  color: rgba(245, 235, 235, 0.55);
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.cc-book-hero h1 {
+  margin: 0 0 16px;
+  color: #f5ebeb;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: clamp(36px, 7vw, 64px);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+}
+
+.cc-book-hero__lead {
+  margin: 0 auto;
+  max-width: 28em;
+  color: rgba(245, 235, 235, 0.82);
+  font-family: "Lato", sans-serif;
+  font-size: clamp(16px, 2.2vw, 19px);
+  font-weight: 300;
+  line-height: 1.55;
+}
+
+.cc-book-hero__rule {
+  width: 64px;
+  height: 1px;
+  margin: 22px auto 0;
+  background: rgba(245, 235, 235, 0.35);
+}
+
+/* ——— Trust strip ——— */
+.cc-book-trust {
+  border-top: 1px solid rgba(245, 235, 235, 0.1);
+  border-bottom: 1px solid rgba(245, 235, 235, 0.1);
+  background: #0a0a0a;
+  padding: 18px 24px;
+}
+
+.cc-book-trust__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px 28px;
+  text-align: center;
+}
+
+.cc-book-trust span {
+  color: rgba(245, 235, 235, 0.7);
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cc-book-trust__sep {
+  opacity: 0.35;
+}
+
+@media (max-width: 560px) {
+  .cc-book-trust__sep {
+    display: none;
+  }
+
+  .cc-book-trust__inner {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* ——— Booking stage ——— */
+.cc-book-stage {
+  padding: clamp(40px, 6vw, 72px) 20px clamp(64px, 8vw, 96px);
+  background: #000;
+}
+
+.cc-book-stage__layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.15fr);
+  gap: clamp(28px, 4vw, 48px);
+  align-items: start;
+}
+
+.cc-book-aside {
+  position: sticky;
+  top: calc(var(--cc-chrome-h, 84px) + 20px);
+}
+
+.cc-book-aside__media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(245, 235, 235, 0.12);
+  aspect-ratio: 4 / 5;
+  background: #111;
+}
+
+.cc-book-aside__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0.35) contrast(1.04);
+}
+
+.cc-book-aside__media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    transparent 40%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+.cc-book-aside__quote {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  bottom: 22px;
+  z-index: 1;
+  margin: 0;
+  color: #f5ebeb;
+  font-family: "Abril Fatface", serif;
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.15;
+}
+
+.cc-book-aside__meta {
+  margin-top: 22px;
+  padding: 0 4px;
+}
+
+.cc-book-aside__meta h2 {
+  margin: 0 0 10px;
+  color: #f5ebeb;
+  font-family: "Montserrat", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.cc-book-aside__meta p,
+.cc-book-aside__meta a {
+  margin: 0 0 6px;
+  color: rgba(245, 235, 235, 0.72);
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.cc-book-aside__meta a:hover {
+  color: #fff;
+}
+
+.cc-book-aside__note {
+  margin-top: 14px !important;
+  padding-top: 14px;
+  border-top: 1px solid rgba(245, 235, 235, 0.12);
+  font-size: 13px !important;
+  font-style: italic;
+  color: rgba(245, 235, 235, 0.5) !important;
+}
+
+/* ——— Widget panel ——— */
+.cc-book-panel {
+  background: #f7f7f7;
+  color: #111;
+  border-radius: 22px;
+  border: 1px solid #e6e6e6;
+  padding: clamp(22px, 3vw, 36px);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+}
+
+.cc-book-panel__head {
+  margin-bottom: 22px;
+  text-align: center;
+}
+
+.cc-book-panel__head .cc-book-eyebrow {
+  color: #8a8a8a;
+}
+
+.cc-book-panel__head h2 {
+  margin: 0 0 10px;
+  color: #111;
+  font-family: "Abril Fatface", serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.cc-book-panel__head p {
+  margin: 0 auto;
+  max-width: 32em;
+  color: #555;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.cc-book-steps {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 14px;
+  margin: 0 0 22px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid #e6e6e6;
+  list-style: none;
+}
+
+.cc-book-steps li {
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cc-book-steps span {
+  color: #111;
+  margin-right: 4px;
+}
+
+.cc-book-widget-shell {
+  min-height: 420px;
+  display: flex;
+  justify-content: center;
+}
+
+/* BookLocal host theming (Shadow DOM reads these via getComputedStyle) */
+booklocal-booking {
+  display: block;
+  width: 100%;
+  max-width: 560px;
+  --booklocal-primary: #111111;
+  --booklocal-background: #ffffff;
+  --booklocal-surface: #f7f7f7;
+  --booklocal-text: #111111;
+  --booklocal-muted: #666666;
+  --booklocal-radius: 10px;
+  --booklocal-font: "Lato", "Quattrocento Sans", system-ui, sans-serif;
+}
+
+.cc-book-demo {
+  margin: 18px 0 0;
+  text-align: center;
+  color: #888;
+  font-family: "Montserrat", sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cc-book-secure {
+  margin: 16px 0 0;
+  text-align: center;
+  color: #666;
+  font-family: "Lato", sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+}
+
+/* ——— Context band ——— */
+.cc-book-context {
+  background: #fff;
+  color: #111;
+  padding: clamp(48px, 7vw, 80px) 24px;
+}
+
+.cc-book-context__inner {
+  max-width: 960px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.cc-book-context article h3 {
+  margin: 0 0 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.cc-book-context article p,
+.cc-book-context article a {
+  margin: 0;
+  color: #333;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+  line-height: 1.55;
+  text-decoration: none;
+}
+
+.cc-book-context article a:hover {
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ——— Motion ——— */
+@media (prefers-reduced-motion: no-preference) {
+  .cc-book-rise {
+    animation: cc-book-rise 0.75s ease-out both;
+  }
+
+  .cc-book-rise-2 {
+    animation: cc-book-rise 0.75s ease-out 0.12s both;
+  }
+
+  .cc-book-rise-3 {
+    animation: cc-book-rise 0.75s ease-out 0.22s both;
+  }
+}
+
+@keyframes cc-book-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ——— Responsive ——— */
+@media screen and (max-width: 900px) {
+  .cc-book-stage__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .cc-book-aside {
+    position: static;
+    display: none;
+  }
+
+  .cc-book-context__inner {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .cc-book-hero {
+    padding: 40px 18px 32px;
+  }
+
+  .cc-book-panel {
+    border-radius: 16px;
+    padding: 20px 16px 24px;
+  }
+
+  .cc-book-steps {
+    gap: 8px 10px;
+  }
+}

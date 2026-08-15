@@ -107,14 +107,40 @@
     var speed = 36; // px per second
     var paused = false;
     var loopWidth = 0;
+    var first = track.querySelector(".cc-review-carousel__set");
 
-    function measure() {
-      var first = track.querySelector(".cc-review-carousel__set");
-      loopWidth = first ? first.getBoundingClientRect().width : 0;
+    function applyWidth(w) {
+      if (w > 0) loopWidth = w;
     }
 
-    measure();
-    window.addEventListener("resize", measure);
+    // Prefer ResizeObserver (no forced layout read after DOM write)
+    if (first && typeof ResizeObserver !== "undefined") {
+      var ro = new ResizeObserver(function (entries) {
+        var entry = entries[0];
+        if (!entry) return;
+        var w = 0;
+        if (entry.borderBoxSize && entry.borderBoxSize[0]) {
+          w = entry.borderBoxSize[0].inlineSize;
+        } else {
+          w = entry.contentRect.width;
+        }
+        applyWidth(w);
+      });
+      ro.observe(first);
+    } else if (first) {
+      window.requestAnimationFrame(function () {
+        applyWidth(first.offsetWidth);
+      });
+      window.addEventListener(
+        "resize",
+        function () {
+          window.requestAnimationFrame(function () {
+            applyWidth(first.offsetWidth);
+          });
+        },
+        { passive: true }
+      );
+    }
 
     carousel.addEventListener("mouseenter", function () {
       paused = true;

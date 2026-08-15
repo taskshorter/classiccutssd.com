@@ -4,8 +4,7 @@
 (function (window, document) {
   'use strict';
 
-  var BOOK_URL =
-    'https://getsquire.com/discover/barbershop/classic-cuts-barbershop-san-diego';
+  var BOOK_URL = 'book.html';
   var BUSINESS = {
     name: 'Classic Cuts Barbershop',
     phone: '6196845871',
@@ -174,22 +173,42 @@
     var announce = document.querySelector('.cc-announce');
     if (!announce) return;
 
-    function measure() {
-      var h = Math.round(announce.getBoundingClientRect().height);
+    function applyHeight(h) {
+      h = Math.round(h);
       if (h > 0) {
         document.documentElement.style.setProperty('--cc-announce-h', h + 'px');
       }
     }
 
-    measure();
-    window.addEventListener('resize', measure, { passive: true });
+    // Prefer ResizeObserver entry box (avoids forced getBoundingClientRect)
     if (typeof ResizeObserver !== 'undefined') {
-      var ro = new ResizeObserver(measure);
+      var ro = new ResizeObserver(function (entries) {
+        var entry = entries[0];
+        if (!entry) return;
+        var h = 0;
+        if (entry.borderBoxSize && entry.borderBoxSize[0]) {
+          h = entry.borderBoxSize[0].blockSize;
+        } else if (entry.contentBoxSize && entry.contentBoxSize[0]) {
+          h = entry.contentBoxSize[0].blockSize;
+        } else {
+          h = entry.contentRect.height;
+        }
+        applyHeight(h);
+      });
       ro.observe(announce);
+      return;
     }
+
+    function measure() {
+      window.requestAnimationFrame(function () {
+        applyHeight(announce.offsetHeight);
+      });
+    }
+    window.addEventListener('load', measure, { once: true });
+    window.addEventListener('resize', measure, { passive: true });
   }
 
-  /** Hero video dissolves into black as the page scrolls into About */
+  /** Hero dissolves into black on scroll — layout reads deferred off first paint */
   function setupHeroScrollFade() {
     var hero = document.querySelector('.cc-hero');
     if (!hero) return;
@@ -203,16 +222,21 @@
     }
 
     var ticking = false;
+    var lastH = 1;
 
     function update() {
       ticking = false;
-      var rect = hero.getBoundingClientRect();
-      var h = rect.height || 1;
-      // 0 while hero fills the viewport; 1 once it's mostly scrolled away
-      var progress = Math.min(1, Math.max(0, -rect.top / (h * 0.85)));
-      // Ease-in so the dissolve accelerates toward black
-      var faded = progress * progress * (3 - 2 * progress); // smoothstep
+      var top = hero.getBoundingClientRect().top;
+      var progress = Math.min(1, Math.max(0, -top / (lastH * 0.85)));
+      var faded = progress * progress * (3 - 2 * progress);
       hero.style.setProperty('--cc-hero-fade', faded.toFixed(4));
+    }
+
+    function refreshHeight() {
+      window.requestAnimationFrame(function () {
+        lastH = hero.offsetHeight || 1;
+        update();
+      });
     }
 
     function onScroll() {
@@ -222,8 +246,8 @@
     }
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    update();
+    window.addEventListener('resize', refreshHeight, { passive: true });
+    window.addEventListener('load', refreshHeight, { once: true });
   }
 
   function init() {

@@ -311,41 +311,68 @@
   function initHomepageBounceGallery() {
     var root = document.getElementById('cc-bounce-cards');
     if (!root) return;
+    if (root.getAttribute('data-bounce-ready') === 'true') return;
 
-    var base = 'assets/images/gallery/';
-    mountBounceCards(root, {
-      className: 'custom-bounceCards',
-      images: [
-        base + 'dsc-0378.jpg',
-        base + 'dsc-0308.jpg',
-        base + 'dsc-0811.jpg',
-        base + 'dsc-0423-copy.jpg',
-        base + 'dsc-0651.jpg',
-        base + 'dsc-0745-2.jpg',
-        base + 'dsc-0097-copy.jpg',
-        base + 'dsc-0211.jpg',
-        base + 'dsc-1008-copy.jpg',
-        base + 'dsc-0781-copy.jpg',
-        base + 'img-1047.jpg',
-        base + 'dsc-0136-copy.jpg',
-        base + 'dsc-0220.jpg',
-        base + 'dsc-0375.jpg',
-        base + 'dsc-0391.jpg',
-        base + 'dsc-0445.jpg',
-        base + 'dsc-0629.jpg',
-        base + 'dsc-0678.jpg',
-        base + 'dsc-0682.jpg',
-        base + 'dsc-0808.jpg',
-        base + 'dsc-0840.jpg',
-        base + 'dsc-0093.jpg',
-      ],
-      containerWidth: Math.max(window.innerWidth || 1200, 320),
-      containerHeight: 380,
-      animationDelay: 0.2,
-      animationStagger: 0.04,
-      easeType: 'elastic.out(1, 0.5)',
-      enableHover: true,
-    });
+    function start() {
+      if (root.getAttribute('data-bounce-ready') === 'true') return;
+      if (typeof gsap === 'undefined') {
+        // Wait briefly for deferred GSAP
+        setTimeout(start, 50);
+        return;
+      }
+      root.setAttribute('data-bounce-ready', 'true');
+      var base = 'assets/images/gallery/';
+      var width = Math.max(root.clientWidth || 0, 320);
+      mountBounceCards(root, {
+        className: 'custom-bounceCards',
+        images: [
+          base + 'dsc-0378.webp',
+          base + 'dsc-0308.webp',
+          base + 'dsc-0811.webp',
+          base + 'dsc-0423-copy.webp',
+          base + 'dsc-0651.webp',
+          base + 'dsc-0745-2.webp',
+          base + 'dsc-0097-copy.webp',
+          base + 'dsc-0211.webp',
+          base + 'dsc-1008-copy.webp',
+          base + 'dsc-0781-copy.webp',
+          base + 'img-1047.webp',
+          base + 'dsc-0136-copy.webp',
+          base + 'dsc-0220.webp',
+          base + 'dsc-0375.webp',
+          base + 'dsc-0391.webp',
+          base + 'dsc-0445.webp',
+          base + 'dsc-0629.webp',
+          base + 'dsc-0678.webp',
+          base + 'dsc-0682.webp',
+          base + 'dsc-0808.webp',
+          base + 'dsc-0840.webp',
+          base + 'dsc-0093.webp',
+        ],
+        containerWidth: width,
+        containerHeight: 380,
+        animationDelay: 0.2,
+        animationStagger: 0.04,
+        easeType: 'elastic.out(1, 0.5)',
+        enableHover: true,
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(
+        function (entries) {
+          if (!entries.some(function (e) { return e.isIntersecting; })) return;
+          io.disconnect();
+          requestAnimationFrame(start);
+        },
+        { rootMargin: '200px 0px' }
+      );
+      io.observe(root);
+    } else {
+      window.addEventListener('load', function () {
+        requestAnimationFrame(start);
+      });
+    }
   }
 
   window.ClassicCutsBounceCards = {

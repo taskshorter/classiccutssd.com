@@ -1,25 +1,101 @@
-/* Barber profile pages */
+/* Barber profile pages — light polish, no heavy motion */
 
-body.cc-page-profile .cc-main {
-  padding-bottom: 64px;
+:root {
+  --cc-profile-ink: #111111;
+  --cc-profile-muted: #5c5c5c;
+  --cc-profile-line: rgba(17, 17, 17, 0.1);
+  --cc-profile-paper: #f3f1ee;
+  --cc-profile-wash: #ebe7e1;
 }
 
+body.cc-page-profile {
+  background:
+    radial-gradient(1200px 520px at 12% -10%, rgba(17, 17, 17, 0.06), transparent 60%),
+    radial-gradient(900px 480px at 92% 8%, rgba(120, 90, 60, 0.07), transparent 55%),
+    linear-gradient(180deg, #eceae6 0%, var(--cc-profile-paper) 42%, #f7f6f4 100%);
+  color: var(--cc-profile-ink);
+}
+
+body.cc-page-profile .cc-site {
+  background: transparent;
+}
+
+body.cc-page-profile .cc-main {
+  padding-bottom: 72px;
+  overflow: clip;
+}
+
+/* Kill leftover Weebly chrome without touching real content */
+body.cc-page-profile hr.styled-hr,
+body.cc-page-profile .wsite-spacer,
+body.cc-page-profile div[style*="height: 20px"],
+body.cc-page-profile div[style*="height:20px"],
+body.cc-page-profile div[style*="height:50px"] {
+  display: none !important;
+}
+
+body.cc-page-profile .wsite-section-wrap,
+body.cc-page-profile .wsite-section,
+body.cc-page-profile .wsite-section-content,
+body.cc-page-profile .container,
+body.cc-page-profile .wsite-section-elements {
+  background: transparent !important;
+  max-width: none;
+  width: 100%;
+  padding-left: 0;
+  padding-right: 0;
+  margin: 0;
+  box-shadow: none;
+  border: 0;
+}
+
+/* ——— Hero ——— */
 .cc-profile-hero {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(160px, 280px) minmax(0, 1fr);
-  gap: 28px 40px;
+  grid-template-columns: minmax(220px, 340px) minmax(0, 1fr);
+  gap: 36px 56px;
   align-items: center;
-  max-width: 920px;
-  margin: 28px auto 36px;
-  padding: 0 8px;
+  width: min(1080px, calc(100% - 48px));
+  margin: 28px auto 48px;
+  padding: clamp(28px, 4vw, 44px) clamp(22px, 3.5vw, 40px);
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.38)),
+    linear-gradient(180deg, #ffffff 0%, #f7f5f2 100%);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.85) inset,
+    0 24px 50px rgba(17, 17, 17, 0.07);
+  isolation: isolate;
+}
+
+.cc-profile-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(420px 220px at 18% 20%, rgba(17, 17, 17, 0.05), transparent 70%),
+    radial-gradient(360px 200px at 88% 80%, rgba(140, 100, 60, 0.06), transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cc-profile-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .cc-profile-hero__photo-wrap {
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: #eee;
-  border-radius: 4px;
+  background: var(--cc-profile-wash);
+  border-radius: 20px;
+  box-shadow:
+    0 18px 40px rgba(17, 17, 17, 0.16),
+    0 0 0 1px rgba(17, 17, 17, 0.04);
 }
 
 .cc-profile-hero__photo {
@@ -27,30 +103,37 @@ body.cc-page-profile .cc-main {
   height: 100%;
   object-fit: cover;
   display: block;
+  transform: scale(1.01);
 }
 
 .cc-profile-hero__eyebrow {
-  margin: 0 0 8px;
+  margin: 0 0 10px;
   font-family: "Montserrat", "Lato", sans-serif;
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: #666;
+  color: rgba(17, 17, 17, 0.48);
 }
 
 .cc-profile-hero__name {
-  margin: 0 0 12px;
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  line-height: 1.05;
+  margin: 0 0 14px;
+  font-family: "Abril Fatface", "Quattrocento", Georgia, serif;
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.02;
+  color: var(--cc-profile-ink);
 }
 
 .cc-profile-hero__bio {
-  margin: 0 0 20px;
-  max-width: 36em;
-  color: #444;
-  font-size: 1.02rem;
-  line-height: 1.55;
+  margin: 0 0 24px;
+  max-width: 34em;
+  color: var(--cc-profile-muted);
+  font-family: "Lato", sans-serif;
+  font-size: clamp(1.02rem, 1.5vw, 1.12rem);
+  font-weight: 300;
+  line-height: 1.65;
 }
 
 .cc-profile-hero__actions {
@@ -60,33 +143,84 @@ body.cc-page-profile .cc-main {
   gap: 14px 18px;
 }
 
+.cc-profile-hero__actions .cc-btn--dark {
+  min-height: 46px;
+  padding: 0 22px;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+}
+
 .cc-profile-hero__ig img {
   width: 40px;
   height: 40px;
   display: block;
-  opacity: 0.92;
-  transition: opacity 180ms ease;
+  opacity: 0.9;
+  transition: opacity 180ms ease, transform 180ms ease;
 }
 
 .cc-profile-hero__ig:hover img {
   opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* ——— Video ——— */
+.cc-profile-video {
+  width: min(820px, calc(100% - 48px));
+  margin: 0 auto 40px;
+  padding: 0;
+}
+
+.cc-profile-video video {
+  width: 100%;
+  display: block;
+  border-radius: 18px;
+  background: #111;
+  box-shadow: 0 18px 42px rgba(17, 17, 17, 0.14);
+}
+
+/* ——— Work section ——— */
+body.cc-page-profile h2.wsite-content-title {
+  width: min(1080px, calc(100% - 48px));
+  margin: 8px auto 22px;
+  padding: 0;
+  text-align: left !important;
+  font-family: "Abril Fatface", "Quattrocento", Georgia, serif !important;
+  font-size: clamp(1.8rem, 3.4vw, 2.4rem) !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--cc-profile-ink) !important;
+}
+
+body.cc-page-profile h2.wsite-content-title::before {
+  content: "Portfolio";
+  display: block;
+  margin-bottom: 8px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.45);
 }
 
 .cc-work-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  max-width: 1100px;
-  margin: 8px auto 28px;
-  padding: 0 4px;
+  gap: 12px;
+  width: min(1080px, calc(100% - 48px));
+  margin: 0 auto 36px;
+  padding: 0;
 }
 
 .cc-work-grid__item {
   display: block;
   aspect-ratio: 1;
   overflow: hidden;
-  background: #f2f2f2;
+  background: #e7e3dd;
+  border-radius: 14px;
   cursor: zoom-in;
+  box-shadow: 0 0 0 1px rgba(17, 17, 17, 0.04);
 }
 
 .cc-work-grid__item img {
@@ -94,24 +228,13 @@ body.cc-page-profile .cc-main {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), filter 420ms ease;
+  filter: saturate(0.96) contrast(1.02);
 }
 
 .cc-work-grid__item:hover img {
-  transform: scale(1.04);
-}
-
-.cc-profile-video {
-  max-width: 720px;
-  margin: 0 auto 28px;
-  padding: 0 8px;
-}
-
-.cc-profile-video video {
-  width: 100%;
-  display: block;
-  border-radius: 12px;
-  background: #000;
+  transform: scale(1.035);
+  filter: saturate(1.05) contrast(1.04);
 }
 
 .cc-profile-book {
@@ -123,6 +246,7 @@ body.cc-page-profile .cc-main {
   margin-bottom: 16px;
 }
 
+/* ——— Lightbox ——— */
 .cc-profile-lightbox {
   position: fixed;
   inset: 0;
@@ -131,7 +255,7 @@ body.cc-page-profile .cc-main {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(0, 0, 0, 0.88);
+  background: rgba(10, 10, 10, 0.9);
   opacity: 0;
   visibility: hidden;
   transition: opacity 200ms ease, visibility 200ms ease;
@@ -146,6 +270,7 @@ body.cc-page-profile .cc-main {
   max-width: min(96vw, 1100px);
   max-height: 90vh;
   object-fit: contain;
+  border-radius: 8px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
 }
 
@@ -162,16 +287,18 @@ body.cc-page-profile .cc-main {
   padding: 8px;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 820px) {
   .cc-profile-hero {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 22px;
     text-align: center;
-    margin-top: 16px;
+    margin-top: 18px;
+    width: min(1080px, calc(100% - 28px));
+    padding: 22px 18px 26px;
   }
 
   .cc-profile-hero__photo-wrap {
-    max-width: 220px;
+    max-width: 240px;
     margin: 0 auto;
   }
 
@@ -184,8 +311,33 @@ body.cc-page-profile .cc-main {
     justify-content: center;
   }
 
+  body.cc-page-profile h2.wsite-content-title {
+    text-align: center !important;
+    width: min(1080px, calc(100% - 28px));
+  }
+
+  .cc-profile-video,
+  .cc-work-grid {
+    width: min(1080px, calc(100% - 28px));
+  }
+
   .cc-work-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
+  }
+
+  .cc-work-grid__item {
+    border-radius: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-work-grid__item img,
+  .cc-profile-hero__ig img {
+    transition: none;
+  }
+
+  .cc-work-grid__item:hover img {
+    transform: none;
   }
 }

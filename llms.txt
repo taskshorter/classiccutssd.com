@@ -1,0 +1,17 @@
+# Classic Cuts Barbershop
+
+> Classic Cuts is a Mission Valley, San Diego barbershop for modern haircuts, skin fades, beard trims, and hot towel shaves. Walk-ins welcome.
+
+## Pages
+
+- [Home](https://classiccutssd.fpdesigner.com/)
+- [Barbers](https://classiccutssd.fpdesigner.com/barber-shop.html)
+- [Services](https://classiccutssd.fpdesigner.com/barbershopservices.html)
+- [Gallery](https://classiccutssd.fpdesigner.com/haircut-gallery.html)
+- [Contact](https://classiccutssd.fpdesigner.com/barber-shop-contact.html)
+- [Book online](/book)
+
+## Contact
+
+- Phone: [(619) 684-5871](tel:+16196845871)
+- Address: [8555 Station Village Ln, San Diego, CA 92108](https://maps.google.com/?q=8555+Station+Village+Ln,+San+Diego,+CA+92108)

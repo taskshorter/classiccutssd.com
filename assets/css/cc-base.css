@@ -1,7 +1,5 @@
 /* Classic Cuts — base (replaces Weebly sites.css + cento theme) */
 
-@import url("https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Lato:wght@300;400;700&family=Montserrat:wght@400;500;600;700&family=Quattrocento+Sans:wght@400;700&family=Quattrocento:wght@400;700&display=swap");
-
 *,
 *::before,
 *::after {
@@ -381,6 +379,13 @@ select {
   text-decoration: none;
 }
 
+.cc-footer a {
+  display: inline-block;
+  min-height: 24px;
+  padding: 4px 0;
+  line-height: 1.5;
+}
+
 .cc-footer a:hover {
   color: #111111;
 }
@@ -391,7 +396,7 @@ select {
   padding-top: 18px;
   border-top: 1px solid #ececec;
   font-size: 12px !important;
-  color: #888888 !important;
+  color: #666666 !important;
 }
 
 @media screen and (max-width: 767px) {
