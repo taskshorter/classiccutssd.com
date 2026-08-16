@@ -1,0 +1,77 @@
+---
+description: Keep Classic Cuts website Agent Skill current after durable changes; promote only generalized lessons to custom-business-websites.
+alwaysApply: true
+---
+
+# Classic Cuts Skill maintenance
+
+Canonical project Skill: `.agents/skills/classic-cuts-website/` (`SKILL.md` + `references/`).
+
+That Skill stays **Classic Cuts–specific**. Do not move it into a global Skill.
+
+Global reusable website extracts (if installed) live outside this repo:
+
+```text
+~/.cursor/skills/future-proof-designers/custom-business-websites/
+```
+
+Related global Skills (do not replace this project Skill):
+
+```text
+~/.cursor/skills/future-proof-designers/project-bootstrap/
+~/.cursor/skills/future-proof-designers/production-saas-patterns/
+```
+
+`production-saas-patterns` applies only at the external booking/SaaS boundary — never as a mandate to rewrite this static marketing site.
+
+## Before declaring a meaningful feature complete
+
+Ask two independent questions:
+
+**A. Did this change alter durable Classic Cuts website knowledge?**
+
+If **yes** → update the **relevant** `classic-cuts-website` reference file(s) in the same feature commit when practical (and `SKILL.md` only if the index/invariants changed).
+
+If **no** → leave the project Skill unchanged.
+
+**B. Did we discover a genuinely reusable website lesson that would still apply if the next project were not Classic Cuts and not a barbershop?**
+
+If **yes** → consider promoting a *generalized* principle into `custom-business-websites` (principle first; Classic Cuts only as a labeled origin example). Strip business names, addresses, phones, tenant IDs, deployment IDs, and exact brand tokens.
+
+If **no** → do not touch global Skills.
+
+Global promotion is **optional and uncommon**. A typo, spacing tweak, one image swap, temporary deploy, one QA result, or minor copy change is never a global update. A new booking-embed failure pattern or mobile CTA invariant might be.
+
+Do **not** copy Classic Cuts references wholesale into the global Skill. Review the global diff before writing.
+
+## Update when changing
+
+- Page architecture or routing (`vercel.json` public paths)
+- Design-system tokens / typography / button hierarchy
+- Navigation / chrome behavior
+- Hero / primary conversion path
+- BookLocal (or other) embed integration boundary
+- Performance strategy (LCP, fonts, video gates)
+- SEO structure (canonical patterns, structured data approach)
+- Accessibility invariants
+- Deployment/caching architecture
+- New failure mode worth documenting
+
+## Do **not** update for
+
+- One-off copy edits, single image swaps, minor spacing
+- Temporary preview URLs or deploy IDs
+- Ephemeral QA notes
+- Uncommitted experiments
+
+## Conflicts
+
+If Skill documentation conflicts with **current website source**, inspect the source and **correct the Skill**.  
+Do **not** modify correct production pages merely to satisfy stale docs.
+
+## Style
+
+- Prefer targeted edits over rewriting the whole Skill
+- Never commit secrets, keys, or unnecessary PII into Skill files
+- Skill updates must be visible in Git diff (no silent memory)
+- Do not auto-rewrite the Skill from every chat turn
