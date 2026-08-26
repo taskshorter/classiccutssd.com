@@ -1,4 +1,4 @@
-/* Services page — matches apply/contact aesthetic */
+/* Services page — matches apply/contact aesthetic (PREVIEW: descriptive menu redesign) */
 
 body.cc-page-services {
   background-color: #f4f4f5;
@@ -33,10 +33,10 @@ body.cc-page-services .cc-main {
 
 .cc-services-menu li {
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr) auto;
+  grid-template-columns: 168px minmax(0, 1fr);
   align-items: center;
-  gap: 14px;
-  padding: 14px 0;
+  gap: 20px;
+  padding: 22px 0;
   border-bottom: 1px solid #ececec;
 }
 
@@ -45,28 +45,60 @@ body.cc-page-services .cc-main {
 }
 
 .cc-services-menu__photo {
-  width: 64px;
-  height: 64px;
+  width: 168px;
+  height: 168px;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 14px;
   background: #eee;
   display: block;
 }
 
+.cc-services-menu__copy {
+  min-width: 0;
+  container-type: inline-size;
+  container-name: service-copy;
+}
+
+.cc-services-menu__top {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: 0 14px;
+  margin-bottom: 8px;
+}
+
 .cc-services-menu__name {
+  margin: 0;
   font-family: "Abril Fatface", "Quattrocento", serif;
-  font-size: 1.28rem;
-  line-height: 1.2;
+  font-size: clamp(1.4rem, 2.5vw, 1.75rem);
+  line-height: 1.15;
   color: #111;
+  white-space: nowrap;
 }
 
 .cc-services-menu__price {
-  font-family: "Montserrat", sans-serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: #222;
+  flex: 0 0 auto;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  line-height: 1.15;
+  color: #111;
   white-space: nowrap;
+}
+
+.cc-services-menu__price::before {
+  content: "·";
+  margin-right: 14px;
+  color: #bbb;
+  font-weight: 400;
+}
+
+.cc-services-menu__desc {
+  margin: 0;
+  max-width: 28rem;
+  font-family: "Lato", sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #555;
 }
 
 .cc-services-specials {
@@ -124,23 +156,56 @@ body.cc-page-services .cc-main {
   margin-top: 22px;
 }
 
+@media (min-width: 900px) {
+  .cc-services-menu li {
+    grid-template-columns: 188px minmax(0, 1fr);
+    gap: 24px;
+    padding: 24px 0;
+  }
+
+  .cc-services-menu__photo {
+    width: 188px;
+    height: 188px;
+    border-radius: 16px;
+  }
+}
+
 @media (max-width: 640px) {
   body.cc-page-services {
     background-attachment: scroll;
   }
 
   .cc-services-menu li {
-    grid-template-columns: 52px minmax(0, 1fr) auto;
-    gap: 12px;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px 0;
+    align-items: start;
   }
 
   .cc-services-menu__photo {
-    width: 52px;
-    height: 52px;
-    border-radius: 8px;
+    width: 112px;
+    height: 112px;
+    border-radius: 12px;
+  }
+
+  .cc-services-menu__top {
+    gap: 0 8px;
   }
 
   .cc-services-menu__name {
-    font-size: 1.1rem;
+    /* Scale with the text column so long titles stay on one line with the price */
+    font-size: clamp(0.85rem, 9cqi, 1.1rem);
+  }
+
+  .cc-services-menu__price {
+    font-size: clamp(0.85rem, 9cqi, 1.05rem);
+  }
+
+  .cc-services-menu__price::before {
+    margin-right: 6px;
+  }
+
+  .cc-services-menu__desc {
+    font-size: 0.92rem;
   }
 }
