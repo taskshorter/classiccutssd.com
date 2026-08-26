@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Our Barbers | Classic Cuts Barbershop Mission Valley</title>
+<title>Meet the Barbers | Classic Cuts Barbershop</title>
 <meta property="og:site_name" content="CLASSIC CUTS BARBERSHOP" />
 <meta property="og:title" content="Meet the Barbers | Classic Cuts Barbershop" />
-<meta property="og:description" content="Meet the Classic Cuts barbers in Mission Valley, San Diego. Scroll the wheel to explore each barber’s profile and book your next cut." />
+<meta property="og:description" content="Meet the Classic Cuts barbers in Mission Valley, San Diego. Pick a barber to see their work and book your next cut." />
 <meta property="og:image" content="assets/images/barbers/colton.png" />
 <meta property="og:url" content="barber-shop.html" />
-<meta name="description" content="Meet the Classic Cuts barbers in Mission Valley, San Diego. Scroll the wheel to explore each barber’s profile and book your next cut." />
+<meta name="description" content="Meet the Classic Cuts barbers in Mission Valley, San Diego. Pick a barber to see their work and book your next cut." />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <meta charset="utf-8" />
@@ -18,10 +18,7 @@
 <link rel="stylesheet" href="assets/css/cc-base.css?v=20260826a" />
 <link rel="stylesheet" href="assets/css/cc-chrome.css?v=20260814p" />
 <link rel="stylesheet" href="assets/css/cc-nav.css?v=20260814p" />
-
-<link rel="stylesheet" href="assets/css/OptionWheel.css" />
-<link rel="stylesheet" href="assets/css/cc-barbers.css?v=20260814e" />
-<script src="assets/js/OptionWheel.js" defer></script>
+<link rel="stylesheet" href="assets/css/cc-barbers-v2.css?v=20260828a" />
 
 <script src="assets/js/cc-business.js?v=20260814v" defer></script>
 <script src="assets/js/cc-nav.js?v=20260814y" defer></script>
@@ -120,20 +117,96 @@
   </nav>
 
   <main id="cc-content" class="cc-main">
-<section class="cc-barbers" aria-label="Meet the barbers">
-          <div class="cc-barbers__wheel" id="cc-barber-wheel"></div>
-          <div class="cc-barbers__detail">
-            <div class="cc-barbers__photo-wrap">
-              <img class="cc-barbers__photo is-visible" id="cc-barber-photo-a" src="assets/images/barbers/colton.png" alt="Colton" width="840" height="1120" />
-              <img class="cc-barbers__photo" id="cc-barber-photo-b" src="assets/images/barbers/colton.png" alt="" width="840" height="1120" aria-hidden="true" />
-            </div>
-            <div class="cc-barbers__copy">
-              <h1 class="cc-barbers__name is-visible" id="cc-barber-name">Colton</h1>
-              <p class="cc-barbers__bio is-visible" id="cc-barber-bio">Clean fades, sharp lines, and a chill chair — Colton brings precision and personality to every cut at Classic Cuts.</p>
-              <a class="cc-barbers__link is-visible" id="cc-barber-link" href="colton.html">View profile</a>
-            </div>
+    <section class="cc-select" aria-label="Meet the barbers">
+      <p class="cc-select__eyebrow">Meet the Team — Pick a Barber</p>
+
+      <div class="cc-select__stage">
+        <div class="cc-select__roster" id="cc-select-roster" role="tablist" aria-label="Barbers" aria-orientation="horizontal">
+          <button type="button" class="cc-select__roster-item" role="tab" id="cc-tab-ray-lopez" aria-selected="true" aria-controls="cc-select-info" tabindex="0">
+            <span class="cc-select__roster-photo"><img src="assets/images/barbers/ray.jpg" alt="" loading="eager" /></span>
+            <span class="cc-select__roster-text">
+              <span class="cc-select__roster-name">Ray Lopez</span>
+              <span class="cc-select__roster-specialty">Consistent craft · Owner</span>
+            </span>
+          </button>
+          <button type="button" class="cc-select__roster-item" role="tab" id="cc-tab-jay-oceguera" aria-selected="false" aria-controls="cc-select-info" tabindex="-1">
+            <span class="cc-select__roster-photo"><img src="assets/images/barbers/jay.jpg" alt="" loading="lazy" /></span>
+            <span class="cc-select__roster-text">
+              <span class="cc-select__roster-name">Jay Oceguera</span>
+              <span class="cc-select__roster-specialty">Skin fades · Gentlemen&rsquo;s cuts</span>
+            </span>
+          </button>
+          <button type="button" class="cc-select__roster-item" role="tab" id="cc-tab-romero-jorge" aria-selected="false" aria-controls="cc-select-info" tabindex="-1">
+            <span class="cc-select__roster-photo"><img src="assets/images/barbers/romero.png" alt="" loading="lazy" /></span>
+            <span class="cc-select__roster-text">
+              <span class="cc-select__roster-name">Romero Jorge</span>
+              <span class="cc-select__roster-specialty">Clean tapers · Bold styles</span>
+            </span>
+          </button>
+          <button type="button" class="cc-select__roster-item" role="tab" id="cc-tab-colton-ballew" aria-selected="false" aria-controls="cc-select-info" tabindex="-1">
+            <span class="cc-select__roster-photo"><img src="assets/images/barbers/colton.png" alt="" loading="lazy" /></span>
+            <span class="cc-select__roster-text">
+              <span class="cc-select__roster-name">Colton Ballew</span>
+              <span class="cc-select__roster-specialty">Clean fades · Sharp lines</span>
+            </span>
+          </button>
+          <button type="button" class="cc-select__roster-item" role="tab" id="cc-tab-will-jaimes" aria-selected="false" aria-controls="cc-select-info" tabindex="-1">
+            <span class="cc-select__roster-photo"><img src="assets/images/barbers/will.png" alt="" loading="lazy" /></span>
+            <span class="cc-select__roster-text">
+              <span class="cc-select__roster-name">Will Jaimes</span>
+              <span class="cc-select__roster-specialty">Detail-focused fades</span>
+            </span>
+          </button>
+          <button type="button" class="cc-select__roster-item" role="tab" id="cc-tab-tammy" aria-selected="false" aria-controls="cc-select-info" tabindex="-1">
+            <span class="cc-select__roster-photo cc-select__roster-photo--placeholder" aria-hidden="true">T</span>
+            <span class="cc-select__roster-text">
+              <span class="cc-select__roster-name">Tammy</span>
+              <span class="cc-select__roster-specialty">Fresh cuts · Clean finishes</span>
+            </span>
+          </button>
+          <button type="button" class="cc-select__roster-item" role="tab" id="cc-tab-tevel" aria-selected="false" aria-controls="cc-select-info" tabindex="-1">
+            <span class="cc-select__roster-photo"><img src="assets/images/barbers/tevel.jpg" alt="" loading="lazy" /></span>
+            <span class="cc-select__roster-text">
+              <span class="cc-select__roster-name">Tevel</span>
+              <span class="cc-select__roster-specialty">Walk-ins · Bookings</span>
+            </span>
+          </button>
+        </div>
+
+        <div class="cc-select__portrait" id="cc-select-portrait">
+          <img class="cc-select__portrait-img is-active" id="cc-select-photo-a" src="assets/images/barbers/ray.jpg" alt="Ray Lopez, barber at Classic Cuts" />
+          <img class="cc-select__portrait-img" id="cc-select-photo-b" src="" alt="" aria-hidden="true" />
+          <div class="cc-select__portrait-placeholder" id="cc-select-placeholder" aria-hidden="true">
+            <span class="cc-select__portrait-placeholder-mark">?</span>
+            <span class="cc-select__portrait-placeholder-note">Photo coming soon</span>
           </div>
-        </section>
+        </div>
+
+        <div class="cc-select__info" id="cc-select-info" role="tabpanel" aria-labelledby="cc-tab-ray-lopez">
+          <p class="cc-select__specialty" id="cc-select-specialty">Consistent craft · Owner</p>
+          <h1 class="cc-select__name" id="cc-select-name">Ray Lopez</h1>
+          <p class="cc-select__intro" id="cc-select-intro">A Classic Cuts staple — Ray delivers confident, consistent cuts with the craft that keeps clients coming back.</p>
+          <ul class="cc-select__tags" id="cc-select-tags">
+            <li>Classic cuts</li>
+            <li>Fades</li>
+            <li>Everyday maintenance</li>
+          </ul>
+          <div class="cc-select__actions">
+            <a class="cc-btn cc-btn--light" id="cc-select-book" href="book.html">Book with Ray</a>
+            <a class="cc-btn cc-btn--ghost-light" id="cc-select-profile" href="raylopez.html">View Profile</a>
+          </div>
+        </div>
+
+        <div class="cc-select__portfolio" aria-label="Recent work">
+          <p class="cc-select__portfolio-label">Recent Work</p>
+          <div class="cc-select__portfolio-strip" id="cc-select-portfolio-strip">
+            <figure class="cc-select__portfolio-item is-in" style="--cc-tilt: -2deg">
+              <img src="assets/images/gallery/dsc-0114-copy.jpg" alt="Haircut example from Ray Lopez" loading="eager" decoding="async" />
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="footer-wrap cc-footer">
     <div class="cc-footer__inner">
@@ -166,183 +239,7 @@
   </footer>
 
 </div>
-<script>
-    (function () {
-      function boot() {
-      if (typeof OptionWheel !== 'function') return;
-
-      var BARBERS = [
-        {
-          name: 'Colton',
-          fullName: 'Colton Ballew',
-          photo: 'assets/images/barbers/colton.png',
-          href: 'colton.html',
-          bio: 'Clean fades, sharp lines, and a chill chair — Colton brings precision and personality to every cut at Classic Cuts.'
-        },
-        {
-          name: 'Jay',
-          fullName: 'Jay Oceguera',
-          photo: 'assets/images/barbers/jay.jpg',
-          href: 'jayoceguera.html',
-          bio: 'Skin fades, taper fades, gentlemen\'s cuts, and hot towel shaves. Jay keeps it classic with a modern edge in Mission Valley.'
-        },
-        {
-          name: 'Will',
-          fullName: 'Will Jaimes',
-          photo: 'assets/images/barbers/will.png',
-          href: 'willjaimes.html',
-          bio: 'Detail-focused and easygoing — Will dials in fades and finishes that look sharp walking out and hold up all week.'
-        },
-        {
-          name: 'Romero',
-          fullName: 'Romero Jorge',
-          photo: 'assets/images/barbers/romero.png',
-          href: 'romero.html',
-          bio: 'From clean tapers to bold styles, Romero brings steady hands and a welcoming vibe to every appointment.'
-        },
-        {
-          name: 'Ray',
-          fullName: 'Ray Lopez',
-          photo: 'assets/images/barbers/ray.jpg',
-          href: 'raylopez.html',
-          bio: 'A Classic Cuts staple — Ray delivers consistent, confident cuts with the kind of craft that keeps clients coming back.'
-        },
-        {
-          name: 'Tevel',
-          fullName: 'Tevel',
-          photo: 'assets/images/barbers/tevel.jpg',
-          href: 'wellington-199912-210611.html',
-          bio: 'Fresh cuts and clean finishes — Tevel is ready when you need a sharp look without the wait for walk-ins or bookings.'
-        }
-      ];
-
-      var photoA = document.getElementById('cc-barber-photo-a');
-      var photoB = document.getElementById('cc-barber-photo-b');
-      var nameEl = document.getElementById('cc-barber-name');
-      var bioEl = document.getElementById('cc-barber-bio');
-      var linkEl = document.getElementById('cc-barber-link');
-      var current = -1;
-      var pending = null;
-      var settleTimer = null;
-      var textTimer = null;
-      var usingA = true;
-      var reducedMotion =
-        window.matchMedia &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      // Preload so swaps never flash empty frames
-      BARBERS.forEach(function (b) {
-        var img = new Image();
-        img.src = b.photo;
-      });
-
-      function setText(b) {
-        nameEl.textContent = b.name;
-        bioEl.textContent = b.bio;
-        linkEl.href = b.href;
-        linkEl.setAttribute('aria-label', 'View profile for ' + b.fullName);
-      }
-
-      function showText(visible) {
-        nameEl.classList.toggle('is-visible', visible);
-        bioEl.classList.toggle('is-visible', visible);
-        linkEl.classList.toggle('is-visible', visible);
-      }
-
-      function applyBarber(index, animate) {
-        var b = BARBERS[index];
-        if (!b || index === current) return;
-        current = index;
-
-        if (!animate || reducedMotion) {
-          photoA.src = b.photo;
-          photoA.alt = b.fullName;
-          photoA.classList.add('is-visible');
-          photoB.classList.remove('is-visible');
-          usingA = true;
-          setText(b);
-          showText(true);
-          return;
-        }
-
-        var incoming = usingA ? photoB : photoA;
-        var outgoing = usingA ? photoA : photoB;
-        usingA = !usingA;
-
-        function reveal() {
-          incoming.alt = b.fullName;
-          outgoing.removeAttribute('alt');
-          outgoing.setAttribute('aria-hidden', 'true');
-          incoming.removeAttribute('aria-hidden');
-          incoming.classList.add('is-visible');
-          outgoing.classList.remove('is-visible');
-        }
-
-        if (incoming.getAttribute('src') === b.photo && incoming.complete) {
-          reveal();
-        } else {
-          incoming.onload = function () {
-            incoming.onload = null;
-            if (current === index) reveal();
-          };
-          incoming.src = b.photo;
-          if (incoming.complete) {
-            incoming.onload = null;
-            reveal();
-          }
-        }
-
-        if (textTimer) clearTimeout(textTimer);
-        showText(false);
-        textTimer = setTimeout(function () {
-          setText(b);
-          requestAnimationFrame(function () {
-            showText(true);
-          });
-        }, 180);
-      }
-
-      function queueBarber(index) {
-        pending = index;
-        if (settleTimer) clearTimeout(settleTimer);
-        // Wait for the wheel to settle before swapping the panel
-        settleTimer = setTimeout(function () {
-          applyBarber(pending, true);
-        }, 140);
-      }
-
-      var mount = document.getElementById('cc-barber-wheel');
-      if (mount && typeof OptionWheel === 'function') {
-        OptionWheel(mount, {
-          items: BARBERS.map(function (b) { return b.name; }),
-          defaultSelected: 0,
-          textColor: '#a0a0a0',
-          activeColor: '#111111',
-          side: 'left',
-          fontSize: window.matchMedia('(max-width: 900px)').matches ? 3.2 : 5.2,
-          spacing: 1.35,
-          curve: 1,
-          tilt: 7,
-          blur: 2,
-          fade: 0.28,
-          smoothing: 280,
-          inset: window.matchMedia('(max-width: 900px)').matches ? 48 : 160,
-          loop: false,
-          draggable: true,
-          onChange: function (index) {
-            queueBarber(index);
-          }
-        });
-      }
-
-      applyBarber(0, false);
-      }
-
-      // OptionWheel.js is deferred — wait until it exists before mounting
-      if (typeof OptionWheel === 'function') boot();
-      else document.addEventListener('DOMContentLoaded', boot);
-    })();
-  </script>
+<script src="assets/js/cc-barbers-v2.js?v=20260828a" defer></script>
 
 </body>
 </html>
