@@ -295,6 +295,24 @@
       root.addEventListener('mouseleave', function () {
         resetSiblings(true);
       });
+
+      // Touch devices: tapping a card focuses it (selects/pauses), but
+      // tapping non-focusable content elsewhere on the page does not
+      // reliably blur it on mobile browsers, so the existing blur-based
+      // deselect never fires. Watch for a pointerdown that lands outside
+      // every card in this gallery and deselect explicitly. Tapping
+      // another card is left alone — its own focus handler already
+      // switches selection correctly.
+      document.addEventListener(
+        'pointerdown',
+        function (e) {
+          if (hoverIdx < 0) return;
+          var hitCard = e.target && e.target.closest && e.target.closest('.card');
+          if (hitCard && root.contains(hitCard)) return;
+          resetSiblings(true);
+        },
+        true
+      );
     }
 
     render();
