@@ -73,7 +73,7 @@
       // error, blocked, offline), BounceCards.js still loads and mounts a
       // static, fully visible gallery instead of leaving the section blank.
       near(bounce, "80px 0px").then(function () {
-        var bounceSrc = "assets/js/BounceCards.js?v=20260815h";
+        var bounceSrc = "assets/js/BounceCards.js?v=20260826b";
         return loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js")
           .catch(function () {
             // Swallow the failure — BounceCards.js's own hasGsap check

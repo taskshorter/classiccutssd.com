@@ -76,13 +76,9 @@
     var spinOffset = 0;
     var hoverIdx = -1;
     var tickerFn = null;
-    var mobile = isMobile();
     var hasGsap = typeof gsap !== 'undefined';
-    // Continuous fan drift plays on every device once GSAP is available;
-    // only reduced-motion (or GSAP being unavailable) disables it.
-    var allowSpin = hasGsap && !prefersReducedMotion();
     // Slow drift: ~one card-width every ~2.2s
-    var spinSpeed = mobile ? 18 : 26;
+    var spinSpeed = isMobile() ? 18 : 26;
 
     function size() {
       var vw = Math.max(window.innerWidth || 1200, 320);
@@ -128,16 +124,10 @@
     }
 
     function startSpin() {
-      if (!allowSpin) return;
+      if (prefersReducedMotion()) return;
       if (tickerFn) return;
       tickerFn = onTick;
       gsap.ticker.add(tickerFn);
-    }
-
-    function stopSpin() {
-      if (!tickerFn || !hasGsap) return;
-      gsap.ticker.remove(tickerFn);
-      tickerFn = null;
     }
 
     function pauseSpin() {
@@ -145,10 +135,8 @@
     }
 
     function resumeSpin() {
-      if (!allowSpin) return;
       spinPaused = false;
       hoverIdx = -1;
-      startSpin();
     }
 
     function pushSiblings(hoveredIdx) {
@@ -267,35 +255,11 @@
             stagger: animationStagger,
             ease: easeType,
             delay: animationDelay,
-            onComplete: function () {
-              if (allowSpin) startSpin();
-            },
+            onComplete: startSpin,
           }
         );
       } else {
         root.classList.add('is-static-ready');
-      }
-
-      // Pause continuous spin when gallery leaves the viewport (desktop).
-      if (allowSpin && 'IntersectionObserver' in window) {
-        var vis = new IntersectionObserver(
-          function (entries) {
-            var onScreen = entries.some(function (e) {
-              return e.isIntersecting;
-            });
-            if (onScreen) {
-              if (hoverIdx < 0) resumeSpin();
-            } else {
-              stopSpin();
-            }
-          },
-          { root: null, rootMargin: '0px', threshold: 0.05 }
-        );
-        vis.observe(root);
-      }
-
-      if (mobile || !hasGsap) {
-        enableHover = false;
       }
 
       Array.prototype.forEach.call(cards, function (card) {
