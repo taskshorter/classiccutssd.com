@@ -23,6 +23,19 @@ body.cc-page-services .cc-main {
   text-align: center;
 }
 
+/* "Menu" duplicates the left pitch's headline weight — demote it to a
+   left-aligned section label so the actual menu rows carry the hierarchy. */
+.cc-services-page .cc-apply__title {
+  margin: 0 0 4px;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  text-align: left;
+}
+
+.cc-services-page .cc-apply__sub {
+  margin: 0 0 18px;
+  text-align: left;
+}
+
 .cc-services-menu {
   margin: 8px 0 0;
   padding: 0;
@@ -62,39 +75,35 @@ body.cc-page-services .cc-main {
 .cc-services-menu__top {
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   flex-wrap: nowrap;
-  gap: 0 14px;
-  margin-bottom: 8px;
+  gap: 0 16px;
+  margin-bottom: 7px;
 }
 
 .cc-services-menu__name {
   margin: 0;
+  flex: 1 1 auto;
+  min-width: 0;
   font-family: "Abril Fatface", "Quattrocento", serif;
   font-size: clamp(1.4rem, 2.5vw, 1.75rem);
   line-height: 1.15;
   color: #111;
-  white-space: nowrap;
 }
 
 .cc-services-menu__price {
   flex: 0 0 auto;
   font-family: "Abril Fatface", "Quattrocento", serif;
-  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
   line-height: 1.15;
   color: #111;
   white-space: nowrap;
-}
-
-.cc-services-menu__price::before {
-  content: "·";
-  margin-right: 14px;
-  color: #bbb;
-  font-weight: 400;
+  font-variant-numeric: tabular-nums;
 }
 
 .cc-services-menu__desc {
   margin: 0;
-  max-width: 28rem;
+  max-width: 44ch;
   font-family: "Lato", sans-serif;
   font-size: 0.98rem;
   line-height: 1.5;
@@ -189,7 +198,7 @@ body.cc-page-services .cc-main {
   }
 
   .cc-services-menu__top {
-    gap: 0 8px;
+    gap: 0 10px;
   }
 
   .cc-services-menu__name {
@@ -198,14 +207,11 @@ body.cc-page-services .cc-main {
   }
 
   .cc-services-menu__price {
-    font-size: clamp(0.85rem, 9cqi, 1.05rem);
-  }
-
-  .cc-services-menu__price::before {
-    margin-right: 6px;
+    font-size: clamp(0.8rem, 8cqi, 1rem);
   }
 
   .cc-services-menu__desc {
     font-size: 0.92rem;
+    max-width: none;
   }
 }
