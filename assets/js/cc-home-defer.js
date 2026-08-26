@@ -68,13 +68,20 @@
         return loadScript("assets/js/PixelSwap.js?v=20260814z");
       });
 
-      // BounceCards + GSAP only when the gallery approaches
+      // BounceCards: GSAP loads on every device so the intended fan/spin motion
+      // plays on mobile too. If the GSAP CDN request itself fails (network
+      // error, blocked, offline), BounceCards.js still loads and mounts a
+      // static, fully visible gallery instead of leaving the section blank.
       near(bounce, "80px 0px").then(function () {
-        return loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js").then(
-          function () {
-            return loadScript("assets/js/BounceCards.js?v=20260814s");
-          }
-        );
+        var bounceSrc = "assets/js/BounceCards.js?v=20260826c";
+        return loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js")
+          .catch(function () {
+            // Swallow the failure — BounceCards.js's own hasGsap check
+            // falls back to a static, visible gallery when gsap is undefined.
+          })
+          .then(function () {
+            return loadScript(bounceSrc);
+          });
       });
 
       var reviews = document.getElementById("reviews");

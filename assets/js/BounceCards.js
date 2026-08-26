@@ -63,7 +63,7 @@
   }
 
   function mountBounceCards(root, options) {
-    if (!root || typeof gsap === 'undefined') return;
+    if (!root) return;
 
     var images = options.images || [];
     var count = images.length;
@@ -76,6 +76,7 @@
     var spinOffset = 0;
     var hoverIdx = -1;
     var tickerFn = null;
+    var hasGsap = typeof gsap !== 'undefined';
     // Slow drift: ~one card-width every ~2.2s
     var spinSpeed = isMobile() ? 18 : 26;
 
@@ -139,7 +140,7 @@
     }
 
     function pushSiblings(hoveredIdx) {
-      if (!enableHover) return;
+      if (!enableHover || !hasGsap) return;
       pauseSpin();
       hoverIdx = hoveredIdx;
 
@@ -179,7 +180,10 @@
     }
 
     function resetSiblings(shouldResume) {
-      if (!enableHover) return;
+      if (!enableHover || !hasGsap) {
+        if (shouldResume) resumeSpin();
+        return;
+      }
       var base = snapshotTransforms();
       var pending = count;
 
@@ -242,17 +246,21 @@
 
       var cards = root.querySelectorAll('.card');
 
-      gsap.fromTo(
-        cards,
-        { scale: 0 },
-        {
-          scale: 1,
-          stagger: animationStagger,
-          ease: easeType,
-          delay: animationDelay,
-          onComplete: startSpin,
-        }
-      );
+      if (hasGsap && !prefersReducedMotion()) {
+        gsap.fromTo(
+          cards,
+          { scale: 0 },
+          {
+            scale: 1,
+            stagger: animationStagger,
+            ease: easeType,
+            delay: animationDelay,
+            onComplete: startSpin,
+          }
+        );
+      } else {
+        root.classList.add('is-static-ready');
+      }
 
       Array.prototype.forEach.call(cards, function (card) {
         var idx = parseInt(card.getAttribute('data-idx'), 10);
@@ -287,6 +295,24 @@
       root.addEventListener('mouseleave', function () {
         resetSiblings(true);
       });
+
+      // Touch devices: tapping a card focuses it (selects/pauses), but
+      // tapping non-focusable content elsewhere on the page does not
+      // reliably blur it on mobile browsers, so the existing blur-based
+      // deselect never fires. Watch for a pointerdown that lands outside
+      // every card in this gallery and deselect explicitly. Tapping
+      // another card is left alone — its own focus handler already
+      // switches selection correctly.
+      document.addEventListener(
+        'pointerdown',
+        function (e) {
+          if (hoverIdx < 0) return;
+          var hitCard = e.target && e.target.closest && e.target.closest('.card');
+          if (hitCard && root.contains(hitCard)) return;
+          resetSiblings(true);
+        },
+        true
+      );
     }
 
     render();
@@ -315,13 +341,8 @@
 
     function start() {
       if (root.getAttribute('data-bounce-ready') === 'true') return;
-      if (typeof gsap === 'undefined') {
-        // Wait briefly for deferred GSAP
-        setTimeout(start, 50);
-        return;
-      }
       root.setAttribute('data-bounce-ready', 'true');
-      var base = 'assets/images/gallery/';
+      var base = '/assets/images/gallery/';
       var width = Math.max(root.clientWidth || 0, 320);
       mountBounceCards(root, {
         className: 'custom-bounceCards',
