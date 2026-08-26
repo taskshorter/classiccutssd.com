@@ -78,8 +78,9 @@
     var tickerFn = null;
     var mobile = isMobile();
     var hasGsap = typeof gsap !== 'undefined';
-    // Continuous fan drift is desktop-only — mobile keeps a static fan (big main-thread win).
-    var allowSpin = hasGsap && !mobile && !prefersReducedMotion();
+    // Continuous fan drift plays on every device once GSAP is available;
+    // only reduced-motion (or GSAP being unavailable) disables it.
+    var allowSpin = hasGsap && !prefersReducedMotion();
     // Slow drift: ~one card-width every ~2.2s
     var spinSpeed = mobile ? 18 : 26;
 

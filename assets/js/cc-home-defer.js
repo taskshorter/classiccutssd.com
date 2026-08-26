@@ -58,10 +58,6 @@
     });
   }
 
-  function isMobile() {
-    return window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
-  }
-
   function boot() {
     var bounce = document.getElementById("cc-bounce-cards");
     var mission = document.getElementById("cc-mission-swap");
@@ -72,17 +68,20 @@
         return loadScript("assets/js/PixelSwap.js?v=20260814z");
       });
 
-      // BounceCards: mobile skips GSAP entirely (static fan). Desktop loads GSAP on approach.
+      // BounceCards: GSAP loads on every device so the intended fan/spin motion
+      // plays on mobile too. If the GSAP CDN request itself fails (network
+      // error, blocked, offline), BounceCards.js still loads and mounts a
+      // static, fully visible gallery instead of leaving the section blank.
       near(bounce, "80px 0px").then(function () {
-        var bounceSrc = "assets/js/BounceCards.js?v=20260815g";
-        if (isMobile()) {
-          return loadScript(bounceSrc);
-        }
-        return loadScript(
-          "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
-        ).then(function () {
-          return loadScript(bounceSrc);
-        });
+        var bounceSrc = "assets/js/BounceCards.js?v=20260815h";
+        return loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js")
+          .catch(function () {
+            // Swallow the failure — BounceCards.js's own hasGsap check
+            // falls back to a static, visible gallery when gsap is undefined.
+          })
+          .then(function () {
+            return loadScript(bounceSrc);
+          });
       });
 
       var reviews = document.getElementById("reviews");
