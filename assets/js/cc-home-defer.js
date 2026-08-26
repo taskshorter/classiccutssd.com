@@ -58,6 +58,10 @@
     });
   }
 
+  function isMobile() {
+    return window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
+  }
+
   function boot() {
     var bounce = document.getElementById("cc-bounce-cards");
     var mission = document.getElementById("cc-mission-swap");
@@ -68,13 +72,17 @@
         return loadScript("assets/js/PixelSwap.js?v=20260814z");
       });
 
-      // BounceCards + GSAP only when the gallery approaches
+      // BounceCards: mobile skips GSAP entirely (static fan). Desktop loads GSAP on approach.
       near(bounce, "80px 0px").then(function () {
-        return loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js").then(
-          function () {
-            return loadScript("assets/js/BounceCards.js?v=20260814s");
-          }
-        );
+        var bounceSrc = "assets/js/BounceCards.js?v=20260815g";
+        if (isMobile()) {
+          return loadScript(bounceSrc);
+        }
+        return loadScript(
+          "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
+        ).then(function () {
+          return loadScript(bounceSrc);
+        });
       });
 
       var reviews = document.getElementById("reviews");

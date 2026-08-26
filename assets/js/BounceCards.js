@@ -63,7 +63,7 @@
   }
 
   function mountBounceCards(root, options) {
-    if (!root || typeof gsap === 'undefined') return;
+    if (!root) return;
 
     var images = options.images || [];
     var count = images.length;
@@ -76,8 +76,12 @@
     var spinOffset = 0;
     var hoverIdx = -1;
     var tickerFn = null;
+    var mobile = isMobile();
+    var hasGsap = typeof gsap !== 'undefined';
+    // Continuous fan drift is desktop-only — mobile keeps a static fan (big main-thread win).
+    var allowSpin = hasGsap && !mobile && !prefersReducedMotion();
     // Slow drift: ~one card-width every ~2.2s
-    var spinSpeed = isMobile() ? 18 : 26;
+    var spinSpeed = mobile ? 18 : 26;
 
     function size() {
       var vw = Math.max(window.innerWidth || 1200, 320);
@@ -123,10 +127,16 @@
     }
 
     function startSpin() {
-      if (prefersReducedMotion()) return;
+      if (!allowSpin) return;
       if (tickerFn) return;
       tickerFn = onTick;
       gsap.ticker.add(tickerFn);
+    }
+
+    function stopSpin() {
+      if (!tickerFn || !hasGsap) return;
+      gsap.ticker.remove(tickerFn);
+      tickerFn = null;
     }
 
     function pauseSpin() {
@@ -134,12 +144,14 @@
     }
 
     function resumeSpin() {
+      if (!allowSpin) return;
       spinPaused = false;
       hoverIdx = -1;
+      startSpin();
     }
 
     function pushSiblings(hoveredIdx) {
-      if (!enableHover) return;
+      if (!enableHover || !hasGsap) return;
       pauseSpin();
       hoverIdx = hoveredIdx;
 
@@ -179,7 +191,10 @@
     }
 
     function resetSiblings(shouldResume) {
-      if (!enableHover) return;
+      if (!enableHover || !hasGsap) {
+        if (shouldResume) resumeSpin();
+        return;
+      }
       var base = snapshotTransforms();
       var pending = count;
 
@@ -242,17 +257,45 @@
 
       var cards = root.querySelectorAll('.card');
 
-      gsap.fromTo(
-        cards,
-        { scale: 0 },
-        {
-          scale: 1,
-          stagger: animationStagger,
-          ease: easeType,
-          delay: animationDelay,
-          onComplete: startSpin,
-        }
-      );
+      if (hasGsap && !prefersReducedMotion()) {
+        gsap.fromTo(
+          cards,
+          { scale: 0 },
+          {
+            scale: 1,
+            stagger: animationStagger,
+            ease: easeType,
+            delay: animationDelay,
+            onComplete: function () {
+              if (allowSpin) startSpin();
+            },
+          }
+        );
+      } else {
+        root.classList.add('is-static-ready');
+      }
+
+      // Pause continuous spin when gallery leaves the viewport (desktop).
+      if (allowSpin && 'IntersectionObserver' in window) {
+        var vis = new IntersectionObserver(
+          function (entries) {
+            var onScreen = entries.some(function (e) {
+              return e.isIntersecting;
+            });
+            if (onScreen) {
+              if (hoverIdx < 0) resumeSpin();
+            } else {
+              stopSpin();
+            }
+          },
+          { root: null, rootMargin: '0px', threshold: 0.05 }
+        );
+        vis.observe(root);
+      }
+
+      if (mobile || !hasGsap) {
+        enableHover = false;
+      }
 
       Array.prototype.forEach.call(cards, function (card) {
         var idx = parseInt(card.getAttribute('data-idx'), 10);
@@ -315,13 +358,8 @@
 
     function start() {
       if (root.getAttribute('data-bounce-ready') === 'true') return;
-      if (typeof gsap === 'undefined') {
-        // Wait briefly for deferred GSAP
-        setTimeout(start, 50);
-        return;
-      }
       root.setAttribute('data-bounce-ready', 'true');
-      var base = 'assets/images/gallery/';
+      var base = '/assets/images/gallery/';
       var width = Math.max(root.clientWidth || 0, 320);
       mountBounceCards(root, {
         className: 'custom-bounceCards',
