@@ -9,7 +9,7 @@
       intro: 'A Classic Cuts staple — Ray delivers confident, consistent cuts with the craft that keeps clients coming back.',
       tags: ['Classic cuts', 'Fades', 'Everyday maintenance'],
       photo: 'assets/images/barbers/ray.jpg',
-      profile: 'raylopez.html',
+      profile: '/barbers/ray-lopez',
       portfolio: ['assets/images/gallery/dsc-0114-copy.jpg']
     },
     {
@@ -19,7 +19,7 @@
       intro: 'Skin fades, taper fades, gentlemen’s cuts, and hot towel shaves. Jay keeps it classic with a modern edge.',
       tags: ['Skin fades', 'Taper fades', 'Hot towel shaves'],
       photo: 'assets/images/barbers/jay.jpg',
-      profile: 'jayoceguera.html',
+      profile: '/barbers/jay-oceguera',
       portfolio: ['assets/images/gallery/dsc-0477-copy.jpg', 'assets/images/gallery/dsc-0136-copy.jpg']
     },
     {
@@ -29,7 +29,7 @@
       intro: 'From clean tapers to bold styles, Romero brings steady hands and a welcoming vibe to every appointment.',
       tags: ['Tapers', 'Bold styles', 'Lineups'],
       photo: 'assets/images/barbers/romero.png',
-      profile: 'romero.html',
+      profile: '/barbers/romero',
       portfolio: [
         'assets/images/gallery/dsc-0749-copy.jpg',
         'assets/images/gallery/dsc-0781-copy.jpg',
@@ -44,7 +44,7 @@
       intro: 'Clean fades, sharp lines, and a chill chair — Colton brings precision and personality to every cut.',
       tags: ['Fades', 'Sharp lines', 'Detail work'],
       photo: 'assets/images/barbers/colton.png',
-      profile: 'colton.html',
+      profile: '/barbers/colton-ballew',
       portfolio: ['assets/images/gallery/colton-05.png']
     },
     {
@@ -54,7 +54,7 @@
       intro: 'Detail-focused and easygoing — Will dials in fades and finishes that look sharp walking out and hold up all week.',
       tags: ['Fades', 'Finishes', 'Week-ready cuts'],
       photo: 'assets/images/barbers/will.png',
-      profile: 'willjaimes.html',
+      profile: '/barbers/will-jaimes',
       portfolio: [
         'assets/images/gallery/dsc-0693-4-copy.jpg',
         'assets/images/gallery/dsc-0423-copy.jpg',
@@ -68,7 +68,7 @@
       intro: 'Fresh cuts and clean finishes — Tammy helps you leave looking sharp and ready for the day.',
       tags: ['Fresh cuts', 'Clean finishes'],
       photo: null,
-      profile: 'wellington-199912.html',
+      profile: '/barbers/tammy',
       portfolio: ['assets/images/gallery/dsc00216.jpg']
     },
     {
@@ -78,7 +78,7 @@
       intro: 'Fresh cuts and clean finishes — Tevel is ready when you need a sharp look, whether you book ahead or walk in.',
       tags: ['Walk-ins', 'Clean finishes'],
       photo: 'assets/images/barbers/tevel.jpg',
-      profile: 'wellington-199912-210611.html',
+      profile: '/barbers/tevel',
       portfolio: ['assets/images/gallery/dsc00113.jpg']
     }
   ];

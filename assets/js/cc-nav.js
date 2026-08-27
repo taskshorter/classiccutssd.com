@@ -4,7 +4,7 @@
 (function () {
   "use strict";
 
-  var BOOK = "book.html";
+  var BOOK = "/book";
 
   function ready(fn) {
     if (document.readyState !== "loading") fn();

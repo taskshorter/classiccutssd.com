@@ -1,6 +1,35 @@
 {
+  "trailingSlash": false,
+  "redirects": [
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/barber-shop.html", "destination": "/barbers", "permanent": true },
+    { "source": "/barbershopservices.html", "destination": "/services", "permanent": true },
+    { "source": "/haircut-gallery.html", "destination": "/gallery", "permanent": true },
+    { "source": "/barber-shop-contact.html", "destination": "/contact", "permanent": true },
+    { "source": "/barber-shop-contact-269206.html", "destination": "/apply", "permanent": true },
+    { "source": "/book.html", "destination": "/book", "permanent": true },
+    { "source": "/raylopez.html", "destination": "/barbers/ray-lopez", "permanent": true },
+    { "source": "/jayoceguera.html", "destination": "/barbers/jay-oceguera", "permanent": true },
+    { "source": "/romero.html", "destination": "/barbers/romero", "permanent": true },
+    { "source": "/colton.html", "destination": "/barbers/colton-ballew", "permanent": true },
+    { "source": "/willjaimes.html", "destination": "/barbers/will-jaimes", "permanent": true },
+    { "source": "/wellington-199912.html", "destination": "/barbers/tammy", "permanent": true },
+    { "source": "/wellington-199912-210611.html", "destination": "/barbers/tevel", "permanent": true }
+  ],
   "rewrites": [
-    { "source": "/book", "destination": "/book.html" }
+    { "source": "/barbers", "destination": "/barber-shop.html" },
+    { "source": "/services", "destination": "/barbershopservices.html" },
+    { "source": "/gallery", "destination": "/haircut-gallery.html" },
+    { "source": "/contact", "destination": "/barber-shop-contact.html" },
+    { "source": "/apply", "destination": "/barber-shop-contact-269206.html" },
+    { "source": "/book", "destination": "/book.html" },
+    { "source": "/barbers/ray-lopez", "destination": "/raylopez.html" },
+    { "source": "/barbers/jay-oceguera", "destination": "/jayoceguera.html" },
+    { "source": "/barbers/romero", "destination": "/romero.html" },
+    { "source": "/barbers/colton-ballew", "destination": "/colton.html" },
+    { "source": "/barbers/will-jaimes", "destination": "/willjaimes.html" },
+    { "source": "/barbers/tammy", "destination": "/wellington-199912.html" },
+    { "source": "/barbers/tevel", "destination": "/wellington-199912-210611.html" }
   ],
   "headers": [
     {
@@ -13,6 +42,12 @@
       "source": "/favicon.ico",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, follow" }
       ]
     }
   ]

@@ -4,7 +4,8 @@
 (function (window, document) {
   'use strict';
 
-  var BOOK_URL = 'book.html';
+  var CANONICAL_HOST = 'https://www.classiccutssd.com';
+  var BOOK_URL = '/book';
   var BUSINESS = {
     name: 'Classic Cuts Barbershop',
     phone: '6196845871',
@@ -94,7 +95,7 @@
       '@type': 'BarberShop',
       name: BUSINESS.name,
       telephone: BUSINESS.phone,
-      image: 'assets/images/brand/logo.png',
+      image: CANONICAL_HOST + '/assets/images/brand/logo.png',
       address: {
         '@type': 'PostalAddress',
         streetAddress: BUSINESS.address1 + ' ' + BUSINESS.suite,
@@ -108,7 +109,11 @@
         latitude: 32.7739008,
         longitude: -117.1432662,
       },
-      url: window.location.origin + window.location.pathname.replace(/[^/]*$/, ''),
+      url: (function () {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        if (canonical) return canonical.href;
+        return CANONICAL_HOST + window.location.pathname;
+      })(),
       sameAs: [BUSINESS.instagramUrl, BUSINESS.facebookUrl, BUSINESS.yelpUrl],
       openingHoursSpecification: [
         {
@@ -124,11 +129,6 @@
           closes: '18:00',
         },
       ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: BUSINESS.rating,
-        reviewCount: BUSINESS.reviewCount,
-      },
       areaServed: BUSINESS.neighborhood + ', ' + BUSINESS.city,
     };
 
