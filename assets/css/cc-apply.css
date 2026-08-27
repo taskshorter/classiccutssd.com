@@ -1,12 +1,20 @@
 /* Barber application — full-page form */
 
+/* The source artwork (application-background.png) has a warm cream/sepia
+   cast baked into its pixels. background-blend-mode: luminosity keeps the
+   image's own lightness/linework detail but takes its hue and saturation
+   from the neutral gray background-color below, stripping the warmth
+   without touching the PNG file. Matches the approved Services treatment;
+   scoped to body.cc-page-apply only, so Contact/Services (different body
+   classes) are unaffected. */
 body.cc-page-apply {
-  background-color: #f4f4f5;
+  background-color: #f2f2f2;
   background-image: url("../images/backgrounds/application-background.png");
   background-repeat: no-repeat;
   background-position: center top;
   background-size: cover;
   background-attachment: fixed;
+  background-blend-mode: luminosity;
   overflow-x: clip;
 }
 
