@@ -66,25 +66,25 @@ body.cc-page-services .cc-main {
   display: block;
 }
 
+/* Two real columns: [ name / desc ] | [ price ]. The price gets its own
+   reserved track (not just a wide cap on a full-width block), so the
+   description physically cannot reach the price's territory. */
 .cc-services-menu__copy {
   min-width: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 32px;
+  row-gap: 7px;
   container-type: inline-size;
   container-name: service-copy;
 }
 
-.cc-services-menu__top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  gap: 0 16px;
-  margin-bottom: 7px;
-}
-
 .cc-services-menu__name {
-  margin: 0;
-  flex: 1 1 auto;
+  grid-column: 1;
+  grid-row: 1;
   min-width: 0;
+  margin: 0;
   font-family: "Abril Fatface", "Quattrocento", serif;
   font-size: clamp(1.4rem, 2.5vw, 1.75rem);
   line-height: 1.15;
@@ -92,7 +92,9 @@ body.cc-page-services .cc-main {
 }
 
 .cc-services-menu__price {
-  flex: 0 0 auto;
+  grid-column: 2;
+  grid-row: 1;
+  align-self: baseline;
   font-family: "Abril Fatface", "Quattrocento", serif;
   font-size: clamp(1.15rem, 2vw, 1.35rem);
   line-height: 1.15;
@@ -102,8 +104,10 @@ body.cc-page-services .cc-main {
 }
 
 .cc-services-menu__desc {
+  grid-column: 1;
+  grid-row: 2;
   margin: 0;
-  max-width: 44ch;
+  max-width: 34ch;
   font-family: "Lato", sans-serif;
   font-size: 0.98rem;
   line-height: 1.5;
@@ -197,8 +201,8 @@ body.cc-page-services .cc-main {
     border-radius: 12px;
   }
 
-  .cc-services-menu__top {
-    gap: 0 10px;
+  .cc-services-menu__copy {
+    column-gap: 14px;
   }
 
   .cc-services-menu__name {
@@ -212,6 +216,6 @@ body.cc-page-services .cc-main {
 
   .cc-services-menu__desc {
     font-size: 0.92rem;
-    max-width: none;
+    max-width: 34ch;
   }
 }
