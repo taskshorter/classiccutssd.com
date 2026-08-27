@@ -1,5 +1,11 @@
 /* Contact page — shares apply aesthetics */
 
+/* The source artwork (application-background.png) has a warm cream/sepia
+   cast baked into its pixels. background-blend-mode: luminosity keeps the
+   image's own lightness/linework detail but takes its hue and saturation
+   from the neutral gray background-color below, which strips the warmth
+   without touching the PNG file or affecting any other element (same
+   treatment already applied to cc-page-services and cc-page-apply). */
 body.cc-page-contact {
   background-color: #f4f4f5;
   background-image: url("../images/backgrounds/application-background.png");
@@ -7,6 +13,7 @@ body.cc-page-contact {
   background-position: center top;
   background-size: cover;
   background-attachment: fixed;
+  background-blend-mode: luminosity;
   overflow-x: clip;
 }
 
