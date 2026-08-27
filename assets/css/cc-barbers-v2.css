@@ -1,0 +1,443 @@
+/* Barbers V2 — editorial character-select-inspired barber selector (PREVIEW) */
+
+body.cc-page-barbers {
+  background: #0a0a0a !important;
+  color: #f5ebeb;
+  overflow-x: hidden;
+}
+
+body.cc-page-barbers .banner-wrap {
+  display: none !important;
+}
+
+body.cc-page-barbers .cc-main {
+  background: transparent !important;
+}
+
+body.cc-page-barbers .cc-footer {
+  background: #0a0a0a;
+  border-top: 1px solid rgba(245, 235, 235, 0.12);
+  color: #f5ebeb;
+}
+
+body.cc-page-barbers .cc-footer a {
+  color: #f5ebeb;
+}
+
+.cc-select {
+  padding: calc(var(--cc-chrome-h, 84px) + 28px) 20px 72px;
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.cc-select__eyebrow {
+  margin: 0 0 22px;
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 235, 0.55);
+  text-align: center;
+}
+
+/* ---------- Layout shell ---------- */
+
+.cc-select__stage {
+  display: grid;
+  gap: 20px;
+  grid-template-areas:
+    "portrait"
+    "roster"
+    "info"
+    "portfolio";
+}
+
+@media (min-width: 980px) {
+  .cc-select__stage {
+    grid-template-columns: 264px minmax(320px, 1.05fr) minmax(320px, 0.95fr);
+    grid-template-areas:
+      "roster portrait info"
+      "roster portfolio portfolio";
+    gap: 28px 36px;
+    align-items: start;
+  }
+}
+
+/* ---------- Roster ---------- */
+
+.cc-select__roster {
+  grid-area: roster;
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 10px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.cc-select__roster::-webkit-scrollbar {
+  height: 6px;
+}
+
+.cc-select__roster::-webkit-scrollbar-thumb {
+  background: rgba(245, 235, 235, 0.18);
+  border-radius: 3px;
+}
+
+@media (min-width: 980px) {
+  .cc-select__roster {
+    flex-direction: column;
+    overflow-x: visible;
+    padding: 0;
+    gap: 6px;
+  }
+}
+
+.cc-select__roster-item {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 168px;
+  padding: 8px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (min-width: 980px) {
+  .cc-select__roster-item {
+    width: 100%;
+  }
+}
+
+.cc-select__roster-item:hover {
+  background: rgba(245, 235, 235, 0.06);
+}
+
+.cc-select__roster-item[aria-selected="true"] {
+  background: rgba(245, 235, 235, 0.1);
+  border-color: rgba(245, 235, 235, 0.28);
+}
+
+.cc-select__roster-item:focus-visible {
+  outline: 2px solid #f5ebeb;
+  outline-offset: 2px;
+}
+
+.cc-select__roster-photo {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-select__roster-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cc-select__roster-photo--placeholder {
+  font-family: "Abril Fatface", Georgia, serif;
+  font-size: 1rem;
+  color: rgba(245, 235, 235, 0.55);
+  background: linear-gradient(160deg, #201c1c, #141212);
+  border: 1px dashed rgba(245, 235, 235, 0.25);
+}
+
+.cc-select__roster-text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.cc-select__roster-name {
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #f5ebeb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cc-select__roster-specialty {
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 10.5px;
+  color: rgba(245, 235, 235, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cc-select__roster-item[aria-selected="true"] .cc-select__roster-name {
+  color: #ffffff;
+}
+
+/* ---------- Featured portrait ---------- */
+
+.cc-select__portrait {
+  grid-area: portrait;
+  position: relative;
+  aspect-ratio: 4 / 5;
+  max-height: 74vh;
+  border-radius: 18px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(245, 235, 235, 0.08), transparent 60%),
+    #141212;
+}
+
+.cc-select__portrait-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0;
+}
+
+.cc-select__portrait-img.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cc-select__portrait-img {
+    transition: opacity 320ms ease;
+  }
+}
+
+.cc-select__portrait-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  background: linear-gradient(165deg, #201c1c, #100e0e);
+  opacity: 0;
+}
+
+.cc-select__portrait-placeholder.is-active {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cc-select__portrait-placeholder {
+    transition: opacity 320ms ease;
+  }
+}
+
+.cc-select__portrait-placeholder-mark {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Abril Fatface", Georgia, serif;
+  font-size: 2.2rem;
+  color: rgba(245, 235, 235, 0.7);
+  border: 1px dashed rgba(245, 235, 235, 0.3);
+}
+
+.cc-select__portrait-placeholder-note {
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 235, 0.45);
+}
+
+/* ---------- Info panel ---------- */
+
+.cc-select__info {
+  grid-area: info;
+  display: flex;
+  flex-direction: column;
+  padding-top: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cc-select__info {
+    transition: opacity 220ms ease, transform 220ms ease;
+  }
+
+  .cc-select__info.is-leaving {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.cc-select__specialty {
+  margin: 0 0 10px;
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 235, 0.55);
+}
+
+.cc-select__name {
+  margin: 0 0 14px;
+  font-family: "Abril Fatface", Georgia, serif;
+  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  color: #f5ebeb;
+}
+
+.cc-select__intro {
+  margin: 0 0 18px;
+  max-width: 40ch;
+  font-family: Lato, system-ui, sans-serif;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: rgba(245, 235, 235, 0.78);
+}
+
+.cc-select__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+
+.cc-select__tags li {
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 10px;
+  border: 1px solid rgba(245, 235, 235, 0.18);
+  color: rgba(245, 235, 235, 0.7);
+}
+
+.cc-select__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.cc-select__actions .cc-btn {
+  min-height: 44px;
+}
+
+/* ---------- Portfolio strip ---------- */
+
+.cc-select__portfolio {
+  grid-area: portfolio;
+}
+
+.cc-select__portfolio-label {
+  margin: 0 0 12px;
+  font-family: Montserrat, system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(245, 235, 235, 0.5);
+}
+
+.cc-select__portfolio-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 16px;
+  padding: 6px 2px 2px;
+}
+
+.cc-select__portfolio-item {
+  margin: 0;
+  flex: 0 0 auto;
+  width: 128px;
+  background: #17140f;
+  border: 1px solid rgba(245, 235, 235, 0.1);
+  border-radius: 4px;
+  padding: 6px 6px 10px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  transform: rotate(var(--cc-tilt, 0deg));
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cc-select__portfolio-item {
+    transition: opacity 260ms ease, transform 260ms ease;
+    transition-delay: var(--cc-delay, 0ms);
+  }
+
+  .cc-select__portfolio-item.is-in {
+    opacity: 1;
+  }
+
+  .cc-select__portfolio-item:not(.is-in) {
+    transform: rotate(var(--cc-tilt, 0deg)) translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-select__portfolio-item {
+    transform: none;
+  }
+
+  .cc-select__portfolio-item.is-in {
+    opacity: 1;
+  }
+}
+
+.cc-select__portfolio-item img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.cc-select__portfolio-empty {
+  margin: 0;
+  font-family: Lato, system-ui, sans-serif;
+  font-size: 0.92rem;
+  color: rgba(245, 235, 235, 0.45);
+  font-style: italic;
+}
+
+/* ---------- Data-gap notice (visible, honest placeholder labeling) ---------- */
+
+.cc-select__data-note {
+  margin: 10px 0 0;
+  font-family: Lato, system-ui, sans-serif;
+  font-size: 0.78rem;
+  color: rgba(245, 235, 235, 0.4);
+}
+
+@media (max-width: 640px) {
+  .cc-select {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .cc-select__portrait {
+    max-height: 56vh;
+  }
+}
