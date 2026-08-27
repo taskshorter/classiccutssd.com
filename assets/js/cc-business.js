@@ -4,7 +4,7 @@
 (function (window, document) {
   'use strict';
 
-  var CANONICAL_HOST = 'https://classiccutssd.com';
+  var CANONICAL_HOST = 'https://www.classiccutssd.com';
   var BOOK_URL = '/book';
   var BUSINESS = {
     name: 'Classic Cuts Barbershop',
@@ -129,11 +129,6 @@
           closes: '18:00',
         },
       ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: BUSINESS.rating,
-        reviewCount: BUSINESS.reviewCount,
-      },
       areaServed: BUSINESS.neighborhood + ', ' + BUSINESS.city,
     };
 
