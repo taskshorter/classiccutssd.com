@@ -4,7 +4,7 @@
 (function (window, document) {
   'use strict';
 
-  var BOOK_URL = 'book.html';
+  var BOOK_URL = '/book';
   var BUSINESS = {
     name: 'Classic Cuts Barbershop',
     phone: '6196845871',
@@ -94,7 +94,7 @@
       '@type': 'BarberShop',
       name: BUSINESS.name,
       telephone: BUSINESS.phone,
-      image: 'assets/images/brand/logo.png',
+      image: '/assets/images/brand/logo.png',
       address: {
         '@type': 'PostalAddress',
         streetAddress: BUSINESS.address1 + ' ' + BUSINESS.suite,

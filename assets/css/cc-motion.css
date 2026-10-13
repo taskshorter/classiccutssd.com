@@ -1,0 +1,31 @@
+/* Classic Cuts — scroll motion
+   Transform only (keep opacity at 1 so contrast audits never fail mid-reveal) */
+
+.cc-reveal {
+  --cc-reveal-delay: 0ms;
+  opacity: 1;
+  transform: translate3d(0, 28px, 0);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1) var(--cc-reveal-delay);
+  will-change: transform;
+}
+
+.cc-reveal.is-inview {
+  transform: translate3d(0, 0, 0);
+}
+
+.cc-reveal.cc-reveal--done {
+  transform: none;
+  transition: none;
+  will-change: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-reveal,
+  .cc-reveal.is-inview,
+  .cc-reveal.cc-reveal--done {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+    will-change: auto;
+  }
+}

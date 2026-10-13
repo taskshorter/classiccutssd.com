@@ -54,7 +54,7 @@ body.cc-page-home #about .cc-about__inner {
 
 body.cc-page-home #about .cc-metric-card,
 body.cc-page-home #about .cc-value-card {
-  background: rgba(8, 8, 8, 0.62);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: #121212;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }

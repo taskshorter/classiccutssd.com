@@ -48,7 +48,10 @@
       }
       var io = new IntersectionObserver(
         function (entries) {
-          if (!entries.some(function (e) { return e.isIntersecting; })) return;
+          if (!entries.some(function (e) {
+            return e.isIntersecting;
+          }))
+            return;
           io.disconnect();
           resolve(true);
         },
@@ -58,32 +61,40 @@
     });
   }
 
+  function isMobile() {
+    return window.matchMedia && window.matchMedia("(max-width: 640px)").matches;
+  }
+
   function boot() {
     var bounce = document.getElementById("cc-bounce-cards");
     var mission = document.getElementById("cc-mission-swap");
 
     afterFirstPaint(function () {
       // PixelSwap has no GSAP dependency — load only when mission is actually visible
-      near(mission, "80px 0px").then(function () {
-        return loadScript("assets/js/PixelSwap.js?v=20260814z");
+      near(mission, "120px 0px").then(function () {
+        return loadScript("/assets/js/PixelSwap.js?v=20260815g");
       });
 
-      // BounceCards + GSAP only when the gallery approaches
-      near(bounce, "80px 0px").then(function () {
-        return loadScript("https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js").then(
-          function () {
-            return loadScript("assets/js/BounceCards.js?v=20260814s");
-          }
-        );
+      // BounceCards: mobile skips GSAP entirely (static fan). Desktop loads GSAP on approach.
+      near(bounce, "180px 0px").then(function () {
+        var bounceSrc = "/assets/js/BounceCards.js?v=20260815g";
+        if (isMobile()) {
+          return loadScript(bounceSrc);
+        }
+        return loadScript(
+          "https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"
+        ).then(function () {
+          return loadScript(bounceSrc);
+        });
       });
 
       var reviews = document.getElementById("reviews");
       near(reviews, "120px 0px").then(function () {
-        return loadScript("assets/js/cc-reviews-carousel.js?v=20260814x");
+        return loadScript("/assets/js/cc-reviews-carousel.js?v=20260814x");
       });
 
       whenIdle(function () {
-        loadScript("assets/js/cc-services-menu.js");
+        loadScript("/assets/js/cc-services-menu.js");
       });
     });
   }
