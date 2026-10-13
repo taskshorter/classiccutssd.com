@@ -10,7 +10,7 @@
 2. Mobile ≤767: hamburger, drawer links, Book/Call actions, hero poster (no video)  
 3. Desktop ≥768: mega Barbers panel open/close, Escape  
 4. `/services`, `/gallery`, `/barbers`, one profile, `/contact`, `/apply` render  
-5. `/book`: loading → embed **or** phone fallback; aside/stack responsive  
+5. `/book`: loading → embed **or** phone fallback; desktop booking UI fits one viewport (no page scroll through the form), mobile stacks with sticky Back/Next, no horizontal overflow at 375px  
 6. Announce wrap does not cover hero controls  
 7. Reduced motion: no reveal jank / no autoplay video  
 8. Spot-check footer NAP vs `cc-business.js`  

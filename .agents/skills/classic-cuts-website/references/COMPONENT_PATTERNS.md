@@ -27,8 +27,8 @@ Not a React component library — **CSS class + small JS modules**.
 
 | Pattern | Notes |
 |---------|-------|
-| `.cc-book-hero` | Branded intro |
-| `.cc-book-stage` / `.cc-book-panel` | Embed shell |
+| `.cc-book-aside__intro` | Booking H1 + one-line lead, inside the left branding column |
+| `.cc-book-stage` / `.cc-book-aside` / `.cc-book-panel` | Two-column booking shell: branding aside + fixed-height embed card |
 | `booklocal-booking` | External custom element |
 
 ## Data-driven UI

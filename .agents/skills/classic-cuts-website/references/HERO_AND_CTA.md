@@ -28,7 +28,7 @@ Repeated Book Now rows after lookbook, trust, visit, and team sections — inten
 
 ## Book page hero
 
-Separate dark hero: eyebrow (location), H1 “Book Your Next Cut”, lead, then trust strip (Choose / Pick / Book), then embed stage. Phone fallback below/aside if embed fails.
+No hero band or trust strip: the H1 “Book Your Next Cut” + one-line lead sit at the top of the left branding column (same width as the photo below), beside the booking card, so the booking UI is visible immediately. Phone fallback below/aside if embed fails.
 
 ## Profile pages
 
