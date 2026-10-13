@@ -23,6 +23,11 @@
 <link rel="stylesheet" href="/assets/css/cc-book.css?v=20260814b" />
 <script src="/assets/js/cc-business.js?v=20260830b" defer></script>
 <script src="/assets/js/cc-nav.js?v=20260830a" defer></script>
+<!-- Card media for the BookLocal widget: the site's own service images and barber photos, keyed by BookLocal catalog id.
+     Order matters (deferred scripts run in document order): data files first, then the map that reads them. -->
+<script src="/assets/js/cc-services.js?v=20261013a" defer></script>
+<script src="/assets/js/cc-barbers-data.js?v=20261013a" defer></script>
+<script src="/assets/js/cc-book-media.js?v=20261013a" defer></script>
 <!--
   BookLocal embed (DEMO_PROSPECT / Stripe Test Mode).
   Production BookLocal: https://booking.fpdesigner.com
