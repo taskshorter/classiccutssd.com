@@ -29,7 +29,46 @@
 }
 
 .cc-mega .cc-mega__col:not(.cc-mega__col--primary) .cc-mega__links {
-  gap: 8px;
+  gap: 5px;
+}
+
+.cc-mega .cc-mega__col:not(.cc-mega__col--primary) .cc-mega__label {
+  margin-bottom: 8px;
+}
+
+/* Block-level rows (the base inline-block leaves ~7px of baseline slack per row). */
+.cc-mega .cc-mega__col:not(.cc-mega__col--primary) .cc-mega__links a {
+  display: block;
+  padding: 1.5px 0;
+}
+
+/* "Staff Portal": an internal/team destination — set apart by a hairline and a
+   small lock, kept as quiet as the other shortcuts. The icon is CSS-only. */
+.cc-mega .cc-mega__links .cc-mega__staff {
+  margin-top: 3px;
+  padding-top: 8px;
+  border-top: 1px solid #ececec;
+}
+
+.cc-mega .cc-mega__col:not(.cc-mega__col--primary) .cc-mega__links .cc-mega__staff a {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #6e6e73;
+}
+
+.cc-mega .cc-mega__col:not(.cc-mega__col--primary) .cc-mega__links .cc-mega__staff a:hover {
+  color: #000000;
+}
+
+.cc-mega .cc-mega__staff a::before {
+  content: "";
+  flex: 0 0 12px;
+  width: 12px;
+  height: 12px;
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 7V5a3.5 3.5 0 0 1 7 0v2h.5A1.5 1.5 0 0 1 13.5 8.5v5A1.5 1.5 0 0 1 12 15H4a1.5 1.5 0 0 1-1.5-1.5v-5A1.5 1.5 0 0 1 4 7h.5Zm1.5 0h4V5a2 2 0 0 0-4 0v2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4.5 7V5a3.5 3.5 0 0 1 7 0v2h.5A1.5 1.5 0 0 1 13.5 8.5v5A1.5 1.5 0 0 1 12 15H4a1.5 1.5 0 0 1-1.5-1.5v-5A1.5 1.5 0 0 1 4 7h.5Zm1.5 0h4V5a2 2 0 0 0-4 0v2Z'/%3E%3C/svg%3E") center / contain no-repeat;
 }
 
 /* Header row: section label + "View all barbers". */
