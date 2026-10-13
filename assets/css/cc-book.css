@@ -9,162 +9,105 @@ body.cc-page-book .cc-main {
   background: #000;
 }
 
-/* ——— Hero ——— */
-.cc-book-hero {
-  position: relative;
-  overflow: hidden;
-  padding: clamp(48px, 8vw, 88px) 24px clamp(36px, 5vw, 56px);
-  background: #000;
+/*
+ * The widget's footer is position: sticky on mobile. The global
+ * `body { overflow-x: hidden }` would make <body> a (non-scrolling) overflow
+ * container and defeat that, so on this page clip horizontally instead —
+ * same visual result, but sticky resolves against the viewport.
+ */
+body.cc-page-book {
+  overflow-x: clip;
+  overflow-y: visible;
 }
 
-.cc-book-hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.cc-book-hero__bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  filter: grayscale(1) contrast(1.05);
-  opacity: 0.38;
-}
-
-.cc-book-hero__bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.72) 45%,
-    #000 100%
+/*
+ * Desktop: the booking experience fits one viewport below the fixed chrome
+ * (announce bar + nav = --cc-chrome-h). The card has a fixed height; the
+ * BookLocal widget scrolls its stage area internally and pins stepper/footer.
+ * Mobile/tablet: natural height, page scrolls normally.
+ */
+body.cc-page-book {
+  --cc-book-fine-h: 34px;
+  --cc-book-stage-pad: 24px;
+  /* Everything below the fixed chrome: stage padding, card, fine print. */
+  --cc-book-card-h: clamp(
+    520px,
+    calc(100dvh - var(--cc-chrome-h, 84px) - var(--cc-book-stage-pad) - var(--cc-book-fine-h) - 32px),
+    820px
   );
-}
-
-.cc-book-hero__inner {
-  position: relative;
-  z-index: 1;
-  max-width: 960px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.cc-book-eyebrow {
-  margin: 0 0 14px;
-  color: rgba(245, 235, 235, 0.55);
-  font-family: "Montserrat", sans-serif;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
-.cc-book-hero h1 {
-  margin: 0 0 16px;
-  color: #f5ebeb;
-  font-family: "Abril Fatface", "Quattrocento", serif;
-  font-size: clamp(36px, 7vw, 64px);
-  font-weight: 400;
-  line-height: 1.05;
-  letter-spacing: 0.01em;
-}
-
-.cc-book-hero__lead {
-  margin: 0 auto;
-  max-width: 28em;
-  color: rgba(245, 235, 235, 0.82);
-  font-family: "Lato", sans-serif;
-  font-size: clamp(16px, 2.2vw, 19px);
-  font-weight: 300;
-  line-height: 1.55;
-}
-
-.cc-book-hero__rule {
-  width: 64px;
-  height: 1px;
-  margin: 22px auto 0;
-  background: rgba(245, 235, 235, 0.35);
-}
-
-/* ——— Trust strip ——— */
-.cc-book-trust {
-  border-top: 1px solid rgba(245, 235, 235, 0.1);
-  border-bottom: 1px solid rgba(245, 235, 235, 0.1);
-  background: #0a0a0a;
-  padding: 18px 24px;
-}
-
-.cc-book-trust__inner {
-  max-width: 960px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px 28px;
-  text-align: center;
-}
-
-.cc-book-trust span {
-  color: rgba(245, 235, 235, 0.7);
-  font-family: "Montserrat", sans-serif;
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.cc-book-trust__sep {
-  opacity: 0.35;
-}
-
-@media (max-width: 560px) {
-  .cc-book-trust__sep {
-    display: none;
-  }
-
-  .cc-book-trust__inner {
-    flex-direction: column;
-    gap: 10px;
-  }
 }
 
 /* ——— Booking stage ——— */
 .cc-book-stage {
-  padding: clamp(40px, 6vw, 72px) 20px clamp(64px, 8vw, 96px);
+  padding: var(--cc-book-stage-pad) 24px clamp(36px, 5vw, 56px);
   background: #000;
 }
 
+/*
+ * Left = a real visual block (title, large photo, shop info — all one width).
+ * Right = the booking application. The card sits to the right of a wider left
+ * column; the title lives in the left column so it never overhangs the photo.
+ */
 .cc-book-stage__layout {
-  max-width: 1180px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.15fr);
-  gap: clamp(28px, 4vw, 48px);
-  align-items: start;
+  grid-template-columns: minmax(300px, 0.38fr) minmax(0, 0.62fr);
+  gap: clamp(28px, 3.4vw, 48px);
+  align-items: stretch;
 }
 
+/* Branding panel: stays exactly as tall as the booking card (+ fine print row). */
 .cc-book-aside {
-  position: sticky;
-  top: calc(var(--cc-chrome-h, 84px) + 20px);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: calc(var(--cc-book-card-h) + var(--cc-book-fine-h));
+  padding-bottom: var(--cc-book-fine-h);
+}
+
+.cc-book-aside__intro {
+  flex: 0 0 auto;
+  margin: 0 0 20px;
+}
+
+.cc-book-aside__intro h1 {
+  margin: 0 0 10px;
+  color: #f5ebeb;
+  font-family: "Abril Fatface", "Quattrocento", serif;
+  font-size: clamp(30px, 3.1vw, 44px);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: 0.01em;
+}
+
+.cc-book-aside__lead {
+  margin: 0;
+  max-width: 30em;
+  color: rgba(245, 235, 235, 0.78);
+  font-family: "Lato", sans-serif;
+  font-size: clamp(14px, 1.2vw, 16px);
+  font-weight: 300;
+  line-height: 1.5;
 }
 
 .cc-book-aside__media {
   position: relative;
+  flex: 1 1 auto;
+  min-height: 150px;
   overflow: hidden;
   border-radius: 18px;
   border: 1px solid rgba(245, 235, 235, 0.12);
-  aspect-ratio: 4 / 5;
   background: #111;
 }
 
 .cc-book-aside__media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 25%;
   filter: grayscale(0.35) contrast(1.04);
 }
 
@@ -172,33 +115,30 @@ body.cc-page-book .cc-main {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    180deg,
-    transparent 40%,
-    rgba(0, 0, 0, 0.75) 100%
-  );
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.78) 100%);
 }
 
 .cc-book-aside__quote {
   position: absolute;
-  left: 20px;
-  right: 20px;
-  bottom: 22px;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
   z-index: 1;
   margin: 0;
   color: #f5ebeb;
   font-family: "Abril Fatface", serif;
-  font-size: clamp(22px, 2.6vw, 28px);
+  font-size: clamp(22px, 2.2vw, 27px);
   line-height: 1.15;
 }
 
 .cc-book-aside__meta {
-  margin-top: 22px;
+  flex: 0 0 auto;
+  margin-top: 18px;
   padding: 0 4px;
 }
 
 .cc-book-aside__meta h2 {
-  margin: 0 0 10px;
+  margin: 0 0 8px;
   color: #f5ebeb;
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
@@ -209,12 +149,12 @@ body.cc-page-book .cc-main {
 
 .cc-book-aside__meta p,
 .cc-book-aside__meta a {
-  margin: 0 0 6px;
+  margin: 0 0 4px;
   color: rgba(245, 235, 235, 0.72);
   font-family: "Lato", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 300;
-  line-height: 1.5;
+  line-height: 1.45;
   text-decoration: none;
 }
 
@@ -223,88 +163,39 @@ body.cc-page-book .cc-main {
 }
 
 .cc-book-aside__note {
-  margin-top: 14px !important;
-  padding-top: 14px;
+  margin-top: 10px !important;
+  padding-top: 10px;
   border-top: 1px solid rgba(245, 235, 235, 0.12);
-  font-size: 13px !important;
+  font-size: 12.5px !important;
   font-style: italic;
   color: rgba(245, 235, 235, 0.5) !important;
 }
 
-/* ——— Widget panel ——— */
+/* ——— Booking card ——— */
+.cc-book-main {
+  min-width: 0;
+}
+
 .cc-book-panel {
-  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  height: var(--cc-book-card-h);
+  overflow: hidden;
+  background: #fff;
   color: #111;
   border-radius: 22px;
   border: 1px solid #e6e6e6;
-  padding: clamp(22px, 3vw, 36px);
   box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
-}
-
-.cc-book-panel__head {
-  margin-bottom: 22px;
-  text-align: center;
-}
-
-.cc-book-panel__head .cc-book-eyebrow {
-  color: #8a8a8a;
-}
-
-.cc-book-panel__head h2 {
-  margin: 0 0 10px;
-  color: #111;
-  font-family: "Abril Fatface", serif;
-  font-size: clamp(28px, 4vw, 40px);
-  font-weight: 400;
-  line-height: 1.1;
-}
-
-.cc-book-panel__head p {
-  margin: 0 auto;
-  max-width: 32em;
-  color: #555;
-  font-family: "Lato", sans-serif;
-  font-size: 15px;
-  font-weight: 300;
-  line-height: 1.5;
-}
-
-.cc-book-steps {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 14px;
-  margin: 0 0 22px;
-  padding: 0 0 18px;
-  border-bottom: 1px solid #e6e6e6;
-  list-style: none;
-}
-
-.cc-book-steps li {
-  color: #888;
-  font-family: "Montserrat", sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.cc-book-steps span {
-  color: #111;
-  margin-right: 4px;
-}
-
-.cc-book-widget-shell {
-  min-height: 420px;
-  display: flex;
-  justify-content: center;
 }
 
 /* BookLocal host theming (Shadow DOM reads these via getComputedStyle) */
 booklocal-booking {
   display: block;
+  flex: 1 1 auto;
+  min-height: 0;
   width: 100%;
-  max-width: 560px;
+  height: 100%;
+  --booklocal-max-width: none;
   --booklocal-primary: #111111;
   --booklocal-background: #ffffff;
   --booklocal-surface: #f7f7f7;
@@ -314,24 +205,51 @@ booklocal-booking {
   --booklocal-font: "Lato", "Quattrocento Sans", system-ui, sans-serif;
 }
 
-.cc-book-demo {
-  margin: 18px 0 0;
+.cc-book-loading {
+  margin: 0;
+  padding: 20px 22px;
+  font-family: Lato, system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: rgba(17, 17, 17, 0.55);
+}
+
+.cc-book-loading[hidden],
+.cc-book-fallback[hidden] {
+  display: none;
+}
+
+.cc-book-fallback {
+  margin: 0;
+  padding: 24px 22px;
   text-align: center;
-  color: #888;
+  color: #444;
+  font-family: "Lato", sans-serif;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.cc-book-fallback a {
+  color: #111;
+}
+
+/* Until the custom element upgrades, hold a stable block (no layout jump). */
+booklocal-booking:not(:defined) {
+  min-height: 220px;
+}
+
+.cc-book-fine {
+  margin: 0;
+  min-height: var(--cc-book-fine-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: rgba(245, 235, 235, 0.5);
   font-family: "Montserrat", sans-serif;
   font-size: 10px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-}
-
-.cc-book-secure {
-  margin: 16px 0 0;
-  text-align: center;
-  color: #666;
-  font-family: "Lato", sans-serif;
-  font-size: 13px;
-  font-weight: 300;
 }
 
 /* ——— Context band ——— */
@@ -403,14 +321,57 @@ booklocal-booking {
 }
 
 /* ——— Responsive ——— */
+
+/* Tablet & below: single column, natural height, page scrolls. */
 @media screen and (max-width: 900px) {
-  .cc-book-stage__layout {
-    grid-template-columns: 1fr;
+  body.cc-page-book {
+    --cc-book-card-h: auto;
+    --cc-book-fine-h: 34px;
   }
 
+  .cc-book-stage__layout {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  /* Branding simplifies to a slim identity strip. */
   .cc-book-aside {
-    position: static;
+    height: auto;
+    padding-bottom: 0;
+  }
+
+  .cc-book-aside__intro {
+    margin-bottom: 8px;
+  }
+
+  .cc-book-aside__media,
+  .cc-book-aside__note {
     display: none;
+  }
+
+  .cc-book-aside__meta {
+    margin: 0;
+    padding: 12px 4px 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 14px;
+  }
+
+  .cc-book-aside__meta h2 {
+    margin: 0;
+  }
+
+  .cc-book-aside__meta p {
+    margin: 0;
+  }
+
+  /* overflow must stay visible so the widget's footer can stick to the viewport. */
+  .cc-book-panel {
+    height: auto;
+    min-height: 420px;
+    overflow: visible;
+    border-radius: 10px;
   }
 
   .cc-book-context__inner {
@@ -420,16 +381,18 @@ booklocal-booking {
 }
 
 @media screen and (max-width: 767px) {
-  .cc-book-hero {
-    padding: 40px 18px 32px;
+  .cc-book-stage {
+    padding: 22px 14px 40px;
   }
 
-  .cc-book-panel {
-    border-radius: 16px;
-    padding: 20px 16px 24px;
+  .cc-book-aside__intro {
+    margin-bottom: 4px;
   }
+}
 
-  .cc-book-steps {
-    gap: 8px 10px;
+/* Short desktop windows: let the card keep a usable minimum and the page scroll a little. */
+@media screen and (min-width: 901px) and (max-height: 640px) {
+  body.cc-page-book {
+    --cc-book-card-h: 520px;
   }
 }
