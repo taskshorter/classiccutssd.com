@@ -1,0 +1,151 @@
+/*
+ * Classic Cuts — compact "Barbers" dropdown (desktop only).
+ *
+ * Loaded AFTER cc-nav.css (or cc-home-app.css on the homepage) and overrides
+ * the original tall, text-only panel. Selectors are `.cc-mega …` so they win
+ * over the base rules and the ≤920px media query without !important.
+ * ≤767px the whole `.cc-mega` is hidden by cc-nav.css; the mobile drawer is
+ * untouched.
+ */
+
+.cc-mega {
+  max-height: calc(100vh - var(--cc-chrome-h, 84px) - 16px);
+  overflow-y: auto;
+}
+
+.cc-mega .cc-mega__inner {
+  max-width: 1040px;
+  padding: 20px 32px 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 176px;
+  gap: 0 32px;
+  align-items: start;
+}
+
+/* Right column: Book & Visit shortcuts, separated by a hairline. */
+.cc-mega .cc-mega__col:not(.cc-mega__col--primary) {
+  padding-left: 32px;
+  border-left: 1px solid #ececec;
+}
+
+.cc-mega .cc-mega__col:not(.cc-mega__col--primary) .cc-mega__links {
+  gap: 8px;
+}
+
+/* Header row: section label + "View all barbers". */
+.cc-mega__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 10px;
+}
+
+.cc-mega__head .cc-mega__label {
+  margin: 0;
+}
+
+.cc-mega .cc-mega__all {
+  color: #06c;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.cc-mega .cc-mega__all:hover {
+  color: #0077ed;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Barber grid: 4 across on a full desktop, fewer as the panel narrows. */
+.cc-mega .cc-mega__barbers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(156px, 1fr));
+  gap: 4px 8px;
+}
+
+.cc-mega .cc-mega__barber {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 6px 8px 8px;
+  border-radius: 14px;
+  color: #1d1d1f;
+  text-decoration: none;
+  transition: background-color 150ms ease;
+}
+
+.cc-mega .cc-mega__barber:hover,
+.cc-mega .cc-mega__barber:focus-visible {
+  background: #f5f5f7;
+  color: #000000;
+  text-decoration: none;
+}
+
+.cc-mega .cc-mega__barber:focus-visible {
+  outline: 2px solid #1d1d1f;
+  outline-offset: -2px;
+}
+
+/* Headshot, or initials where there is no approved unique photo. */
+.cc-mega__avatar {
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: #ececef;
+  color: #1d1d1f;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.cc-mega__avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center 22%;
+}
+
+.cc-mega__name {
+  min-width: 0;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-mega.is-open {
+    animation: none;
+  }
+
+  .cc-mega .cc-mega__barber {
+    transition: none;
+  }
+}
+
+@media screen and (max-width: 920px) {
+  .cc-mega .cc-mega__inner {
+    padding: 18px 24px 22px;
+    grid-template-columns: minmax(0, 1fr) 160px;
+  }
+
+  .cc-mega .cc-mega__col:not(.cc-mega__col--primary) {
+    padding-left: 24px;
+  }
+}

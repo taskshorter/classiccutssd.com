@@ -18,13 +18,14 @@ Conversion shortcuts:
 |-------|-------|
 | Markup | Duplicated in each HTML page |
 | Behavior | `assets/js/cc-nav.js` |
-| Styles | `assets/css/cc-nav.css` (+ chrome) |
+| Styles | `assets/css/cc-nav.css` (+ chrome); compact Barbers dropdown in `assets/css/cc-mega-barbers.css` (loaded after cc-nav.css on every page; non-blocking on the homepage, whose bundle is `cc-home-app.css`) |
 
 ## Desktop mega
 
 - `.has-mega` + `.cc-mega[data-mega="barbers"]`  
 - Open on mouseenter/focusin ≥768px; delayed close; Escape closes  
 - Backdrop click closes  
+- Barbers panel is a compact white sheet: headshot + name per barber (4 across, 2 rows), "View all barbers" link, hairline-separated "Book & Visit" column. Headshots are the existing `assets/images/barbers/*` files; a barber without a unique approved photo (Tammy) shows an initial. Images are lazy and warmed on first pointer/focus entry to the nav bar
 
 ## Mobile drawer
 

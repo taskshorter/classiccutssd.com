@@ -74,6 +74,24 @@
       }
     }
 
+    // The dropdown's headshots are lazy (they sit in a hidden panel, so they
+    // would not otherwise load until the menu is open). The first time the
+    // pointer or keyboard reaches the nav bar, start loading them so they are
+    // ready by the time "Barbers" is hovered — without costing every page load.
+    var warmed = false;
+    function warmMegaImages() {
+      if (warmed) return;
+      warmed = true;
+      document.querySelectorAll('.cc-mega img[loading="lazy"]').forEach(function (img) {
+        img.loading = "eager";
+      });
+    }
+    var navBar = document.querySelector(".cc-header__nav");
+    if (navBar) {
+      navBar.addEventListener("pointerenter", warmMegaImages, { once: true });
+      navBar.addEventListener("focusin", warmMegaImages, { once: true });
+    }
+
     function scheduleClose() {
       clearTimeout(closeTimer);
       closeTimer = setTimeout(closeMega, 140);
