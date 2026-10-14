@@ -65,7 +65,7 @@
     afterFirstPaint(function () {
       // PixelSwap has no GSAP dependency — load only when mission is actually visible
       near(mission, "80px 0px").then(function () {
-        return loadScript("assets/js/PixelSwap.js?v=20260814z");
+        return loadScript("assets/js/PixelSwap.js?v=20261014a");
       });
 
       // BounceCards: GSAP loads on every device so the intended fan/spin motion
@@ -86,7 +86,7 @@
 
       var reviews = document.getElementById("reviews");
       near(reviews, "120px 0px").then(function () {
-        return loadScript("assets/js/cc-reviews-carousel.js?v=20260814x");
+        return loadScript("assets/js/cc-reviews-carousel.js?v=20261014a");
       });
 
       whenIdle(function () {

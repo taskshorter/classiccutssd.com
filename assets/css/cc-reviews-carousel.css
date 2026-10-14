@@ -156,3 +156,33 @@ body.cc-page-home #reviews .cc-review-slide__author,
     transform: none !important;
   }
 }
+
+/* Touch / reduced-motion: no autoplay — a normal swipeable (or scrollable) row
+   so every review card stays reachable. */
+body.cc-page-home #reviews .cc-review-carousel__viewport.is-manual,
+#cc-content #reviews .cc-review-carousel__viewport.is-manual {
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(245, 235, 235, 0.35) transparent;
+}
+
+body.cc-page-home #reviews .cc-review-carousel__viewport.is-manual::-webkit-scrollbar,
+#cc-content #reviews .cc-review-carousel__viewport.is-manual::-webkit-scrollbar {
+  height: 6px;
+}
+
+body.cc-page-home #reviews .cc-review-carousel__viewport.is-manual::-webkit-scrollbar-thumb,
+#cc-content #reviews .cc-review-carousel__viewport.is-manual::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(245, 235, 235, 0.35);
+}
+
+/* Clear the edge fades so the first and last cards are fully visible at the ends. */
+body.cc-page-home #reviews .cc-review-carousel__viewport.is-manual .cc-review-carousel__track,
+#cc-content #reviews .cc-review-carousel__viewport.is-manual .cc-review-carousel__track {
+  padding-left: clamp(40px, 10vw, 140px);
+  padding-right: clamp(40px, 10vw, 140px);
+}

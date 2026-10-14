@@ -455,6 +455,9 @@
         }
         internalActive = next;
       }
+      if (trigger === "hover" || trigger === "click") {
+        root.setAttribute("aria-pressed", desiredActive() ? "true" : "false");
+      }
       if (typeof onActiveChange === "function") onActiveChange(next);
 
       if (transition) {
@@ -501,7 +504,19 @@
         "aria-label",
         root.getAttribute("data-aria-label") || "Reveal shop highlights"
       );
+      root.setAttribute("aria-pressed", "false");
       root.tabIndex = 0;
+      // Keyboard: Enter / Space toggle the reveal (hover and tap are unchanged).
+      // preventDefault stops Space from scrolling the page.
+      root.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+          event.preventDefault();
+          if (event.repeat) return;
+          requestActive(!desiredActive());
+        } else if (event.key === "Escape" && desiredActive()) {
+          requestActive(false);
+        }
+      });
     } else if (trigger === "click") {
       root.setAttribute("role", "button");
       root.setAttribute(

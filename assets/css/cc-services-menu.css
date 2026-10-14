@@ -222,3 +222,12 @@ body.cc-page-home .cc-lookbook__actions {
     font-size: 20px !important;
   }
 }
+
+/* Touch targets: 44px filter pills on phones / coarse pointers. */
+@media screen and (max-width: 767px), (pointer: coarse) {
+  body.cc-page-home .cc-lookbook__tab {
+    min-height: 44px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}

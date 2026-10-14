@@ -94,13 +94,26 @@
     var carousel = track && track.closest(".cc-review-carousel");
     if (!track || !carousel) return;
 
+    var viewport = carousel.querySelector(".cc-review-carousel__viewport");
     var pairs = buildPairs(REVIEWS);
-    track.innerHTML = setHtml(pairs) + setHtml(pairs);
 
     var reduced =
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) return;
+    // Touch / coarse-pointer devices (and reduced motion) get no autoplay:
+    // the strip is a plain horizontally scrollable row with every card
+    // reachable, so the user's swipe never fights a moving marquee.
+    var touchLike =
+      window.matchMedia &&
+      window.matchMedia("(hover: none), (pointer: coarse), (any-pointer: coarse)").matches;
+
+    if (reduced || touchLike) {
+      track.innerHTML = setHtml(pairs);
+      if (viewport) viewport.classList.add("is-manual");
+      return;
+    }
+
+    track.innerHTML = setHtml(pairs) + setHtml(pairs);
 
     var offset = 0;
     var last = performance.now();
@@ -142,11 +155,28 @@
       );
     }
 
+    var hoverPaused = false;
+    var focusPaused = false;
+    function syncPaused() {
+      paused = hoverPaused || focusPaused;
+    }
     carousel.addEventListener("mouseenter", function () {
-      paused = true;
+      hoverPaused = true;
+      syncPaused();
     });
     carousel.addEventListener("mouseleave", function () {
-      paused = false;
+      hoverPaused = false;
+      syncPaused();
+    });
+    // Keyboard users tabbing into a review also pause the marquee.
+    carousel.addEventListener("focusin", function () {
+      focusPaused = true;
+      syncPaused();
+    });
+    carousel.addEventListener("focusout", function () {
+      focusPaused = false;
+      syncPaused();
+      if (viewport) viewport.scrollLeft = 0;
     });
 
     function tick(now) {
