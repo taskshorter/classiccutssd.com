@@ -1,48 +1,42 @@
-/* Classic Cuts — custom booking page shell (BookLocal handles the flow) */
+/* Classic Cuts — custom booking page shell (BookLocal handles the flow).
+   Shared by /book and /account. Light, illustrated shell that matches /apply and /contact:
+   the same application-background.png artwork, neutralised with the same luminosity blend
+   (see cc-apply.css / cc-contact.css), a white rounded surface for the widget, dark accents. */
 
-body.cc-page-book {
-  background: #000;
-  color: #f5ebeb;
+body.cc-page-book,
+body.cc-page-account {
+  background-color: #f4f4f5;
+  background-image: url("../images/backgrounds/application-background.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  background-blend-mode: luminosity;
+  color: #111;
+  overflow-x: clip;
 }
 
-body.cc-page-book .cc-main {
-  background: #000;
+html:has(body.cc-page-book),
+html:has(body.cc-page-account) {
+  overflow-x: clip;
+}
+
+body.cc-page-book .cc-main,
+body.cc-page-account .cc-main {
+  background: transparent;
 }
 
 /* ——— Hero ——— */
 .cc-book-hero {
   position: relative;
   overflow: hidden;
-  padding: clamp(48px, 8vw, 88px) 24px clamp(36px, 5vw, 56px);
-  background: #000;
+  padding: clamp(40px, 6vw, 64px) 24px clamp(20px, 3vw, 32px);
+  background: transparent;
 }
 
+/* The dark photo hero is retired; the page artwork carries the atmosphere now. */
 .cc-book-hero__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.cc-book-hero__bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 30%;
-  filter: grayscale(1) contrast(1.05);
-  opacity: 0.38;
-}
-
-.cc-book-hero__bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(0, 0, 0, 0.55) 0%,
-    rgba(0, 0, 0, 0.72) 45%,
-    #000 100%
-  );
+  display: none;
 }
 
 .cc-book-hero__inner {
@@ -54,8 +48,8 @@ body.cc-page-book .cc-main {
 }
 
 .cc-book-eyebrow {
-  margin: 0 0 14px;
-  color: rgba(245, 235, 235, 0.55);
+  margin: 0 0 12px;
+  color: #6b6b6b;
   font-family: "Montserrat", sans-serif;
   font-size: 11px;
   font-weight: 600;
@@ -64,38 +58,50 @@ body.cc-page-book .cc-main {
 }
 
 .cc-book-hero h1 {
-  margin: 0 0 16px;
-  color: #f5ebeb;
+  margin: 0 0 14px;
+  color: #111;
   font-family: "Abril Fatface", "Quattrocento", serif;
-  font-size: clamp(36px, 7vw, 64px);
+  font-size: clamp(36px, 6vw, 58px);
   font-weight: 400;
   line-height: 1.05;
   letter-spacing: 0.01em;
 }
 
+/* Scissors divider, same device as the Apply / Contact pitch column. */
+.cc-book-hero__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 16px;
+  color: #8a8a8a;
+}
+
+.cc-book-hero__divider span {
+  width: 52px;
+  height: 1px;
+  background: #cfcfcf;
+}
+
+.cc-book-hero__divider svg {
+  width: 18px;
+  height: 18px;
+}
+
 .cc-book-hero__lead {
   margin: 0 auto;
-  max-width: 28em;
-  color: rgba(245, 235, 235, 0.82);
+  max-width: 30em;
+  color: #555;
   font-family: "Lato", sans-serif;
-  font-size: clamp(16px, 2.2vw, 19px);
+  font-size: clamp(15px, 2vw, 18px);
   font-weight: 300;
   line-height: 1.55;
 }
 
-.cc-book-hero__rule {
-  width: 64px;
-  height: 1px;
-  margin: 22px auto 0;
-  background: rgba(245, 235, 235, 0.35);
-}
-
 /* ——— Trust strip ——— */
 .cc-book-trust {
-  border-top: 1px solid rgba(245, 235, 235, 0.1);
-  border-bottom: 1px solid rgba(245, 235, 235, 0.1);
-  background: #0a0a0a;
-  padding: 18px 24px;
+  background: transparent;
+  padding: 0 24px clamp(4px, 1.5vw, 12px);
 }
 
 .cc-book-trust__inner {
@@ -109,7 +115,7 @@ body.cc-page-book .cc-main {
 }
 
 .cc-book-trust span {
-  color: rgba(245, 235, 235, 0.7);
+  color: #6b6b6b;
   font-family: "Montserrat", sans-serif;
   font-size: 11px;
   font-weight: 500;
@@ -118,7 +124,7 @@ body.cc-page-book .cc-main {
 }
 
 .cc-book-trust__sep {
-  opacity: 0.35;
+  opacity: 0.45;
 }
 
 @media (max-width: 560px) {
@@ -128,35 +134,40 @@ body.cc-page-book .cc-main {
 
   .cc-book-trust__inner {
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
   }
 }
 
 /* ——— Booking stage ——— */
 .cc-book-stage {
-  padding: clamp(40px, 6vw, 72px) 20px clamp(64px, 8vw, 96px);
-  background: #000;
+  padding: clamp(24px, 4vw, 44px) 20px clamp(56px, 7vw, 88px);
+  background: transparent;
 }
 
 .cc-book-stage__layout {
   max-width: 1180px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.15fr);
-  gap: clamp(28px, 4vw, 48px);
+  grid-template-columns: minmax(260px, 0.76fr) minmax(0, 1.24fr);
+  gap: clamp(24px, 3.4vw, 40px);
   align-items: start;
 }
 
+/* Aside: one white card holding the photo and the shop details */
 .cc-book-aside {
   position: sticky;
   top: calc(var(--cc-chrome-h, 84px) + 20px);
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 22px;
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .cc-book-aside__media {
   position: relative;
   overflow: hidden;
-  border-radius: 18px;
-  border: 1px solid rgba(245, 235, 235, 0.12);
+  border-radius: 14px;
   aspect-ratio: 4 / 5;
   background: #111;
 }
@@ -174,8 +185,8 @@ body.cc-page-book .cc-main {
   inset: 0;
   background: linear-gradient(
     180deg,
-    transparent 40%,
-    rgba(0, 0, 0, 0.75) 100%
+    transparent 42%,
+    rgba(0, 0, 0, 0.72) 100%
   );
 }
 
@@ -186,31 +197,31 @@ body.cc-page-book .cc-main {
   bottom: 22px;
   z-index: 1;
   margin: 0;
-  color: #f5ebeb;
+  color: #fff;
   font-family: "Abril Fatface", serif;
   font-size: clamp(22px, 2.6vw, 28px);
   line-height: 1.15;
 }
 
 .cc-book-aside__meta {
-  margin-top: 22px;
-  padding: 0 4px;
+  margin-top: 18px;
+  padding: 0 8px 6px;
 }
 
 .cc-book-aside__meta h2 {
   margin: 0 0 10px;
-  color: #f5ebeb;
+  color: #111;
   font-family: "Montserrat", sans-serif;
   font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.14em;
+  font-weight: 700;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
 }
 
 .cc-book-aside__meta p,
 .cc-book-aside__meta a {
   margin: 0 0 6px;
-  color: rgba(245, 235, 235, 0.72);
+  color: #555;
   font-family: "Lato", sans-serif;
   font-size: 15px;
   font-weight: 300;
@@ -219,35 +230,37 @@ body.cc-page-book .cc-main {
 }
 
 .cc-book-aside__meta a:hover {
-  color: #fff;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .cc-book-aside__note {
   margin-top: 14px !important;
   padding-top: 14px;
-  border-top: 1px solid rgba(245, 235, 235, 0.12);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
   font-size: 13px !important;
   font-style: italic;
-  color: rgba(245, 235, 235, 0.5) !important;
+  color: #6b6b6b !important;
 }
 
 /* ——— Widget panel ——— */
 .cc-book-panel {
-  background: #f7f7f7;
+  background: #fff;
   color: #111;
   border-radius: 22px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid rgba(0, 0, 0, 0.07);
   padding: clamp(22px, 3vw, 36px);
-  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 .cc-book-panel__head {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   text-align: center;
 }
 
 .cc-book-panel__head .cc-book-eyebrow {
-  color: #8a8a8a;
+  color: #6b6b6b;
 }
 
 .cc-book-panel__head h2 {
@@ -269,29 +282,44 @@ body.cc-page-book .cc-main {
   line-height: 1.5;
 }
 
+/* Step row: outlined numerals, no "current" state (the widget below owns real progress) */
 .cc-book-steps {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px 14px;
+  justify-content: space-between;
+  gap: 10px 8px;
   margin: 0 0 22px;
-  padding: 0 0 18px;
-  border-bottom: 1px solid #e6e6e6;
+  padding: 16px 0;
+  border-top: 1px solid #ececec;
+  border-bottom: 1px solid #ececec;
   list-style: none;
 }
 
 .cc-book-steps li {
-  color: #888;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #6b6b6b;
   font-family: "Montserrat", sans-serif;
   font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .cc-book-steps span {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+  border: 1px solid #d9d9d9;
+  border-radius: 50%;
+  background: #fff;
   color: #111;
-  margin-right: 4px;
+  font-size: 10px;
+  letter-spacing: 0;
 }
 
 .cc-book-widget-shell {
@@ -304,7 +332,7 @@ body.cc-page-book .cc-main {
 booklocal-booking {
   display: block;
   width: 100%;
-  max-width: 560px;
+  max-width: none;
   --booklocal-primary: #111111;
   --booklocal-background: #ffffff;
   --booklocal-surface: #f7f7f7;
@@ -317,7 +345,7 @@ booklocal-booking {
 .cc-book-demo {
   margin: 18px 0 0;
   text-align: center;
-  color: #888;
+  color: #6b6b6b;
   font-family: "Montserrat", sans-serif;
   font-size: 10px;
   font-weight: 500;
@@ -356,7 +384,7 @@ booklocal-booking {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #888;
+  color: #6b6b6b;
 }
 
 .cc-book-context article p,
@@ -421,15 +449,29 @@ booklocal-booking {
 
 @media screen and (max-width: 767px) {
   .cc-book-hero {
-    padding: 40px 18px 32px;
+    padding: 32px 18px 20px;
   }
 
   .cc-book-panel {
     border-radius: 16px;
     padding: 20px 16px 24px;
   }
+}
 
+/* Phones: five equal columns, numeral over label, so the row never wraps or scrolls */
+@media screen and (max-width: 560px) {
   .cc-book-steps {
-    gap: 8px 10px;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 4px;
+    padding: 14px 0;
+  }
+
+  .cc-book-steps li {
+    flex-direction: column;
+    gap: 6px;
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    text-align: center;
   }
 }

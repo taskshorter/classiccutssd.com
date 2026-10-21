@@ -1,8 +1,8 @@
 /* Customer account page (/account). Reuses the booking page hero, stage, panel and context
    blocks (cc-book.css); only the single-column layout and the widget mount are specific. */
-.cc-account-hero .cc-book-hero__inner { padding-bottom: clamp(20px, 3vw, 36px); }
+.cc-account-hero .cc-book-hero__inner { padding-bottom: 0; }
 .cc-account-layout {
-  max-width: 860px;
+  max-width: 828px;
   margin: 0 auto;
 }
 .cc-account-shell {
@@ -15,6 +15,8 @@
 }
 .cc-account-note { margin-top: 18px; }
 .cc-account-note a { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+/* The widget draws its own card; keep the white panel snug around it so the two read as one surface. */
+.cc-account-panel { padding: clamp(12px, 2.2vw, 24px); }
 /* The widget draws its own padded card, so the panel gives it more room on phones. */
 @media screen and (max-width: 560px) {
   .cc-account-stage { padding-left: 12px; padding-right: 12px; }
