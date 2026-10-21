@@ -1,36 +1,19 @@
-/* Gallery page — masonry-style grid (PREVIEW: replaces legacy Weebly gallery) */
-
-body.cc-page-gallery {
-  background: #ffffff;
-  color: #111111;
-}
+/* Gallery page — light illustrated shell (shared with Apply / Contact / Book / Account via cc-light-shell.css).
+   The photography stays the focus: the grid keeps its square / 2:1 aspect ratios and sits in one white frame. */
 
 body.cc-page-gallery .banner-wrap {
   display: none !important;
 }
 
 body.cc-page-gallery .cc-main {
-  background: #ffffff !important;
-  color: #111111;
-}
-
-body.cc-page-gallery .cc-footer {
-  background: #ffffff;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  color: #111111;
-}
-
-body.cc-page-gallery .cc-footer a {
-  color: #111111;
+  color: var(--cc-ink);
 }
 
 .cc-gallery-hero {
-  padding: calc(var(--cc-chrome-h, 84px) + 48px) 24px 28px;
+  padding: clamp(40px, 6vw, 64px) 24px clamp(20px, 3vw, 32px);
   text-align: center;
-  background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0, 0, 0, 0.04), transparent 55%),
-    #ffffff;
-  color: #111111;
+  background: transparent;
+  color: var(--cc-ink);
 }
 
 .cc-gallery-hero__eyebrow {
@@ -40,24 +23,27 @@ body.cc-page-gallery .cc-footer a {
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.55);
+  color: var(--cc-ink-muted);
 }
 
 .cc-gallery-hero h1 {
-  margin: 0 0 12px;
+  margin: 0;
   font-family: "Abril Fatface", Georgia, serif;
   font-size: clamp(2.3rem, 5.5vw, 3.6rem);
   font-weight: 400;
-  letter-spacing: -0.02em;
-  color: #111111;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  color: var(--cc-ink);
 }
 
 .cc-gallery-hero__lead {
   margin: 0 auto 24px;
   max-width: 34rem;
   font-family: Lato, system-ui, sans-serif;
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 300;
   line-height: 1.55;
-  color: rgba(17, 17, 17, 0.78);
+  color: var(--cc-ink-soft);
 }
 
 .cc-gallery-hero__actions {
@@ -67,16 +53,26 @@ body.cc-page-gallery .cc-footer a {
   justify-content: center;
 }
 
+.cc-gallery-hero__actions .cc-btn,
+.cc-gallery-cta__actions .cc-btn {
+  min-height: 46px;
+}
+
+/* One white frame around the photos, like the panels on Book and Account */
 .cc-gallery {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 12px 16px 48px;
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto 40px;
+  padding: clamp(10px, 1.6vw, 16px);
+  background: var(--cc-card-bg);
+  border: var(--cc-card-border);
+  border-radius: var(--cc-card-radius);
+  box-shadow: var(--cc-card-shadow);
 }
 
 .cc-gallery__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -85,7 +81,7 @@ body.cc-page-gallery .cc-footer a {
 @media (min-width: 700px) {
   .cc-gallery__grid {
     grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+    gap: 12px;
   }
 }
 
@@ -99,7 +95,8 @@ body.cc-page-gallery .cc-footer a {
   margin: 0;
   position: relative;
   overflow: hidden;
-  background: #f0f0f0;
+  border-radius: 12px;
+  background: #ececec;
   aspect-ratio: 1;
 }
 
@@ -108,6 +105,11 @@ body.cc-page-gallery .cc-footer a {
   height: 100%;
   color: inherit;
   text-decoration: none;
+}
+
+.cc-gallery__item a:focus-visible {
+  outline: 3px solid var(--cc-ink);
+  outline-offset: -3px;
 }
 
 .cc-gallery__item img {
@@ -120,7 +122,7 @@ body.cc-page-gallery .cc-footer a {
 
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .cc-gallery__item:hover img {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
 }
 
@@ -138,15 +140,21 @@ body.cc-page-gallery .cc-footer a {
 
 .cc-gallery-cta {
   text-align: center;
-  padding: 8px 24px 88px;
-  color: #111111;
+  padding: 8px 24px 72px;
+  color: var(--cc-ink);
+}
+
+.cc-gallery-cta::before {
+  margin-top: 0;
 }
 
 .cc-gallery-cta p {
   margin: 0 auto 18px;
   max-width: 28rem;
   font-family: Lato, system-ui, sans-serif;
-  color: rgba(17, 17, 17, 0.78);
+  font-size: 1.02rem;
+  font-weight: 300;
+  color: var(--cc-ink-soft);
   line-height: 1.5;
 }
 

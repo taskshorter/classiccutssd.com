@@ -1,0 +1,70 @@
+/* Classic Cuts — shared light shell for Gallery, Barbers and Barber profile pages.
+   Same visual system as /apply, /contact, /book and /account (see cc-apply.css, cc-contact.css,
+   cc-book.css): the application-background.png illustration neutralised with the same luminosity
+   blend, a white rounded surface for content, near-black accents, a small scissors rule.
+   Page-specific layout stays in cc-gallery.css / cc-barbers-v2.css / cc-profile.css. */
+
+:root {
+  --cc-card-bg: rgba(255, 255, 255, 0.94);
+  --cc-card-border: 1px solid rgba(0, 0, 0, 0.07);
+  --cc-card-radius: 22px;
+  --cc-card-shadow: 0 22px 54px rgba(0, 0, 0, 0.09), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --cc-ink: #111111;
+  --cc-ink-soft: #555555;
+  --cc-ink-muted: #6b6b6b;
+}
+
+body.cc-page-gallery,
+body.cc-page-barbers,
+body.cc-page-profile {
+  background-color: #f4f4f5;
+  background-image: url("../images/backgrounds/application-background.png");
+  background-repeat: no-repeat;
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+  background-blend-mode: luminosity;
+  color: var(--cc-ink);
+  overflow-x: clip;
+}
+
+html:has(body.cc-page-gallery),
+html:has(body.cc-page-barbers),
+html:has(body.cc-page-profile) {
+  overflow-x: clip;
+}
+
+body.cc-page-gallery .cc-main,
+body.cc-page-barbers .cc-main,
+body.cc-page-profile .cc-main {
+  background: transparent !important;
+}
+
+/* Scissors rule: the same device used under the Apply / Contact / Book / Account titles */
+.cc-gallery-hero h1::after,
+.cc-select__title::after,
+.cc-gallery-cta::before {
+  content: "";
+  display: block;
+  width: 146px;
+  height: 18px;
+  margin: 14px auto 16px;
+  background: url("../images/brand/scissors-rule.svg") center / contain no-repeat;
+}
+
+.cc-profile-hero__name::after {
+  content: "";
+  display: block;
+  width: 146px;
+  height: 18px;
+  margin: 14px 0 0;
+  background: url("../images/brand/scissors-rule.svg") left center / contain no-repeat;
+}
+
+@media (max-width: 820px) {
+  .cc-profile-hero__name::after {
+    margin-left: auto;
+    margin-right: auto;
+    background-position: center;
+  }
+}

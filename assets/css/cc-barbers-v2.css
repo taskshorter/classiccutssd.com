@@ -1,77 +1,86 @@
-/* Barbers V2 — editorial character-select-inspired barber selector (PREVIEW) */
-
-body.cc-page-barbers {
-  background: #0a0a0a !important;
-  color: #f5ebeb;
-  overflow-x: hidden;
-}
+/* Barbers — "Meet the Team" selector, light illustrated shell (shared with Apply / Contact / Book / Account via
+   cc-light-shell.css). Black is kept for the selected barber, buttons and headings. All selection behaviour lives in
+   cc-barbers-v2.js and keys off element ids and the is-active / is-leaving / is-in state classes, which are unchanged. */
 
 body.cc-page-barbers .banner-wrap {
   display: none !important;
 }
 
-body.cc-page-barbers .cc-main {
-  background: transparent !important;
-}
-
-body.cc-page-barbers .cc-footer {
-  background: #0a0a0a;
-  border-top: 1px solid rgba(245, 235, 235, 0.12);
-  color: #f5ebeb;
-}
-
-body.cc-page-barbers .cc-footer a {
-  color: #f5ebeb;
-}
-
 .cc-select {
-  padding: calc(var(--cc-chrome-h, 84px) + 28px) 20px 72px;
-  max-width: 1320px;
+  padding: clamp(40px, 6vw, 64px) 20px 72px;
+  max-width: 1240px;
   margin: 0 auto;
 }
 
+/* ---------- Page header ---------- */
+
+.cc-select__head {
+  text-align: center;
+  margin: 0 0 clamp(24px, 3.5vw, 36px);
+}
+
 .cc-select__eyebrow {
-  margin: 0 0 22px;
+  margin: 0 0 12px;
   font-family: Montserrat, system-ui, sans-serif;
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(245, 235, 235, 0.55);
-  text-align: center;
+  color: var(--cc-ink-muted);
+}
+
+.cc-select__title {
+  margin: 0;
+  font-family: "Abril Fatface", Georgia, serif;
+  font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.05;
+  color: var(--cc-ink);
+}
+
+.cc-select__lead {
+  margin: 0 auto;
+  max-width: 30em;
+  font-family: Lato, system-ui, sans-serif;
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 300;
+  line-height: 1.55;
+  color: var(--cc-ink-soft);
 }
 
 /* ---------- Layout shell ---------- */
 
 .cc-select__stage {
   display: grid;
-  gap: 20px;
+  gap: 18px;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-areas:
-    "portrait"
     "roster"
-    "info"
-    "portfolio";
+    "feature";
 }
 
 @media (min-width: 980px) {
   .cc-select__stage {
-    grid-template-columns: 264px minmax(320px, 1.05fr) minmax(320px, 0.95fr);
-    grid-template-areas:
-      "roster portrait info"
-      "roster portfolio portfolio";
-    gap: 28px 36px;
+    grid-template-columns: 284px minmax(0, 1fr);
+    grid-template-areas: "roster feature";
+    gap: 28px;
     align-items: start;
   }
 }
 
-/* ---------- Roster ---------- */
+/* ---------- Roster (selector card) ---------- */
 
 .cc-select__roster {
   grid-area: roster;
   display: flex;
-  gap: 10px;
+  gap: 8px;
   overflow-x: auto;
-  padding: 4px 2px 10px;
+  padding: 10px;
+  background: var(--cc-card-bg);
+  border: var(--cc-card-border);
+  border-radius: var(--cc-card-radius);
+  box-shadow: var(--cc-card-shadow);
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
 }
@@ -81,7 +90,7 @@ body.cc-page-barbers .cc-footer a {
 }
 
 .cc-select__roster::-webkit-scrollbar-thumb {
-  background: rgba(245, 235, 235, 0.18);
+  background: rgba(0, 0, 0, 0.18);
   border-radius: 3px;
 }
 
@@ -89,8 +98,10 @@ body.cc-page-barbers .cc-footer a {
   .cc-select__roster {
     flex-direction: column;
     overflow-x: visible;
-    padding: 0;
-    gap: 6px;
+    gap: 4px;
+    padding: 12px;
+    position: sticky;
+    top: calc(var(--cc-chrome-h, 84px) + 20px);
   }
 }
 
@@ -99,17 +110,19 @@ body.cc-page-barbers .cc-footer a {
   scroll-snap-align: start;
   display: flex;
   align-items: center;
-  gap: 10px;
-  width: 168px;
-  padding: 8px;
+  gap: 12px;
+  width: 188px;
+  min-height: 60px;
+  padding: 8px 10px;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   text-align: left;
   font: inherit;
-  color: inherit;
+  color: var(--cc-ink);
   -webkit-tap-highlight-color: transparent;
+  transition: background 160ms ease, color 160ms ease;
 }
 
 @media (min-width: 980px) {
@@ -119,16 +132,19 @@ body.cc-page-barbers .cc-footer a {
 }
 
 .cc-select__roster-item:hover {
-  background: rgba(245, 235, 235, 0.06);
+  background: #f1f1f2;
 }
 
+/* Selected barber: the dark accent */
 .cc-select__roster-item[aria-selected="true"] {
-  background: rgba(245, 235, 235, 0.1);
-  border-color: rgba(245, 235, 235, 0.28);
+  background: var(--cc-ink);
+  border-color: var(--cc-ink);
+  color: #ffffff;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
 }
 
 .cc-select__roster-item:focus-visible {
-  outline: 2px solid #f5ebeb;
+  outline: 3px solid var(--cc-ink);
   outline-offset: 2px;
 }
 
@@ -138,10 +154,11 @@ body.cc-page-barbers .cc-footer a {
   height: 44px;
   border-radius: 50%;
   overflow: hidden;
-  background: #1a1a1a;
+  background: #e6e6e6;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 0 2px #ffffff, 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 .cc-select__roster-photo img {
@@ -154,23 +171,23 @@ body.cc-page-barbers .cc-footer a {
 .cc-select__roster-photo--placeholder {
   font-family: "Abril Fatface", Georgia, serif;
   font-size: 1rem;
-  color: rgba(245, 235, 235, 0.55);
-  background: linear-gradient(160deg, #201c1c, #141212);
-  border: 1px dashed rgba(245, 235, 235, 0.25);
+  color: var(--cc-ink-soft);
+  background: linear-gradient(160deg, #f2f2f2, #e2e2e2);
+  border: 1px dashed rgba(0, 0, 0, 0.28);
 }
 
 .cc-select__roster-text {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 2px;
 }
 
 .cc-select__roster-name {
   font-family: Montserrat, system-ui, sans-serif;
-  font-size: 12.5px;
+  font-size: 13px;
   font-weight: 600;
-  color: #f5ebeb;
+  color: inherit;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -178,29 +195,56 @@ body.cc-page-barbers .cc-footer a {
 
 .cc-select__roster-specialty {
   font-family: Montserrat, system-ui, sans-serif;
-  font-size: 10.5px;
-  color: rgba(245, 235, 235, 0.5);
+  font-size: 11px;
+  color: var(--cc-ink-muted);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.cc-select__roster-item[aria-selected="true"] .cc-select__roster-name {
-  color: #ffffff;
+.cc-select__roster-item[aria-selected="true"] .cc-select__roster-specialty {
+  color: rgba(255, 255, 255, 0.78);
 }
 
-/* ---------- Featured portrait ---------- */
+/* ---------- Featured barber card ---------- */
+
+.cc-select__feature {
+  grid-area: feature;
+  display: grid;
+  gap: 22px 36px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "portrait"
+    "info"
+    "portfolio";
+  padding: clamp(16px, 2.6vw, 30px);
+  background: var(--cc-card-bg);
+  border: var(--cc-card-border);
+  border-radius: var(--cc-card-radius);
+  box-shadow: var(--cc-card-shadow);
+}
+
+@media (min-width: 760px) {
+  .cc-select__feature {
+    grid-template-columns: minmax(240px, 0.86fr) minmax(0, 1.14fr);
+    grid-template-areas:
+      "portrait info"
+      "portfolio portfolio";
+    align-items: start;
+  }
+}
+
+/* ---------- Portrait ---------- */
 
 .cc-select__portrait {
   grid-area: portrait;
   position: relative;
   aspect-ratio: 4 / 5;
   max-height: 74vh;
-  border-radius: 18px;
+  border-radius: 16px;
   overflow: hidden;
-  background:
-    radial-gradient(ellipse 90% 70% at 50% 0%, rgba(245, 235, 235, 0.08), transparent 60%),
-    #141212;
+  background: #e9e9ea;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
 .cc-select__portrait-img {
@@ -231,7 +275,7 @@ body.cc-page-barbers .cc-footer a {
   justify-content: center;
   flex-direction: column;
   gap: 10px;
-  background: linear-gradient(165deg, #201c1c, #100e0e);
+  background: linear-gradient(165deg, #f4f4f5, #e3e3e5);
   opacity: 0;
 }
 
@@ -254,8 +298,8 @@ body.cc-page-barbers .cc-footer a {
   justify-content: center;
   font-family: "Abril Fatface", Georgia, serif;
   font-size: 2.2rem;
-  color: rgba(245, 235, 235, 0.7);
-  border: 1px dashed rgba(245, 235, 235, 0.3);
+  color: var(--cc-ink-soft);
+  border: 1px dashed rgba(0, 0, 0, 0.32);
 }
 
 .cc-select__portrait-placeholder-note {
@@ -263,16 +307,16 @@ body.cc-page-barbers .cc-footer a {
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(245, 235, 235, 0.45);
+  color: var(--cc-ink-muted);
 }
 
-/* ---------- Info panel ---------- */
+/* ---------- Info ---------- */
 
 .cc-select__info {
   grid-area: info;
   display: flex;
   flex-direction: column;
-  padding-top: 4px;
+  padding: 4px 2px 0;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -293,26 +337,27 @@ body.cc-page-barbers .cc-footer a {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(245, 235, 235, 0.55);
+  color: var(--cc-ink-muted);
 }
 
 .cc-select__name {
   margin: 0 0 14px;
   font-family: "Abril Fatface", Georgia, serif;
-  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-size: clamp(2.1rem, 3.6vw, 3rem);
   font-weight: 400;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.01em;
   line-height: 1.05;
-  color: #f5ebeb;
+  color: var(--cc-ink);
 }
 
 .cc-select__intro {
   margin: 0 0 18px;
   max-width: 40ch;
   font-family: Lato, system-ui, sans-serif;
-  font-size: 1.02rem;
-  line-height: 1.55;
-  color: rgba(245, 235, 235, 0.78);
+  font-size: 1.05rem;
+  font-weight: 300;
+  line-height: 1.6;
+  color: var(--cc-ink-soft);
 }
 
 .cc-select__tags {
@@ -326,13 +371,15 @@ body.cc-page-barbers .cc-footer a {
 
 .cc-select__tags li {
   font-family: Montserrat, system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 6px 10px;
-  border: 1px solid rgba(245, 235, 235, 0.18);
-  color: rgba(245, 235, 235, 0.7);
+  padding: 7px 12px;
+  border: 1px solid #dcdcdd;
+  border-radius: 999px;
+  background: #fafafa;
+  color: #444444;
 }
 
 .cc-select__actions {
@@ -342,13 +389,15 @@ body.cc-page-barbers .cc-footer a {
 }
 
 .cc-select__actions .cc-btn {
-  min-height: 44px;
+  min-height: 46px;
 }
 
 /* ---------- Portfolio strip ---------- */
 
 .cc-select__portfolio {
   grid-area: portfolio;
+  padding-top: 20px;
+  border-top: 1px solid #ececec;
 }
 
 .cc-select__portfolio-label {
@@ -358,7 +407,7 @@ body.cc-page-barbers .cc-footer a {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(245, 235, 235, 0.5);
+  color: var(--cc-ink-muted);
 }
 
 .cc-select__portfolio-strip {
@@ -371,12 +420,12 @@ body.cc-page-barbers .cc-footer a {
 .cc-select__portfolio-item {
   margin: 0;
   flex: 0 0 auto;
-  width: 128px;
-  background: #17140f;
-  border: 1px solid rgba(245, 235, 235, 0.1);
-  border-radius: 4px;
+  width: 132px;
+  background: #ffffff;
+  border: 1px solid #e6e6e7;
+  border-radius: 6px;
   padding: 6px 6px 10px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   transform: rotate(var(--cc-tilt, 0deg));
   opacity: 0;
 }
@@ -411,14 +460,14 @@ body.cc-page-barbers .cc-footer a {
   width: 100%;
   aspect-ratio: 4 / 5;
   object-fit: cover;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
 .cc-select__portfolio-empty {
   margin: 0;
   font-family: Lato, system-ui, sans-serif;
-  font-size: 0.92rem;
-  color: rgba(245, 235, 235, 0.45);
+  font-size: 0.95rem;
+  color: var(--cc-ink-muted);
   font-style: italic;
 }
 
@@ -427,8 +476,8 @@ body.cc-page-barbers .cc-footer a {
 .cc-select__data-note {
   margin: 10px 0 0;
   font-family: Lato, system-ui, sans-serif;
-  font-size: 0.78rem;
-  color: rgba(245, 235, 235, 0.4);
+  font-size: 0.8rem;
+  color: var(--cc-ink-muted);
 }
 
 @media (max-width: 640px) {
@@ -439,5 +488,13 @@ body.cc-page-barbers .cc-footer a {
 
   .cc-select__portrait {
     max-height: 56vh;
+  }
+
+  .cc-select__roster-item {
+    width: 176px;
+  }
+
+  .cc-select__actions .cc-btn {
+    flex: 1 1 100%;
   }
 }

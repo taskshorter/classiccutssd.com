@@ -1,20 +1,5 @@
-/* Barber profile pages — light polish, no heavy motion */
-
-:root {
-  --cc-profile-ink: #111111;
-  --cc-profile-muted: #5c5c5c;
-  --cc-profile-line: rgba(17, 17, 17, 0.1);
-  --cc-profile-paper: #f3f1ee;
-  --cc-profile-wash: #ebe7e1;
-}
-
-body.cc-page-profile {
-  background:
-    radial-gradient(1200px 520px at 12% -10%, rgba(17, 17, 17, 0.06), transparent 60%),
-    radial-gradient(900px 480px at 92% 8%, rgba(120, 90, 60, 0.07), transparent 55%),
-    linear-gradient(180deg, #eceae6 0%, var(--cc-profile-paper) 42%, #f7f6f4 100%);
-  color: var(--cc-profile-ink);
-}
+/* Barber profile pages — light illustrated shell (shared with Apply / Contact / Book / Account via cc-light-shell.css):
+   white rounded surfaces, near-black accents, no heavy motion. */
 
 body.cc-page-profile .cc-site {
   background: transparent;
@@ -57,44 +42,22 @@ body.cc-page-profile .wsite-section-elements {
   gap: 36px 56px;
   align-items: center;
   width: min(1080px, calc(100% - 48px));
-  margin: 28px auto 48px;
-  padding: clamp(28px, 4vw, 44px) clamp(22px, 3.5vw, 40px);
-  border-radius: 28px;
-  background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.38)),
-    linear-gradient(180deg, #ffffff 0%, #f7f5f2 100%);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.85) inset,
-    0 24px 50px rgba(17, 17, 17, 0.07);
-  isolation: isolate;
-}
-
-.cc-profile-hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background:
-    radial-gradient(420px 220px at 18% 20%, rgba(17, 17, 17, 0.05), transparent 70%),
-    radial-gradient(360px 200px at 88% 80%, rgba(140, 100, 60, 0.06), transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-}
-
-.cc-profile-hero > * {
-  position: relative;
-  z-index: 1;
+  margin: clamp(28px, 4vw, 44px) auto 36px;
+  padding: clamp(24px, 3.6vw, 40px) clamp(22px, 3.5vw, 40px);
+  border-radius: var(--cc-card-radius);
+  background: var(--cc-card-bg);
+  border: var(--cc-card-border);
+  box-shadow: var(--cc-card-shadow);
 }
 
 .cc-profile-hero__photo-wrap {
   width: 100%;
   aspect-ratio: 3 / 4;
   overflow: hidden;
-  background: var(--cc-profile-wash);
-  border-radius: 20px;
+  background: #e9e9ea;
+  border-radius: 16px;
   box-shadow:
-    0 18px 40px rgba(17, 17, 17, 0.16),
+    0 16px 34px rgba(17, 17, 17, 0.14),
     0 0 0 1px rgba(17, 17, 17, 0.04);
 }
 
@@ -103,18 +66,17 @@ body.cc-page-profile .wsite-section-elements {
   height: 100%;
   object-fit: cover;
   display: block;
-  transform: scale(1.01);
 }
 
-/* Honest "no photo yet" state — matches the placeholder pattern already
-   approved for the Barbers V2 selector (roster initial + portrait note). */
+/* Honest "no photo yet" state — matches the placeholder pattern used by the Barbers selector
+   (roster initial + portrait note). */
 .cc-profile-hero__photo-wrap--placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   gap: 12px;
-  background: linear-gradient(165deg, #201c1c, #100e0e);
+  background: linear-gradient(165deg, #f4f4f5, #e3e3e5);
 }
 
 .cc-profile-hero__photo-placeholder-mark {
@@ -128,8 +90,8 @@ body.cc-page-profile .wsite-section-elements {
   justify-content: center;
   font-family: "Abril Fatface", Georgia, serif;
   font-size: clamp(1.6rem, 6vw, 2.2rem);
-  color: rgba(245, 235, 235, 0.7);
-  border: 1px dashed rgba(245, 235, 235, 0.3);
+  color: var(--cc-ink-soft);
+  border: 1px dashed rgba(0, 0, 0, 0.32);
 }
 
 .cc-profile-hero__photo-placeholder-note {
@@ -137,7 +99,7 @@ body.cc-page-profile .wsite-section-elements {
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(245, 235, 235, 0.45);
+  color: var(--cc-ink-muted);
   text-align: center;
   padding: 0 12px;
 }
@@ -149,23 +111,23 @@ body.cc-page-profile .wsite-section-elements {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.48);
+  color: var(--cc-ink-muted);
 }
 
 .cc-profile-hero__name {
-  margin: 0 0 14px;
+  margin: 0 0 18px;
   font-family: "Abril Fatface", "Quattrocento", Georgia, serif;
   font-size: clamp(2.4rem, 5vw, 3.6rem);
   font-weight: 400;
   letter-spacing: 0.01em;
   line-height: 1.02;
-  color: var(--cc-profile-ink);
+  color: var(--cc-ink);
 }
 
 .cc-profile-hero__bio {
   margin: 0 0 24px;
   max-width: 34em;
-  color: var(--cc-profile-muted);
+  color: var(--cc-ink-soft);
   font-family: "Lato", sans-serif;
   font-size: clamp(1.02rem, 1.5vw, 1.12rem);
   font-weight: 300;
@@ -182,8 +144,21 @@ body.cc-page-profile .wsite-section-elements {
 .cc-profile-hero__actions .cc-btn--dark {
   min-height: 46px;
   padding: 0 22px;
-  border-radius: 999px;
-  letter-spacing: 0.08em;
+}
+
+.cc-profile-hero__ig {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+
+.cc-profile-hero__ig:focus-visible,
+.cc-work-grid__item:focus-visible {
+  outline: 3px solid var(--cc-ink);
+  outline-offset: 3px;
 }
 
 .cc-profile-hero__ig img {
@@ -203,21 +178,24 @@ body.cc-page-profile .wsite-section-elements {
 .cc-profile-video {
   width: min(820px, calc(100% - 48px));
   margin: 0 auto 40px;
-  padding: 0;
+  padding: clamp(8px, 1.4vw, 12px);
+  background: var(--cc-card-bg);
+  border: var(--cc-card-border);
+  border-radius: var(--cc-card-radius);
+  box-shadow: var(--cc-card-shadow);
 }
 
 .cc-profile-video video {
   width: 100%;
   display: block;
-  border-radius: 18px;
+  border-radius: 14px;
   background: #111;
-  box-shadow: 0 18px 42px rgba(17, 17, 17, 0.14);
 }
 
 /* ——— Work section ——— */
 body.cc-page-profile h2.wsite-content-title {
   width: min(1080px, calc(100% - 48px));
-  margin: 8px auto 22px;
+  margin: 8px auto 20px;
   padding: 0;
   text-align: left !important;
   font-family: "Abril Fatface", "Quattrocento", Georgia, serif !important;
@@ -225,7 +203,7 @@ body.cc-page-profile h2.wsite-content-title {
   font-weight: 400 !important;
   letter-spacing: 0.01em;
   line-height: 1.1;
-  color: var(--cc-profile-ink) !important;
+  color: var(--cc-ink) !important;
 }
 
 body.cc-page-profile h2.wsite-content-title::before {
@@ -237,26 +215,30 @@ body.cc-page-profile h2.wsite-content-title::before {
   font-weight: 600;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.45);
+  color: var(--cc-ink-muted);
 }
 
+/* The photos sit in one white frame, like the Gallery */
 .cc-work-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
+  gap: 10px;
   width: min(1080px, calc(100% - 48px));
   margin: 0 auto 36px;
-  padding: 0;
+  padding: clamp(10px, 1.6vw, 16px);
+  background: var(--cc-card-bg);
+  border: var(--cc-card-border);
+  border-radius: var(--cc-card-radius);
+  box-shadow: var(--cc-card-shadow);
 }
 
 .cc-work-grid__item {
   display: block;
   aspect-ratio: 1;
   overflow: hidden;
-  background: #e7e3dd;
-  border-radius: 14px;
+  background: #ececec;
+  border-radius: 12px;
   cursor: zoom-in;
-  box-shadow: 0 0 0 1px rgba(17, 17, 17, 0.04);
 }
 
 .cc-work-grid__item img {
@@ -273,13 +255,30 @@ body.cc-page-profile h2.wsite-content-title::before {
   filter: saturate(1.05) contrast(1.04);
 }
 
+/* Closing "Book an appointment" call to action */
 .cc-profile-book {
+  width: min(1080px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: clamp(24px, 3.4vw, 36px) 24px;
   text-align: center;
-  padding: 12px 0 28px;
+  background: var(--cc-card-bg);
+  border: var(--cc-card-border);
+  border-radius: var(--cc-card-radius);
+  box-shadow: var(--cc-card-shadow);
 }
 
 .cc-profile-book h2 {
-  margin-bottom: 16px;
+  margin: 0 0 16px;
+  font-family: "Abril Fatface", "Quattrocento", Georgia, serif;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--cc-ink);
+}
+
+.cc-profile-book .cc-btn {
+  min-height: 46px;
+  padding: 0 24px;
 }
 
 /* ——— Lightbox ——— */
@@ -353,7 +352,8 @@ body.cc-page-profile h2.wsite-content-title::before {
   }
 
   .cc-profile-video,
-  .cc-work-grid {
+  .cc-work-grid,
+  .cc-profile-book {
     width: min(1080px, calc(100% - 28px));
   }
 

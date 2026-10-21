@@ -20,7 +20,8 @@
 <link rel="stylesheet" href="/assets/css/cc-chrome.css?v=20260814p" />
 <link rel="stylesheet" href="/assets/css/cc-nav.css?v=20260814p" />
 <link rel="stylesheet" href="/assets/css/cc-mega-barbers.css?v=20261014a" />
-<link rel="stylesheet" href="/assets/css/cc-barbers-v2.css?v=20260828a" />
+<link rel="stylesheet" href="/assets/css/cc-light-shell.css?v=20261022a" />
+<link rel="stylesheet" href="/assets/css/cc-barbers-v2.css?v=20261022a" />
 
 <script src="/assets/js/cc-business.js?v=20260830b" defer></script>
 <script src="/assets/js/cc-nav.js?v=20261014a" defer></script>
@@ -134,7 +135,11 @@
 
   <main id="cc-content" class="cc-main">
     <section class="cc-select" aria-label="Meet the barbers">
-      <p class="cc-select__eyebrow">Meet the Team — Pick a Barber</p>
+      <header class="cc-select__head">
+        <p class="cc-select__eyebrow">Mission Valley · San Diego</p>
+        <h1 class="cc-select__title">Meet the Team</h1>
+        <p class="cc-select__lead">Pick a barber to see their style and recent work, then book their chair.</p>
+      </header>
 
       <div class="cc-select__stage">
         <div class="cc-select__roster" id="cc-select-roster" role="tablist" aria-label="Barbers" aria-orientation="horizontal">
@@ -189,36 +194,38 @@
           </button>
         </div>
 
-        <div class="cc-select__portrait" id="cc-select-portrait">
-          <img class="cc-select__portrait-img is-active" id="cc-select-photo-a" src="/assets/images/barbers/ray.jpg" alt="Ray Lopez, barber at Classic Cuts" />
-          <img class="cc-select__portrait-img" id="cc-select-photo-b" src="" alt="" aria-hidden="true" />
-          <div class="cc-select__portrait-placeholder" id="cc-select-placeholder" aria-hidden="true">
-            <span class="cc-select__portrait-placeholder-mark">?</span>
-            <span class="cc-select__portrait-placeholder-note">Photo coming soon</span>
+        <div class="cc-select__feature">
+          <div class="cc-select__portrait" id="cc-select-portrait">
+            <img class="cc-select__portrait-img is-active" id="cc-select-photo-a" src="/assets/images/barbers/ray.jpg" alt="Ray Lopez, barber at Classic Cuts" />
+            <img class="cc-select__portrait-img" id="cc-select-photo-b" src="" alt="" aria-hidden="true" />
+            <div class="cc-select__portrait-placeholder" id="cc-select-placeholder" aria-hidden="true">
+              <span class="cc-select__portrait-placeholder-mark">?</span>
+              <span class="cc-select__portrait-placeholder-note">Photo coming soon</span>
+            </div>
           </div>
-        </div>
 
-        <div class="cc-select__info" id="cc-select-info" role="tabpanel" aria-labelledby="cc-tab-ray-lopez">
-          <p class="cc-select__specialty" id="cc-select-specialty">Consistent craft · Owner</p>
-          <h1 class="cc-select__name" id="cc-select-name">Ray Lopez</h1>
-          <p class="cc-select__intro" id="cc-select-intro">A Classic Cuts staple — Ray delivers confident, consistent cuts with the craft that keeps clients coming back.</p>
-          <ul class="cc-select__tags" id="cc-select-tags">
-            <li>Classic cuts</li>
-            <li>Fades</li>
-            <li>Everyday maintenance</li>
-          </ul>
-          <div class="cc-select__actions">
-            <a class="cc-btn cc-btn--light" id="cc-select-book" href="/book">Book with Ray</a>
-            <a class="cc-btn cc-btn--ghost-light" id="cc-select-profile" href="/barbers/ray-lopez">View Profile</a>
+          <div class="cc-select__info" id="cc-select-info" role="tabpanel" aria-labelledby="cc-tab-ray-lopez">
+            <p class="cc-select__specialty" id="cc-select-specialty">Consistent craft · Owner</p>
+            <h2 class="cc-select__name" id="cc-select-name">Ray Lopez</h2>
+            <p class="cc-select__intro" id="cc-select-intro">A Classic Cuts staple — Ray delivers confident, consistent cuts with the craft that keeps clients coming back.</p>
+            <ul class="cc-select__tags" id="cc-select-tags">
+              <li>Classic cuts</li>
+              <li>Fades</li>
+              <li>Everyday maintenance</li>
+            </ul>
+            <div class="cc-select__actions">
+              <a class="cc-btn cc-btn--dark" id="cc-select-book" href="/book">Book with Ray</a>
+              <a class="cc-btn cc-btn--ghost-dark" id="cc-select-profile" href="/barbers/ray-lopez">View Profile</a>
+            </div>
           </div>
-        </div>
 
-        <div class="cc-select__portfolio" aria-label="Recent work">
-          <p class="cc-select__portfolio-label">Recent Work</p>
-          <div class="cc-select__portfolio-strip" id="cc-select-portfolio-strip">
-            <figure class="cc-select__portfolio-item is-in" style="--cc-tilt: -2deg">
-              <img src="/assets/images/gallery/dsc-0114-copy.jpg" alt="Haircut example from Ray Lopez" loading="eager" decoding="async" />
-            </figure>
+          <div class="cc-select__portfolio" aria-label="Recent work">
+            <p class="cc-select__portfolio-label">Recent Work</p>
+            <div class="cc-select__portfolio-strip" id="cc-select-portfolio-strip">
+              <figure class="cc-select__portfolio-item is-in" style="--cc-tilt: -2deg">
+                <img src="/assets/images/gallery/dsc-0114-copy.jpg" alt="Haircut example from Ray Lopez" loading="eager" decoding="async" />
+              </figure>
+            </div>
           </div>
         </div>
       </div>
